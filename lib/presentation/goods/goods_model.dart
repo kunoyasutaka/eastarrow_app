@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HomePageModel extends ChangeNotifier {
+class GoodsModel extends ChangeNotifier {
   int sliderIndex = 0;
   List<String> imgList = [
     'https://east-arrow.com/images/inventory_benzb180.png',

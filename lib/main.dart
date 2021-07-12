@@ -1,4 +1,5 @@
 import 'package:eastarrow_app/presentation/root.dart';
+import 'package:eastarrow_app/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      //theme: myTheme(),
+      theme: myTheme(),
       home: const Root(),
     );
   }

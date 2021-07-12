@@ -1,82 +1,51 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:eastarrow_app/presentation/admission/admission_page.dart';
+import 'package:eastarrow_app/presentation/admission/emergency_page.dart';
 import 'package:eastarrow_app/presentation/chat/chat_page.dart';
-import 'package:eastarrow_app/presentation/home/home_page_model.dart';
+import 'package:eastarrow_app/presentation/goods/goods_model.dart';
 import 'package:eastarrow_app/presentation/my/my_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class GoodsPage extends StatelessWidget {
+  const GoodsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => HomePageModel(),
-      child: Consumer<HomePageModel>(builder: (context, model, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('出演者紹介'),
-            centerTitle: true,
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                CarouselSlider(
-                  items: createImageSliders(model.imgList),
-                  options: CarouselOptions(
+      create: (_) => GoodsModel(),
+      child: Consumer<GoodsModel>(
+        builder: (context, model, child) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('入荷情報'),
+              centerTitle: true,
+            ),
+            endDrawer: Drawer(),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  CarouselSlider(
+                    items: createImageSliders(model.imgList),
+                    options: CarouselOptions(
                       autoPlay: true,
                       autoPlayInterval: const Duration(seconds: 4),
                       enlargeCenterPage: true,
                       onPageChanged: (index, reason) {
                         model.pageChanged(index);
-                      }),
-                ),
-                ImageSliderIndicator(
-                  imageList: model.imgList,
-                  currentNumber: model.sliderIndex,
-                ),
-                const SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _pageTransitionPanelWidget(
-                      context: context,
-                      title: '入荷情報',
-                      color: Theme.of(context).colorScheme.secondary,
-                      page: const ChatPage(),
+                      },
                     ),
-                    _pageTransitionPanelWidget(
-                      context: context,
-                      title: '連絡',
-                      color: Theme.of(context).colorScheme.secondary,
-                      page: const ChatPage(),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 32),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _pageTransitionPanelWidget(
-                      context: context,
-                      title: '緊急連絡',
-                      color: Theme.of(context).colorScheme.primary,
-                      page: const AdmissionPage(),
-                    ),
-                    _pageTransitionPanelWidget(
-                      context: context,
-                      title: 'マイページ',
-                      color: Theme.of(context).colorScheme.primary,
-                      page: const MyPage(),
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                  ImageSliderIndicator(
+                    imageList: model.imgList,
+                    currentNumber: model.sliderIndex,
+                  ),
+                  const SizedBox(height: 16),
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 

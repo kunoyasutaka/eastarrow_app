@@ -1,5 +1,6 @@
 import 'package:eastarrow_app/presentation/my/my_member_info/email_change_page/email_change_page.dart';
 import 'package:eastarrow_app/presentation/my/my_member_info/password_change_page/password_change_page.dart';
+import 'package:eastarrow_app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class MyPage extends StatelessWidget {
@@ -12,13 +13,8 @@ class MyPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('マイページ'),
-        actions: [
-          IconButton(
-            onPressed: () => null,
-            icon: const Icon(Icons.menu),
-          ),
-        ],
       ),
+      endDrawer: Drawer(),
       body: Column(
         children: [
           const SizedBox(height: 8),
@@ -41,7 +37,7 @@ class MyPage extends StatelessWidget {
           InkWell(
             child: Container(
               width: size.width * 9 / 10,
-              //color: AppColors.navyBlue,
+              color: AppColors.navyBlue,
               child: const ListTile(
                 leading: Text(
                   'メールアドレス変更',
@@ -68,7 +64,7 @@ class MyPage extends StatelessWidget {
           InkWell(
             child: Container(
               width: size.width * 9 / 10,
-              //color: AppColors.navyBlue,
+              color: AppColors.navyBlue,
               child: const ListTile(
                 leading: Text(
                   'パスワード変更',
@@ -95,7 +91,7 @@ class MyPage extends StatelessWidget {
           InkWell(
             child: Container(
               width: size.width * 9 / 10,
-              //color: AppColors.navyBlue,
+              color: AppColors.navyBlue,
               child: const ListTile(
                 leading: Text(
                   '利用規約',

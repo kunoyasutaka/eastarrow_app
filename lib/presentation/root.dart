@@ -1,6 +1,6 @@
-import 'package:eastarrow_app/presentation/admission/admission_page.dart';
+import 'package:eastarrow_app/presentation/admission/emergency_page.dart';
 import 'package:eastarrow_app/presentation/chat/chat_page.dart';
-import 'package:eastarrow_app/presentation/home/home_page.dart';
+import 'package:eastarrow_app/presentation/goods/goods_page.dart';
 import 'package:eastarrow_app/presentation/my/my_page.dart';
 import 'package:flutter/material.dart';
 
@@ -16,23 +16,23 @@ class _RootState extends State<Root> {
   final _bottomNavigationBarItems = <BottomNavigationBarItem>[];
 
   static const _footerIcons = [
-    Icons.home,
     Icons.directions_car_rounded,
     Icons.info_sharp,
+    Icons.quick_contacts_dialer,
     Icons.account_box_rounded,
   ];
 
   static const _footerItemNames = [
-    'ホーム',
     '入荷情報',
     '連絡',
+    '緊急連絡',
     'マイページ',
   ];
 
   var routes = [
-    const HomePage(),
-    const AdmissionPage(),
+    const GoodsPage(),
     const ChatPage(),
+    const EmergencyPage(),
     const MyPage(),
   ];
 
