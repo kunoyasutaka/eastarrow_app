@@ -1,10 +1,3 @@
-# video_base_app
-動画再生アプリのベースリポジトリ
-
-# 開発の流れ（エンジニア向け）
-## スクラムマスター
-- 山村祐也(@bestriser)
-
 ## GitHubの運用ルール([GitHub Flow](https://tracpath.com/bootcamp/learning_git_github_flow.html)と呼ばれる運用フローを採用)
 以下の4つを準拠して、masterブランチは常にリリース可能な状態にしながら、GitHubを運用する
 
