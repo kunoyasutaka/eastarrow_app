@@ -1,0 +1,13 @@
+# https://pub.dev/packages/pedantic_mono
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    todo: ignore
+
+linter:
+  rules:
+    avoid_catches_without_on_clauses: false
+    cascade_invocations: false
+    only_throw_errors: false
+    prefer_int_literals: false
