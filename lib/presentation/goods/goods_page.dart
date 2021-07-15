@@ -21,102 +21,52 @@ class GoodsPage extends StatelessWidget {
               centerTitle: true,
             ),
             endDrawer: Drawer(),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CarouselSlider(
-                    items: createImageSliders(model.imgList),
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      autoPlayInterval: const Duration(seconds: 4),
-                      enlargeCenterPage: true,
-                      onPageChanged: (index, reason) {
-                        model.pageChanged(index);
-                      },
+            body: ListView.builder(
+              itemCount: model.imgList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            Image.network(model.imgList[index]),
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                '130万円',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 32,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'メルセデス・ベンツ 190クラス',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
                     ),
                   ),
-                  ImageSliderIndicator(
-                    imageList: model.imgList,
-                    currentNumber: model.sliderIndex,
-                  ),
-                  const SizedBox(height: 16),
-                ],
-              ),
+                );
+              },
             ),
           );
         },
       ),
-    );
-  }
-
-  Widget _pageTransitionPanelWidget({
-    required BuildContext context,
-    required String title,
-    required Color color,
-    required Widget page,
-  }) {
-    return GestureDetector(
-      child: Container(
-        width: 150,
-        height: 100,
-        color: color,
-        child: Center(
-          child: Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => page),
-        );
-      },
-    );
-  }
-
-  List<Widget> createImageSliders(List<String> imgList) {
-    return imgList.map((item) {
-      return Image.network(item);
-    }).toList();
-  }
-}
-
-//画像の下部に位置し、現在の画像が何番目の画像かを示すclass
-//TODO: 別ファイルで管理することを検討
-class ImageSliderIndicator extends StatelessWidget {
-  const ImageSliderIndicator({
-    Key? key,
-    required this.imageList,
-    required this.currentNumber,
-  }) : super(key: key);
-
-  final List? imageList;
-  final int? currentNumber;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: imageList!.map((e) {
-        final int index = imageList!.indexOf(e);
-        return Container(
-          width: 8.0,
-          height: 8.0,
-          margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: currentNumber == index
-                ? const Color.fromRGBO(0, 0, 0, 0.9)
-                : const Color.fromRGBO(0, 0, 0, 0.4),
-          ),
-        );
-      }).toList(),
     );
   }
 }

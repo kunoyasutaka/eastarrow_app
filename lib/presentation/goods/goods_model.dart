@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 
 class GoodsModel extends ChangeNotifier {
-  int sliderIndex = 0;
   List<String> imgList = [
-    'https://east-arrow.com/images/inventory_benzb180.png',
-    'https://east-arrow.com/images/inventory_toyota_mark2.png',
-    'https://east-arrow.com/images/inventory_bmw5.png',
-    'https://east-arrow.com/images/inventory_mazda_sclam.png',
+    'https://ccsrpcma.carsensor.net/CSphoto/bkkn/933/463/U00034933463/U00034933463_001.JPG?ver=detail001&impolicy=car_002',
+    'https://ccsrpcma.carsensor.net/CSphoto/bkkn/904/586/U00034904586/U00034904586_001.JPG?ver=detail001&impolicy=car_002',
+    'https://ccsrpcma.carsensor.net/CSphoto/bkkn/322/213/U00033322213/U00033322213_001.JPG?ver=detail001&impolicy=car_002',
+    'https://ccsrpcma.carsensor.net/CSphoto/bkkn/903/223/U00034903223/U00034903223_001.JPG?ver=detail001&impolicy=car_002',
+    'https://ccsrpcma.carsensor.net/CSphoto/bkkn/937/696/U00033937696/U00033937696_001.JPG?ver=detail001&impolicy=car_002',
   ];
-
-  void pageChanged(int index) {
-    sliderIndex = index;
-    notifyListeners();
-  }
 }
