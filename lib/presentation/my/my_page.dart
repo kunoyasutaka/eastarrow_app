@@ -18,17 +18,84 @@ class MyPage extends StatelessWidget {
             title: const Text('マイページ'),
           ),
           endDrawer: Drawer(),
-          body: Column(
-            children: [
-              const SizedBox(height: 8),
-              TextField(
-                autofocus: false,
-                controller: model.nameController,
-                onChanged: (text) {
-                  print(model.nameController);
-                },
-              ),
-            ],
+          body: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  '名前',
+                  style: TextStyle(fontSize: 20),
+                ),
+                TextField(
+                  autofocus: false,
+                  controller: model.nameController,
+                  textAlign: TextAlign.end,
+                  onChanged: (text) {},
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  'メールアドレス',
+                  style: TextStyle(fontSize: 20),
+                ),
+                TextField(
+                  autofocus: false,
+                  controller: model.mailController,
+                  textAlign: TextAlign.end,
+                  onChanged: (text) {},
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  '生年月日',
+                  style: TextStyle(fontSize: 20),
+                ),
+                TextFormField(
+                  autofocus: false,
+                  controller: model.birthdayController,
+                  textAlign: TextAlign.end,
+                  onChanged: (text) {},
+                  onTap: () => model.selectedDate(context),
+                ),
+                TextField(
+                  autofocus: false,
+                  controller: model.birthdayController,
+                  textAlign: TextAlign.end,
+                  onChanged: (text) {},
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  '住所',
+                  style: TextStyle(fontSize: 20),
+                ),
+                TextField(
+                  autofocus: false,
+                  controller: model.addressController,
+                  textAlign: TextAlign.end,
+                  onChanged: (text) {},
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  '電話番号',
+                  style: TextStyle(fontSize: 20),
+                ),
+                TextField(
+                  autofocus: false,
+                  controller: model.telephoneNumberController,
+                  textAlign: TextAlign.end,
+                  onChanged: (text) {},
+                ),
+                Expanded(child: Container()),
+                const SizedBox(
+                  height: 50,
+                  width: 500, //TODO 横幅を最大にする書き方
+                  child: ElevatedButton(
+                    onPressed: null,
+                    child: Text('更新'),
+                    style: ButtonStyle(),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       }),
