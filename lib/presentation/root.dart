@@ -1,6 +1,6 @@
 import 'package:eastarrow_app/presentation/admission/emergency_page.dart';
 import 'package:eastarrow_app/presentation/chat/chat_page.dart';
-import 'package:eastarrow_app/presentation/goods/goods_page.dart';
+import 'package:eastarrow_app/presentation/goods/goods_list/goods_list_page.dart';
 import 'package:eastarrow_app/presentation/my/my_page.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +30,7 @@ class _RootState extends State<Root> {
   ];
 
   var routes = [
-    const GoodsPage(),
+    const GoodsListPage(),
     const ChatPage(),
     const EmergencyPage(),
     const MyPage(),

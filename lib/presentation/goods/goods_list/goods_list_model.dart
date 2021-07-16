@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GoodsModel extends ChangeNotifier {
+class GoodsListModel extends ChangeNotifier {
   List<String> imgList = [
     'https://ccsrpcma.carsensor.net/CSphoto/bkkn/933/463/U00034933463/U00034933463_001.JPG?ver=detail001&impolicy=car_002',
     'https://ccsrpcma.carsensor.net/CSphoto/bkkn/904/586/U00034904586/U00034904586_001.JPG?ver=detail001&impolicy=car_002',
