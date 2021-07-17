@@ -17,7 +17,7 @@ class MyPage extends StatelessWidget {
           appBar: AppBar(
             title: const Text('マイページ'),
           ),
-          endDrawer: Drawer(),
+          endDrawer: const Drawer(),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -49,18 +49,12 @@ class MyPage extends StatelessWidget {
                   '生年月日',
                   style: TextStyle(fontSize: 20),
                 ),
-                TextFormField(
-                  autofocus: false,
-                  controller: model.birthdayController,
-                  textAlign: TextAlign.end,
-                  onChanged: (text) {},
-                  onTap: () => model.selectedDate(context),
-                ),
                 TextField(
                   autofocus: false,
                   controller: model.birthdayController,
                   textAlign: TextAlign.end,
                   onChanged: (text) {},
+                  onTap: () => model.selectedDate(context),
                 ),
                 const SizedBox(height: 15),
                 const Text(
@@ -69,7 +63,7 @@ class MyPage extends StatelessWidget {
                 ),
                 TextField(
                   autofocus: false,
-                  controller: model.addressController,
+                  controller: model.addressController,//TODO 住所編集の方法
                   textAlign: TextAlign.end,
                   onChanged: (text) {},
                 ),
@@ -80,17 +74,17 @@ class MyPage extends StatelessWidget {
                 ),
                 TextField(
                   autofocus: false,
-                  controller: model.telephoneNumberController,
+                  controller: model.telephoneNumberController,//TODO 電話番号編集の方法
                   textAlign: TextAlign.end,
                   onChanged: (text) {},
                 ),
                 Expanded(child: Container()),
                 const SizedBox(
                   height: 50,
-                  width: 500, //TODO 横幅を最大にする書き方
+                  width: 500, //TODO ボタン横幅を最大にする書き方
                   child: ElevatedButton(
                     onPressed: null,
-                    child: Text('更新'),
+                    child: Text('ユーザー情報を更新'),
                     style: ButtonStyle(),
                   ),
                 ),
