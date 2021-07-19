@@ -1,5 +1,4 @@
 import 'package:eastarrow_app/presentation/my/my_page_model.dart';
-import 'package:eastarrow_app/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -98,11 +97,10 @@ class MyPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(20.0),
                   decoration: BoxDecoration(
-                      // borderRadius: BorderRadius.circular(20),
                       color: Colors.grey.shade200),
                   child: const SizedBox(
                     height: 50,
-                    width: 500, //TODO ボタン横幅を最大にする書き方
+                    width: double.infinity,
                     child: ElevatedButton(
                       onPressed: null,
                       child: Text('ユーザー情報を更新'),
