@@ -8,4 +8,8 @@ class GoodsListModel extends ChangeNotifier {
     'https://ccsrpcma.carsensor.net/CSphoto/bkkn/903/223/U00034903223/U00034903223_001.JPG?ver=detail001&impolicy=car_002',
     'https://ccsrpcma.carsensor.net/CSphoto/bkkn/937/696/U00033937696/U00033937696_001.JPG?ver=detail001&impolicy=car_002',
   ];
+
+  String goodsName = 'メルセデス・ベンツ 190クラス';
+  String introduction =
+      'CLS350 ブルーエフィシェンシー AMGスポーツパッケージ/エアロ/AW/HID/ナビ/Bカメラ/地デジ';
 }

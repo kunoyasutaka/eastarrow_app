@@ -1,3 +1,4 @@
+import 'package:eastarrow_app/presentation/goods/goods_detail/goods_detail_page.dart';
 import 'package:eastarrow_app/presentation/goods/goods_list/goods_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,18 @@ class GoodsListPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GoodsDetailPage(
+                              url: model.imgList[index],
+                              name: model.goodsName,
+                              introduction: model.introduction,
+                            ),
+                          ),
+                        );
+                      },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -48,17 +60,19 @@ class GoodsListPage extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 8),
-                          const Text(
-                            'メルセデス・ベンツ 190クラス',
-                            style: TextStyle(
+                          Text(
+                            model.goodsName,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 20,
                             ),
                           ),
                           const SizedBox(height: 8),
-                          const Text('年式 2011 (H23)'),
+                          Text(
+                            model.introduction,
+                            style: const TextStyle(fontSize: 12),
+                          ),
                           const SizedBox(height: 8),
-                          const Text('走行距離 7.5万km'),
                         ],
                       ),
                     ),
