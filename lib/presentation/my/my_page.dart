@@ -39,7 +39,7 @@ class MyPage extends StatelessWidget {
                             onChanged: (text) =>
                                 model.nameController.text = text,
                           ),
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 16),
                           const Text(
                             'メールアドレス',
                             style: TextStyle(fontSize: 20),
@@ -51,7 +51,7 @@ class MyPage extends StatelessWidget {
                             textAlign: TextAlign.end,
                             onChanged: (text) {},
                           ),
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 16),
                           const Text(
                             '生年月日',
                             style: TextStyle(fontSize: 20),
@@ -61,9 +61,9 @@ class MyPage extends StatelessWidget {
                             controller: model.birthdayController,
                             textAlign: TextAlign.end,
                             onChanged: (text) {},
-                            onTap: () => model.selectedDate(context),
+                            onTap: () => model.selectBirthday(context),
                           ),
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 16),
                           const Text(
                             '住所',
                             style: TextStyle(fontSize: 20),
@@ -71,12 +71,11 @@ class MyPage extends StatelessWidget {
                           TextField(
                             autofocus: false,
                             controller: model.addressController,
-                            //TODO 住所編集の方法
                             keyboardType: TextInputType.streetAddress,
                             textAlign: TextAlign.end,
                             onChanged: (text) {},
                           ),
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 16),
                           const Text(
                             '電話番号',
                             style: TextStyle(fontSize: 20),
@@ -84,10 +83,33 @@ class MyPage extends StatelessWidget {
                           TextField(
                             autofocus: false,
                             controller: model.phoneNumberController,
-                            //TODO 電話番号編集の方法
                             keyboardType: TextInputType.phone,
                             textAlign: TextAlign.end,
                             onChanged: (text) {},
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            '車種',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          TextField(
+                            autofocus: false,
+                            controller: model.vehicleTypeController,
+                            keyboardType: TextInputType.text,
+                            textAlign: TextAlign.end,
+                            onChanged: (text) {},
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            '車検日',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          TextField(
+                            autofocus: false,
+                            controller: model.inspectionController,
+                            textAlign: TextAlign.end,
+                            onChanged: (text) {},
+                            onTap: () => model.selectInspectionDay(context),
                           ),
                         ],
                       ),
