@@ -1,6 +1,6 @@
 import 'package:eastarrow_app/presentation/admission/emergency_page.dart';
-import 'package:eastarrow_app/presentation/chat/chat_page.dart';
 import 'package:eastarrow_app/presentation/goods/goods_page.dart';
+import 'package:eastarrow_app/presentation/information/information_page.dart';
 import 'package:eastarrow_app/presentation/my/my_page.dart';
 import 'package:flutter/material.dart';
 
@@ -24,14 +24,14 @@ class _RootState extends State<Root> {
 
   static const _footerItemNames = [
     '入荷情報',
-    '連絡',
+    'お知らせ',
     '緊急連絡',
     'マイページ',
   ];
 
   var routes = [
     const GoodsPage(),
-    const ChatPage(),
+    const InformationPage(),
     const EmergencyPage(),
     const MyPage(),
   ];
