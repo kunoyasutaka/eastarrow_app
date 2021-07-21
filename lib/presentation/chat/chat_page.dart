@@ -52,7 +52,7 @@ class ChatPage extends StatelessWidget {
                             Flexible(
                               child: TextField(
                                 decoration:
-                                const InputDecoration(hintText: '件名'),
+                                    const InputDecoration(hintText: '件名'),
                                 keyboardType: TextInputType.text,
                                 controller: model.subjectController,
                               ),
@@ -88,23 +88,28 @@ class ChatPage extends StatelessWidget {
   }
 
   chatLogTile(ChatLog chatLog, ChatModel model) {
-    return ExpansionTile(
-      leading: chatLog.sender == '管理者'
-          ? const Icon(Icons.mail)
-          : const Icon(Icons.person),
-      trailing: model.replyButton(chatLog),
-      title: Text('件名：${chatLog.title}'),
-      subtitle: Text(chatLog.date),
-      children: [
-        Container(
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Text(chatLog.description),
-        )
-      ],
+    return Container(
+      decoration: const BoxDecoration(
+          border: Border(
+        bottom: BorderSide(color: Colors.grey, width: 1),
+      )),
+      child: ExpansionTile(
+        leading: chatLog.sender == '管理者'
+            ? const Icon(Icons.mail)
+            : const Icon(Icons.person),
+        trailing: const Icon(Icons.reply),
+
+        // trailing: model.replyButton(chatLog),
+        title: Text('件名：${chatLog.title}'),
+        subtitle: Text(chatLog.date),
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(chatLog.description),
+          )
+        ],
+      ),
     );
   }
 }
-
-
-
