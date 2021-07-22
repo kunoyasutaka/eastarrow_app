@@ -11,7 +11,7 @@ class InformationInStockPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => InformationModel()..whereInStockInformation(),
       child: Consumer<InformationModel>(
-        builder: (context, model, snapshot) {
+        builder: (context, model, child) {
           return Scaffold(
             body: ListView.builder(
               itemCount: model.inStockInformation.length,

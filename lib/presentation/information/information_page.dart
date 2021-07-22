@@ -1,3 +1,6 @@
+import 'package:eastarrow_app/presentation/information/information_tab/information_all_page.dart';
+import 'package:eastarrow_app/presentation/information/information_tab/information_inspection_page.dart';
+import 'package:eastarrow_app/presentation/information/information_tab/information_instock_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'information_model.dart';
@@ -10,26 +13,28 @@ class InformationPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => InformationModel(),
       child: Consumer<InformationModel>(
-        builder: (context, model, snapshot) {
+        builder: (context, model, child) {
           return DefaultTabController(
-            length: model.tabInfo.length,
+            length: 3,
             child: Scaffold(
               appBar: AppBar(
                 title: const Text('お知らせ'),
                 centerTitle: true,
-                bottom: TabBar(
-                  tabs: model.tabInfo.map((TabInfo tabInfo) {
-                    return Tab(
-                      text: tabInfo.label,
-                    );
-                  }).toList(),
+                bottom: const TabBar(
+                  tabs: [
+                    Tab(text: 'すべて'),
+                    Tab(text: '入荷情報'),
+                    Tab(text: '車検情報'),
+                  ],
                 ),
               ),
               endDrawer: const Drawer(),
-              body: TabBarView(
-                children: model.tabInfo
-                    .map((TabInfo tabInfo) => tabInfo.widget)
-                    .toList(),
+              body: const TabBarView(
+                children: [
+                  InformationAllPage(),
+                  InformationInspectionPage(),
+                  InformationInStockPage(),
+                ],
               ),
             ),
           );
@@ -38,7 +43,7 @@ class InformationPage extends StatelessWidget {
     );
   }
 
-  informationTile(Information information) {
+  Widget informationTile(Information information) {
     return ExpansionTile(
       title: Text('更新日：${information.date}'),
       subtitle: Text('タイトル：${information.title}'),

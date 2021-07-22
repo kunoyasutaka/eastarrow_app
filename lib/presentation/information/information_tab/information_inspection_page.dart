@@ -11,7 +11,7 @@ class InformationInspectionPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => InformationModel()..whereInspectionInformation(),
       child: Consumer<InformationModel>(
-        builder: (context, model, snapshot) {
+        builder: (context, model, child) {
           return Scaffold(
             body: ListView.builder(
               itemCount: model.inspectionInformation.length,

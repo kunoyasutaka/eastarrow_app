@@ -11,7 +11,7 @@ class ChatPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => ChatModel(),
       child: Consumer<ChatModel>(
-        builder: (context, model, snapshot) {
+        builder: (context, model, child) {
           return GestureDetector(
             onTap: () {
               FocusScopeNode currentFocus = FocusScope.of(context);
@@ -28,14 +28,12 @@ class ChatPage extends StatelessWidget {
               body: Column(
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ListView.builder(
-                        itemCount: model.chatLog.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return chatLogTile(model.chatLog[index], model);
-                        },
-                      ),
+                    child: ListView.builder(
+                      itemCount: model.chatLog.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return chatLogTile(
+                            context, model.chatLog[index], model);
+                      },
                     ),
                   ),
                   Container(
@@ -58,9 +56,22 @@ class ChatPage extends StatelessWidget {
                               ),
                             ),
                             IconButton(
-                                onPressed: () =>
-                                    showConfirmDialog(context, '送信しますか？'),
-                                icon: const Icon(Icons.send)),
+                              onPressed: () async =>
+                                  await showTextDialog(context, '画像を選択してください。'),
+                              icon: const Icon(Icons.image),
+                            ),
+                            //TODO ImagePickerでファイルを取得
+                            IconButton(
+                              onPressed: () async =>
+                                  await showTextDialog(context, '写真を撮影してください。'),
+                              icon: const Icon(Icons.camera_alt),
+                            ),
+                            //TODO カメラを開く
+                            IconButton(
+                              onPressed: () async =>
+                                  await showConfirmDialog(context, '送信しますか？'),
+                              icon: const Icon(Icons.send),
+                            ), //TODO 送信処理
                           ],
                         ),
                         const SizedBox(
@@ -87,27 +98,61 @@ class ChatPage extends StatelessWidget {
     );
   }
 
-  chatLogTile(ChatLog chatLog, ChatModel model) {
+  Widget chatLogTile(BuildContext context, ChatLog chatLog, ChatModel model) {
     return Container(
       decoration: const BoxDecoration(
-          border: Border(
-        bottom: BorderSide(color: Colors.grey, width: 1),
-      )),
+        border: Border(
+          bottom: BorderSide(color: Colors.grey, width: 1),
+        ),
+      ),
       child: ExpansionTile(
-        leading: chatLog.sender == '管理者'
-            ? const Icon(Icons.mail)
-            : const Icon(Icons.person),
-        trailing: const Icon(Icons.reply),
-
-        // trailing: model.replyButton(chatLog),
+        trailing: IconButton(
+            onPressed: () => model.subjectController.text = chatLog.title,
+            icon: const Icon(Icons.reply)),
         title: Text('件名：${chatLog.title}'),
-        subtitle: Text(chatLog.date),
+        children: chatLog.chatDetail
+            .map((ChatDetail chatDetail) => chatDetailTile(context, chatDetail))
+            .toList(),
+      ),
+    );
+  }
+
+  Widget chatDetailTile(BuildContext context, ChatDetail chatDetail) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Colors.grey.shade400, width: 1),
+        ),
+      ),
+      alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.only(left: 40, top: 12, right: 20, bottom: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            children: [
+              chatDetail.sender == '管理者'
+                  ? const Icon(Icons.mail, size: 20)
+                  : const Icon(Icons.person, size: 20),
+              const SizedBox(width: 12),
+              Text(chatDetail.sender),
+              const Expanded(child: SizedBox()),
+              Text(chatDetail.date),
+            ],
+          ),
           Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Text(chatLog.description),
-          )
+            padding: const EdgeInsets.all(12),
+            child: Text(chatDetail.description),
+          ),
+          chatDetail.imageURL != ''
+              ? Container(
+                  padding: const EdgeInsets.all(12),
+                  child: Image.network(
+                    chatDetail.imageURL,
+                    width: double.infinity,
+                  ),
+                )
+              : Container(),
         ],
       ),
     );
