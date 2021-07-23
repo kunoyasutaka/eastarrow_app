@@ -1,21 +1,21 @@
 import 'package:eastarrow_app/presentation/common/dialog.dart';
-import 'package:eastarrow_app/presentation/my/my_page_model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:eastarrow_app/presentation/question_page/question_model.dart';
+import 'package:eastarrow_app/presentation/root.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MyPage extends StatelessWidget {
-  const MyPage({Key? key}) : super(key: key);
+class QuestionPage extends StatelessWidget {
+  const QuestionPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => MyPageModel(),
-      child: Consumer<MyPageModel>(
+      create: (_) => QuestionModel(),
+      child: Consumer<QuestionModel>(
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('マイページ'),
+              title: const Text('アンケート'),
             ),
             endDrawer: const Drawer(),
             body: GestureDetector(
@@ -31,6 +31,16 @@ class MyPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const Center(
+                        child: Text(
+                          'ユーザー情報の回答をお願いします。',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 32),
                       const Text(
                         '名前',
                         style: TextStyle(fontSize: 20),
@@ -124,10 +134,19 @@ class MyPage extends StatelessWidget {
                           height: 50,
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () async => await showConfirmDialog(
-                                context, 'ユーザー情報を更新しますか？'),
-                            child: const Text('ユーザー情報を更新'),
-                          ), //TODO 情報変更時ボタンをアクティブに＆DBをupdate
+                            onPressed: () async {
+                              if (await showConfirmDialog(
+                                  context, 'この内容で登録しますか？')) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Root(),
+                                  ),
+                                );
+                              }
+                            },
+                            child: const Text('ユーザー情報を登録'),
+                          ),
                         ),
                       ),
                     ],
