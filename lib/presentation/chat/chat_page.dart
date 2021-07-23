@@ -12,20 +12,20 @@ class ChatPage extends StatelessWidget {
       create: (_) => ChatModel(),
       child: Consumer<ChatModel>(
         builder: (context, model, child) {
-          return GestureDetector(
-            onTap: () {
-              FocusScopeNode currentFocus = FocusScope.of(context);
-              if (!currentFocus.hasPrimaryFocus) {
-                currentFocus.unfocus();
-              }
-            },
-            child: Scaffold(
+          return Scaffold(
               appBar: AppBar(
                 title: const Text('連絡'),
                 centerTitle: true,
               ),
               endDrawer: const Drawer(),
-              body: Column(
+              body: GestureDetector(
+                onTap: () {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.unfocus();
+                  }
+                },
+                child: Column(
                 children: [
                   Expanded(
                     child: ListView.builder(
