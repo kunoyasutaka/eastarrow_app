@@ -1,6 +1,6 @@
-import 'package:eastarrow_app/presentation/goods/goods_list/goods_list_page.dart';
 import 'package:eastarrow_app/presentation/login/login_model.dart';
 import 'package:eastarrow_app/presentation/register/register_page.dart';
+import 'package:eastarrow_app/presentation/root.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,8 +59,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const GoodsListPage()),
+                          MaterialPageRoute(builder: (context) => const Root()),
                         );
                       },
                     ),
