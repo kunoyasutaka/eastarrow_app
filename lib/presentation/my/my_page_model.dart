@@ -4,10 +4,14 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 class MyPageModel extends ChangeNotifier {
   final nameController = TextEditingController(text: '関 純一'); //TODO DBのname
   final mailController = TextEditingController(text: 'mail'); //TODO DBのmail
-  final birthdayController = TextEditingController(text: '生年月日を入力してください'); //TODO DBのbirthday
-  final addressController = TextEditingController(text: '阿久比'); //TODO DBのaddress
-  final inspectionController = TextEditingController(text: '車検日を入力してください'); //TODO DBのinspectionDay
-  final vehicleTypeController = TextEditingController(text: 'ホンダ　ライフ'); //TODO DBのvehicleType
+  final birthdayController =
+      TextEditingController(text: '生年月日を入力してください'); //TODO DBのbirthday
+  final addressController =
+      TextEditingController(text: '阿久比'); //TODO DBのaddress
+  final inspectionController =
+      TextEditingController(text: '車検日を入力してください'); //TODO DBのinspectionDay
+  final vehicleTypeController =
+      TextEditingController(text: 'ホンダ　ライフ'); //TODO DBのvehicleType
   final phoneNumberController =
       TextEditingController(text: '090xxxxxxxx'); //TODO DBのphone
 
@@ -34,7 +38,7 @@ class MyPageModel extends ChangeNotifier {
     );
     if (selectedInspectionDay != null) {
       inspectionController.text =
-      '${selectedInspectionDay.year}年${selectedInspectionDay.month}月${selectedInspectionDay.day}日';
+          '${selectedInspectionDay.year}年${selectedInspectionDay.month}月${selectedInspectionDay.day}日';
     }
     notifyListeners();
   }

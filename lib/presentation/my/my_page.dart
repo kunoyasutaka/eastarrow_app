@@ -14,18 +14,18 @@ class MyPage extends StatelessWidget {
       child: Consumer<MyPageModel>(
         builder: (context, model, child) {
           return Scaffold(
-              appBar: AppBar(
-                title: const Text('マイページ'),
-              ),
-              endDrawer: const Drawer(),
-              body: GestureDetector(
-                onTap: () {
-                  FocusScopeNode currentFocus = FocusScope.of(context);
-                  if (!currentFocus.hasPrimaryFocus) {
-                    currentFocus.unfocus();
-                  }
-                },
-                child: SingleChildScrollView(
+            appBar: AppBar(
+              title: const Text('マイページ'),
+            ),
+            endDrawer: const Drawer(),
+            body: GestureDetector(
+              onTap: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+              },
+              child: SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   child: Column(
