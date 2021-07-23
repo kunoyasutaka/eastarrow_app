@@ -33,7 +33,7 @@ class GoodsDetailPage extends StatelessWidget {
           builder: (context, model, child) {
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -63,7 +63,6 @@ class GoodsDetailPage extends StatelessWidget {
                         Text(
                           model.bodyValueString,
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
                             fontSize: 20,
                           ),
                         ),
@@ -73,7 +72,7 @@ class GoodsDetailPage extends StatelessWidget {
                             Text(
                               model.bodyValue,
                               style: const TextStyle(
-                                fontSize: 36,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -81,7 +80,7 @@ class GoodsDetailPage extends StatelessWidget {
                               '万円',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                fontSize: 20,
                               ),
                             ),
                           ],
@@ -95,7 +94,6 @@ class GoodsDetailPage extends StatelessWidget {
                         Text(
                           model.totalValueString,
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
                             fontSize: 20,
                           ),
                         ),
@@ -105,7 +103,7 @@ class GoodsDetailPage extends StatelessWidget {
                             Text(
                               model.totalValue,
                               style: const TextStyle(
-                                fontSize: 36,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -113,7 +111,7 @@ class GoodsDetailPage extends StatelessWidget {
                               '万円',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                fontSize: 20,
                               ),
                             ),
                           ],
@@ -206,6 +204,7 @@ class GoodsDetailPage extends StatelessWidget {
                       ],
                     ),
                     const Divider(color: Colors.grey),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
