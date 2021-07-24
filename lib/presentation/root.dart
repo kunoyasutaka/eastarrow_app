@@ -1,6 +1,5 @@
 import 'package:eastarrow_app/presentation/admission/emergency_page.dart';
 import 'package:eastarrow_app/presentation/chat/chat_page.dart';
-import 'package:eastarrow_app/presentation/goods/goods_page.dart';
 import 'package:eastarrow_app/presentation/information/information_page.dart';
 import 'package:eastarrow_app/presentation/goods/goods_list/goods_list_page.dart';
 import 'package:eastarrow_app/presentation/my/my_page.dart';
