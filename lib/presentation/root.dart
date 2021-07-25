@@ -48,7 +48,7 @@ class _RootState extends State<Root> {
     return BottomNavigationBarItem(
       icon: Icon(
         _footerIcons[index],
-        color: Colors.grey,
+        color: Colors.black,
       ),
       label: _footerItemNames[index],
     );
@@ -83,7 +83,7 @@ class _RootState extends State<Root> {
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
         onTap: _onItemTapped,
-        selectedItemColor: Colors.grey,
+        selectedItemColor: Colors.black,
       ),
     );
   }

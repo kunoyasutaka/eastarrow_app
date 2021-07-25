@@ -8,7 +8,7 @@ ThemeData myTheme() => ThemeData(
       ),
 
       ///背景の色をに薄いグレーを設定
-      scaffoldBackgroundColor: AppColors.lightGrey,
+      scaffoldBackgroundColor: AppColors.ocher.shade50,
 
       ///メインフォントを'NotoSerifJP'に設定
       fontFamily: 'NotoSerifJP',
@@ -23,7 +23,7 @@ ThemeData myTheme() => ThemeData(
 
       ///アプリバーの背景の色をwhiteに設定
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.grey,
+        backgroundColor: AppColors.navyBlue,
       ),
 
       ///バーの文字の色をblackに設定
