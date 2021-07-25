@@ -54,18 +54,6 @@ class QuestionPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        'メールアドレス',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      TextField(
-                        autofocus: false,
-                        controller: model.mailController,
-                        keyboardType: TextInputType.emailAddress,
-                        textAlign: TextAlign.end,
-                        onChanged: (text) {},
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
                         '生年月日',
                         style: TextStyle(fontSize: 20),
                       ),
