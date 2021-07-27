@@ -1,5 +1,6 @@
 import 'package:eastarrow_app/presentation/admission/emergency_page.dart';
 import 'package:eastarrow_app/presentation/chat/chat_page.dart';
+import 'package:eastarrow_app/presentation/information/information_page.dart';
 import 'package:eastarrow_app/presentation/goods/goods_list/goods_list_page.dart';
 import 'package:eastarrow_app/presentation/my/my_page.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,14 @@ class _RootState extends State<Root> {
   static const _footerIcons = [
     Icons.directions_car_rounded,
     Icons.info_sharp,
+    Icons.chat,
     Icons.quick_contacts_dialer,
     Icons.account_box_rounded,
   ];
 
   static const _footerItemNames = [
     '入荷情報',
+    'お知らせ',
     '連絡',
     '緊急連絡',
     'マイページ',
@@ -31,6 +34,7 @@ class _RootState extends State<Root> {
 
   var routes = [
     const GoodsListPage(),
+    const InformationPage(),
     const ChatPage(),
     const EmergencyPage(),
     const MyPage(),
