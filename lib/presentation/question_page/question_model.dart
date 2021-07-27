@@ -3,7 +3,6 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class QuestionModel extends ChangeNotifier {
   final nameController = TextEditingController();
-  final mailController = TextEditingController();
   final birthdayController = TextEditingController();
   final addressController = TextEditingController();
   final inspectionController = TextEditingController();
