@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class InformationModel extends ChangeNotifier {
-
   final List<Information> information = [
     Information('inStock', '新車種の入荷①', '2021/7/20', '新たに〇〇が入荷致しました。'),
     Information('inspection', '車検のお知らせ①', '2021/7/20', '車検についてお知らせ致します。'),
@@ -13,12 +12,16 @@ class InformationModel extends ChangeNotifier {
   List<Information> inStockInformation = [];
 
   void whereInspectionInformation() {
-    inspectionInformation =
-        information.where((Information information) => information.classify == 'inspection').toList();
+    inspectionInformation = information
+        .where(
+            (Information information) => information.classify == 'inspection')
+        .toList();
   }
+
   void whereInStockInformation() {
-    inStockInformation =
-        information.where((Information information) => information.classify == 'inStock').toList();
+    inStockInformation = information
+        .where((Information information) => information.classify == 'inStock')
+        .toList();
   }
 }
 
