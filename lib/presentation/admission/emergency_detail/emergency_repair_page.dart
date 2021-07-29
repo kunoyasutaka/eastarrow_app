@@ -41,7 +41,7 @@ class EmergencyRepairPage extends StatelessWidget {
                         ),
                         TextField(
                           autofocus: false,
-                          controller: TextEditingController(),
+                          controller: model.carMakerController,
                           keyboardType: TextInputType.text,
                           onChanged: (text) {},
                         ),
@@ -52,7 +52,7 @@ class EmergencyRepairPage extends StatelessWidget {
                         ),
                         TextField(
                           autofocus: false,
-                          controller: TextEditingController(),
+                          controller: model.carTypeController,
                           keyboardType: TextInputType.text,
                           onChanged: (text) {},
                         ),
@@ -63,7 +63,7 @@ class EmergencyRepairPage extends StatelessWidget {
                         ),
                         TextField(
                           autofocus: false,
-                          controller: TextEditingController(),
+                          controller: model.inspectionExpirationController,
                           keyboardType: TextInputType.text,
                           onChanged: (text) {},
                         ),
@@ -74,7 +74,7 @@ class EmergencyRepairPage extends StatelessWidget {
                         ),
                         TextField(
                           autofocus: false,
-                          controller: TextEditingController(),
+                          controller: model.inquiryController,
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
@@ -87,7 +87,7 @@ class EmergencyRepairPage extends StatelessWidget {
                         ),
                         TextField(
                           autofocus: false,
-                          controller: TextEditingController(),
+                          controller: model.remarkController,
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
@@ -100,7 +100,10 @@ class EmergencyRepairPage extends StatelessWidget {
                             height: 50,
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () async => await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？'),
+                              onPressed: () async {
+                                await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？');
+                                Navigator.of(context).pop();
+                              },
                               child: const Text('こちらの内容で送信'),
                             ),
                           ),

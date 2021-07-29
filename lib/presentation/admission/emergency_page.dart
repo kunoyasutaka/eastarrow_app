@@ -21,7 +21,7 @@ class EmergencyPage extends StatelessWidget {
             ),
             endDrawer: const Drawer(),
             body: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.only(left: 20, top: 32, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -29,7 +29,7 @@ class EmergencyPage extends StatelessWidget {
                     width: double.infinity,
                     child: const Text(
                       '緊急連絡',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                     ),
                     decoration: const BoxDecoration(
                       border: Border(
@@ -42,70 +42,71 @@ class EmergencyPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('事故や故障などの場合は下のボタンから詳細を入力していただくと、店舗へメッセージが送信されます。\n内容を確認後、直ちに担当者よりお電話させていただきます。'),
-                        const SizedBox(
-                          height: 20,
+                        const Text(
+                          '事故や故障などの場合は下のボタンから詳細を入力していただくと、店舗へメッセージが送信されます。\n内容を確認後、直ちに担当者よりお電話させていただきます。',
+                          style: TextStyle(fontSize: 16),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            SizedBox(
-                              child: Column(
-                                children: [
-                                  const Text('事故・保険の場合'),
-                                  ElevatedButton.icon(
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        isScrollControlled: true,
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(15),
-                                          ),
-                                        ),
-                                        builder: (BuildContext context) {
-                                          return SizedBox(
-                                            height: MediaQuery.of(context).size.height * 0.8,
-                                            child: const EmergencyAccidentPage(),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    label: const Text('詳細を入力する'),
-                                    icon: const Icon(Icons.edit),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        const Text(
+                          '・事故・保険のお問い合わせ',
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(15),
                                   ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              child: Column(
-                                children: [
-                                  const Text('修理・整備の場合'),
-                                  ElevatedButton.icon(
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        isScrollControlled: true,
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(15),
-                                          ),
-                                        ),
-                                        builder: (BuildContext context) {
-                                          return SizedBox(
-                                            height: MediaQuery.of(context).size.height * 0.8,
-                                            child: const EmergencyRepairPage(),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    label: const Text('詳細を入力する'),
-                                    icon: const Icon(Icons.edit),
+                                ),
+                                builder: (BuildContext context) {
+                                  return SizedBox(
+                                    height: MediaQuery.of(context).size.height * 0.8,
+                                    child: const EmergencyAccidentPage(),
+                                  );
+                                },
+                              );
+                            },
+                            label: const Text('詳細を入力する'),
+                            icon: const Icon(Icons.edit),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          '・修理・整備のお問い合わせ',
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(15),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ],
+                                ),
+                                builder: (BuildContext context) {
+                                  return SizedBox(
+                                    height: MediaQuery.of(context).size.height * 0.8,
+                                    child: const EmergencyRepairPage(),
+                                  );
+                                },
+                              );
+                            },
+                            label: const Text('詳細を入力する'),
+                            icon: const Icon(Icons.edit),
+                          ),
                         ),
                       ],
                     ),
@@ -117,7 +118,7 @@ class EmergencyPage extends StatelessWidget {
                     width: double.infinity,
                     child: const Text(
                       '緊急通話',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                     ),
                     decoration: const BoxDecoration(
                       border: Border(
@@ -130,14 +131,17 @@ class EmergencyPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('緊急時は下のボタンを押してください。\n店舗へ電話がつながります。'),
+                        const Text(
+                          '緊急時は下のボタンを押してください。\n店舗へ電話がつながります。',
+                          style: TextStyle(fontSize: 16),
+                        ),
                         Container(
                           padding: const EdgeInsets.all(12),
                           width: double.infinity,
                           child: ElevatedButton.icon(
                             onPressed: () => showConfirmDialog(context, '店舗に電話します。\nよろしいですか。'),
                             icon: const Icon(Icons.phone),
-                            label: const Text('店舗に電話する （TEL:0574-62-4200）'),
+                            label: const Text('店舗に電話する'),
                           ),
                         ),
                       ],

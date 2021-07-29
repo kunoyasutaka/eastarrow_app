@@ -41,7 +41,7 @@ class EmergencyAccidentPage extends StatelessWidget {
                         ),
                         TextField(
                           autofocus: false,
-                          controller: TextEditingController(),
+                          controller: model.policyNumberController,
                           keyboardType: TextInputType.text,
                           onChanged: (text) {},
                         ),
@@ -52,7 +52,7 @@ class EmergencyAccidentPage extends StatelessWidget {
                         ),
                         TextField(
                           autofocus: false,
-                          controller: TextEditingController(),
+                          controller: model.carDamageController,
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
@@ -65,7 +65,7 @@ class EmergencyAccidentPage extends StatelessWidget {
                         ),
                         TextField(
                           autofocus: false,
-                          controller: TextEditingController(),
+                          controller: model.injuryController,
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
@@ -78,7 +78,7 @@ class EmergencyAccidentPage extends StatelessWidget {
                         ),
                         TextField(
                           autofocus: false,
-                          controller: TextEditingController(),
+                          controller: model.opponentController,
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
@@ -91,7 +91,7 @@ class EmergencyAccidentPage extends StatelessWidget {
                         ),
                         TextField(
                           autofocus: false,
-                          controller: TextEditingController(),
+                          controller: model.accidentSituationController,
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
@@ -104,7 +104,10 @@ class EmergencyAccidentPage extends StatelessWidget {
                             height: 50,
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () async => await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？'),
+                              onPressed: () async {
+                                await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？');
+                                Navigator.of(context).pop();
+                              },
                               child: const Text('こちらの内容で送信'),
                             ),
                           ),
