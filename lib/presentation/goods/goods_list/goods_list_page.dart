@@ -66,14 +66,16 @@ class GoodsListPage extends StatelessWidget {
                             alignment: Alignment.bottomRight,
                             children: [
                               Image.network(model.imgList[index]),
-                              Container(
-                                child: const Text(
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
                                   '130万円',
-                                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 32,
+                                  ),
                                 ),
-                                width: 120,
-                                color: Colors.white,
-                                alignment: Alignment.center,
                               ),
                             ],
                           ),

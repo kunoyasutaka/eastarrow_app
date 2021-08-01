@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/goods/goods_detail/goods_detail_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -86,8 +85,8 @@ class GoodsDetailPage extends StatelessWidget {
                         carouselController: model.carouselController,
                         options: CarouselOptions(
                           autoPlay: true,
-                          enlargeCenterPage: true,
-                          viewportFraction: 0.7,
+                          // enlargeCenterPage: true,
+                          // viewportFraction: 0.75,
                         ),
                       ),
                     ),
@@ -256,31 +255,6 @@ class GoodsDetailPage extends StatelessWidget {
                           ),
                           const Divider(color: Colors.grey),
                           const SizedBox(height: 20),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () => showConfirmDialog(context, '在庫確認を依頼します。\n後ほど「連絡画面」にメッセージをお送りいたします。'),
-                                child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  child: const Text(
-                                    '在庫確認',
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () => showConfirmDialog(context, '見積依頼をします。\n後ほど「連絡画面」にメッセージをお送りいたします。'),
-                                child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  child: const Text(
-                                    '見積依頼',
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
                         ],
                       ),
                     ),
