@@ -22,7 +22,7 @@ class EmergencyPage extends StatelessWidget {
             endDrawer: const Drawer(),
             body: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(left: 20, top: 32, right: 20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -52,7 +52,7 @@ class EmergencyPage extends StatelessWidget {
                           ),
                           const Text(
                             '・事故・保険のお問い合わせ',
-                            style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           Container(
                             padding: const EdgeInsets.all(12),
@@ -75,14 +75,17 @@ class EmergencyPage extends StatelessWidget {
                                   },
                                 );
                               },
-                              label: const Text('詳細を入力する'),
+                              label: const Text(
+                                '詳細を入力する',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               icon: const Icon(Icons.edit),
                             ),
                           ),
                           const SizedBox(height: 16),
                           const Text(
                             '・修理・整備のお問い合わせ',
-                            style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           Container(
                             padding: const EdgeInsets.all(12),
@@ -105,7 +108,10 @@ class EmergencyPage extends StatelessWidget {
                                   },
                                 );
                               },
-                              label: const Text('詳細を入力する'),
+                              label: const Text(
+                                '詳細を入力する',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               icon: const Icon(Icons.edit),
                             ),
                           ),
@@ -142,7 +148,10 @@ class EmergencyPage extends StatelessWidget {
                             child: ElevatedButton.icon(
                               onPressed: () => showConfirmDialog(context, '店舗に電話します。\nよろしいですか。'),
                               icon: const Icon(Icons.phone),
-                              label: const Text('店舗に電話する'),
+                              label: const Text(
+                                '店舗に電話する',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ],
