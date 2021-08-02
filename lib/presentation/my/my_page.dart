@@ -10,7 +10,7 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => MyPageModel(),
+      create: (_) => MyPageModel()..init(),
       child: Consumer<MyPageModel>(
         builder: (context, model, child) {
           return Scaffold(
@@ -73,7 +73,7 @@ class MyPage extends StatelessWidget {
                       ),
                       TextField(
                         autofocus: false,
-                        controller: model.addressController,
+                        controller: model.locationController,
                         keyboardType: TextInputType.streetAddress,
                         textAlign: TextAlign.end,
                         onChanged: (text) {},
@@ -97,7 +97,7 @@ class MyPage extends StatelessWidget {
                       ),
                       TextField(
                         autofocus: false,
-                        controller: model.vehicleTypeController,
+                        controller: model.carTypeController,
                         keyboardType: TextInputType.text,
                         textAlign: TextAlign.end,
                         onChanged: (text) {},

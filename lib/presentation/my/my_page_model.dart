@@ -1,19 +1,19 @@
+import 'package:eastarrow_app/domain/user.dart';
+import 'package:eastarrow_app/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class MyPageModel extends ChangeNotifier {
-  final nameController = TextEditingController(text: '関 純一'); //TODO DBのname
-  final mailController = TextEditingController(text: 'mail'); //TODO DBのmail
-  final birthdayController =
-      TextEditingController(text: '生年月日を入力してください'); //TODO DBのbirthday
-  final addressController =
-      TextEditingController(text: '阿久比'); //TODO DBのaddress
-  final inspectionController =
-      TextEditingController(text: '車検日を入力してください'); //TODO DBのinspectionDay
-  final vehicleTypeController =
-      TextEditingController(text: 'ホンダ　ライフ'); //TODO DBのvehicleType
-  final phoneNumberController =
-      TextEditingController(text: '090xxxxxxxx'); //TODO DBのphone
+  final nameController = TextEditingController();
+  final mailController = TextEditingController();
+  final birthdayController = TextEditingController();
+  final locationController = TextEditingController();
+  final inspectionController = TextEditingController();
+  final carTypeController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+
+  final repository = UserRepository();
+  late User user;
 
   Future<void> selectBirthday(BuildContext context) async {
     final selectedBirthday = await DatePicker.showDatePicker(
@@ -41,5 +41,24 @@ class MyPageModel extends ChangeNotifier {
           '${selectedInspectionDay.year}年${selectedInspectionDay.month}月${selectedInspectionDay.day}日';
     }
     notifyListeners();
+  }
+
+  Future<void> fetchUser() async {
+    // TODO auth処理が完成するまでの暫定定義
+    const userId = 'ZIMFU3g9CuQxuXJMFi1L';
+    user = await repository.fetchUser(userId);
+  }
+
+  Future<void> init() async {
+    await fetchUser();
+
+    /// DBがNullだった場合、空文字を返すようにUserモデルでケアしているため!で代入
+    nameController.text = user.name!;
+    mailController.text = user.email!;
+    birthdayController.text = user.birthDate!;
+    locationController.text = user.location!;
+    phoneNumberController.text = user.phoneNumber!;
+    carTypeController.text = user.carType!;
+    inspectionController.text = user.inspectionDay!;
   }
 }
