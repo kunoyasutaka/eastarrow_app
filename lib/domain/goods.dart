@@ -4,6 +4,7 @@ class GoodsField {
   static const id = 'id';
   static const name = 'name';
   static const introduction = 'introduction';
+  static const imageUrl = 'imageUrl';
   static const bodyValue = 'bodyValue';
   static const totalValue = 'totalValue';
   static const modelYear = 'modelYear';
@@ -19,6 +20,7 @@ class Goods {
   final String? id;
   final String? name;
   final String? introduction;
+  final List<String>? imageUrl;
   final String? bodyValue;
   final String? totalValue;
   final String? modelYear;
@@ -33,6 +35,7 @@ class Goods {
     this.id,
     this.name,
     this.introduction,
+    this.imageUrl,
     this.bodyValue,
     this.totalValue,
     this.modelYear,
@@ -51,6 +54,7 @@ class Goods {
       id: data[GoodsField.id] ?? '',
       name: data[GoodsField.name] ?? '',
       introduction: data[GoodsField.introduction] ?? '',
+      imageUrl: (data[GoodsField.imageUrl]) ?? [],
       bodyValue: data[GoodsField.bodyValue] ?? '',
       totalValue: data[GoodsField.totalValue] ?? '',
       modelYear: data[GoodsField.modelYear] ?? '',
