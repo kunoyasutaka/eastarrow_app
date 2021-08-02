@@ -50,8 +50,8 @@ class User {
       phoneNumber: data[UserField.phoneNumber] ?? '',
       carType: data[UserField.carType] ?? '',
       inspectionDay: data[UserField.inspectionDay] ?? '',
-      createdAt: data[UserField.createdAt],
-      updatedAt: data[UserField.updatedAt],
+      createdAt: data[UserField.createdAt].toDate(),
+      updatedAt: data[UserField.updatedAt].toDate(),
     );
   }
 }

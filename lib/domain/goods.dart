@@ -62,8 +62,8 @@ class Goods {
       inspection: data[GoodsField.inspection] ?? '',
       repair: data[GoodsField.repair] ?? '',
       area: data[GoodsField.area] ?? '',
-      createdAt: data[GoodsField.createdAt],
-      updatedAt: data[GoodsField.updatedAt],
+      createdAt: data[GoodsField.createdAt].toDate(),
+      updatedAt: data[GoodsField.updatedAt].toDate(),
     );
   }
 }

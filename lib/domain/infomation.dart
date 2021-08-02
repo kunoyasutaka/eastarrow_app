@@ -34,8 +34,8 @@ class Infomation {
       title: data[InfomationField.title] ?? '',
       body: data[InfomationField.body] ?? '',
       imageUrl: data[InfomationField.imageUrl] ?? '',
-      createdAt: data[InfomationField.createdAt],
-      updatedAt: data[InfomationField.updatedAt],
+      createdAt: data[InfomationField.createdAt].toDate(),
+      updatedAt: data[InfomationField.updatedAt].toDate(),
     );
   }
 }
