@@ -21,12 +21,6 @@ class GoodsDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('入荷情報'),
         centerTitle: true,
-        // actions: [
-        //   IconButton(
-        //     onPressed: () => Navigator.pop(context),
-        //     icon: Icon(Icons.arrow_back),
-        //   )
-        // ],
       ),
       body: ChangeNotifierProvider(
         create: (_) => GoodsDetailModel(),
@@ -41,7 +35,10 @@ class GoodsDetailPage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.only(bottom: 8),
                       width: double.infinity,
-                      decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+                      decoration: const BoxDecoration(
+                          border: Border(
+                              bottom:
+                                  BorderSide(color: Colors.grey, width: 1))),
                       child: Text(
                         name!,
                         style: const TextStyle(
@@ -64,7 +61,8 @@ class GoodsDetailPage extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: CarouselSlider.builder(
                         itemCount: model.detailImgList.length,
-                        itemBuilder: (BuildContext context, int index, int index2) {
+                        itemBuilder:
+                            (BuildContext context, int index, int index2) {
                           return Stack(
                             alignment: Alignment.topRight,
                             children: [
@@ -72,7 +70,8 @@ class GoodsDetailPage extends StatelessWidget {
                               Container(
                                 child: Text(
                                   '${index + 1}/${model.detailImgList.length}',
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 width: 40,
                                 height: 28,
@@ -94,7 +93,10 @@ class GoodsDetailPage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.only(bottom: 8),
                       width: double.infinity,
-                      decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+                      decoration: const BoxDecoration(
+                          border: Border(
+                              bottom:
+                                  BorderSide(color: Colors.grey, width: 1))),
                       child: const Text(
                         '商品の情報',
                         style: TextStyle(
