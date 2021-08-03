@@ -54,7 +54,7 @@ class Goods {
       id: data[GoodsField.id] ?? '',
       name: data[GoodsField.name] ?? '',
       introduction: data[GoodsField.introduction] ?? '',
-      imageUrl: (data[GoodsField.imageUrl]) ?? [],
+      imageUrl: List<String>.from(data[GoodsField.imageUrl] ?? []),
       bodyValue: data[GoodsField.bodyValue] ?? '',
       totalValue: data[GoodsField.totalValue] ?? '',
       modelYear: data[GoodsField.modelYear] ?? '',
