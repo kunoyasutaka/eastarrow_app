@@ -1,4 +1,5 @@
 import 'package:eastarrow_app/presentation/common/dialog.dart';
+import 'package:eastarrow_app/presentation/common/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'chat_model.dart';
@@ -17,7 +18,7 @@ class ChatPage extends StatelessWidget {
               title: const Text('連絡'),
               centerTitle: true,
             ),
-            endDrawer: const Drawer(),
+            endDrawer: drawer(),
             body: GestureDetector(
               onTap: () {
                 FocusScopeNode currentFocus = FocusScope.of(context);
