@@ -3,6 +3,7 @@ import 'package:eastarrow_app/presentation/chat/chat_page.dart';
 import 'package:eastarrow_app/presentation/information/information_page.dart';
 import 'package:eastarrow_app/presentation/goods/goods_list/goods_list_page.dart';
 import 'package:eastarrow_app/presentation/my/my_page.dart';
+import 'package:eastarrow_app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class Root extends StatefulWidget {
@@ -82,7 +83,7 @@ class _RootState extends State<Root> {
     return Scaffold(
       body: routes.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.lightGrey,
         items: _bottomNavigationBarItems,
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,

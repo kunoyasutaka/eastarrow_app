@@ -12,4 +12,7 @@ class GoodsListModel extends ChangeNotifier {
   String goodsName = 'メルセデス・ベンツ 190クラス';
   String introduction =
       'CLS350 ブルーエフィシェンシー AMGスポーツパッケージ/エアロ/AW/HID/ナビ/Bカメラ/地デジ';
+
+  /// DBからのデータ取得処理をあとで書く
+  Future<void> fetchGoodsData() async {}
 }
