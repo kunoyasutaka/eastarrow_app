@@ -10,7 +10,7 @@ class GoodsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => GoodsListModel(),
+      create: (_) => GoodsListModel()..init(),
       child: Consumer<GoodsListModel>(
         builder: (context, model, child) {
           return Scaffold(
@@ -20,10 +20,11 @@ class GoodsListPage extends StatelessWidget {
             ),
             endDrawer: drawer(),
             body: ListView.builder(
-              itemCount: model.imgList.length,
+              itemCount: model.goodsList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: InkWell(
@@ -32,9 +33,7 @@ class GoodsListPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => GoodsDetailPage(
-                                    url: model.imgList[index],
-                                    name: model.goodsName,
-                                    introduction: model.introduction,
+                                    goods: model.goodsList[index],
                                   ),
                               fullscreenDialog: true),
                         );
@@ -45,10 +44,12 @@ class GoodsListPage extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.only(bottom: 8),
                             width: double.infinity,
-                            decoration:
-                                const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+                            decoration: const BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.grey, width: 1))),
                             child: Text(
-                              model.goodsName,
+                              model.goodsList[index].name!,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -58,20 +59,22 @@ class GoodsListPage extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 12, top: 12),
                             child: Text(
-                              model.introduction,
-                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                              model.goodsList[index].introduction!,
+                              style: const TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                           ),
                           const SizedBox(height: 16),
                           Stack(
                             alignment: Alignment.bottomRight,
                             children: [
-                              Image.network(model.imgList[index]),
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
+                              Image.network(
+                                  model.goodsList[index].imageUrl!.first),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  '130万円',
-                                  style: TextStyle(
+                                  '${model.goodsList[index].bodyValue!}万円',
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 32,
