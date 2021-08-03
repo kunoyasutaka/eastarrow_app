@@ -13,12 +13,15 @@ class InformationInspectionPage extends StatelessWidget {
       child: Consumer<InformationModel>(
         builder: (context, model, child) {
           return Scaffold(
-            body: ListView.builder(
-              itemCount: model.inspectionInformation.length,
-              itemBuilder: (BuildContext context, int index) {
+            body: RefreshIndicator(
+              onRefresh: () async => await model.fetchInfoData(),
+              child: ListView.builder(
+                itemCount: model.inspectionInformation.length,
+                itemBuilder: (BuildContext context, int index) {
                   return const InformationPage()
                       .informationTile(model.inspectionInformation[index]);
-              },
+                },
+              ),
             ),
           );
         },

@@ -22,17 +22,17 @@ class GoodsListPage extends StatelessWidget {
               itemCount: model.goodsList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: InkWell(
                       onTap: () {
-                        model.fetchGoods(model.goodsList[index].id!);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => GoodsDetailPage(
-                                goods: model.goodsList[index],
+                                    goods: model.goodsList[index],
                                   ),
                               fullscreenDialog: true),
                         );
@@ -43,8 +43,10 @@ class GoodsListPage extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.only(bottom: 8),
                             width: double.infinity,
-                            decoration:
-                                const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+                            decoration: const BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.grey, width: 1))),
                             child: Text(
                               model.goodsList[index].name!,
                               style: const TextStyle(
@@ -57,14 +59,16 @@ class GoodsListPage extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 12, top: 12),
                             child: Text(
                               model.goodsList[index].introduction!,
-                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                              style: const TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                           ),
                           const SizedBox(height: 16),
                           Stack(
                             alignment: Alignment.bottomRight,
                             children: [
-                              Image.network(model.goodsList[index].imageUrl!.first),
+                              Image.network(
+                                  model.goodsList[index].imageUrl!.first),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(

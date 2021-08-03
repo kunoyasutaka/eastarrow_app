@@ -16,15 +16,4 @@ class GoodsRepository {
       rethrow;
     }
   }
-
-  Future<Goods> fetchGoods(String goodsId) async {
-    try {
-      final snaps = await _db.collection(_collectionPath).doc(goodsId).get();
-
-      return Goods.fromFirestore(snaps);
-    } catch (e) {
-      Logger().e(e.toString());
-      rethrow;
-    }
-  }
 }
