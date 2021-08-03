@@ -5,19 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GoodsDetailPage extends StatelessWidget {
-  // final String? url;
-  // final String? name;
-  // final String? introduction;
-  final Goods? goods;
+  final Goods goods;
 
-  const GoodsDetailPage(
-      {Key? key,
-      // this.url,
-      // this.name,
-      // this.introduction,
-      this.goods,
-      })
-      : super(key: key);
+  const GoodsDetailPage({
+    Key? key,
+    required this.goods,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +21,6 @@ class GoodsDetailPage extends StatelessWidget {
       ),
       body: ChangeNotifierProvider(
         create: (_) => GoodsDetailModel(),
-          // ..goodsId = id!
-          // ..init(),
         child: Consumer<GoodsDetailModel>(
           builder: (context, model, child) {
             return SingleChildScrollView(
@@ -41,9 +32,12 @@ class GoodsDetailPage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.only(bottom: 8),
                       width: double.infinity,
-                      decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+                      decoration: const BoxDecoration(
+                          border: Border(
+                              bottom:
+                                  BorderSide(color: Colors.grey, width: 1))),
                       child: Text(
-                        goods!.name!,
+                        goods.name!,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -53,7 +47,7 @@ class GoodsDetailPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 12, top: 12),
                       child: Text(
-                        goods!.introduction!,
+                        goods.introduction!,
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -63,16 +57,18 @@ class GoodsDetailPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: CarouselSlider.builder(
-                        itemCount: goods!.imageUrl!.length,
-                        itemBuilder: (BuildContext context, int index, int index2) {
+                        itemCount: goods.imageUrl!.length,
+                        itemBuilder:
+                            (BuildContext context, int index, int index2) {
                           return Stack(
                             alignment: Alignment.topRight,
                             children: [
-                              Image.network(goods!.imageUrl![index]),
+                              Image.network(goods.imageUrl![index]),
                               Container(
                                 child: Text(
-                                  '${index + 1}/${goods!.imageUrl!.length}',
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  '${index + 1}/${goods.imageUrl!.length}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 width: 40,
                                 height: 28,
@@ -82,17 +78,17 @@ class GoodsDetailPage extends StatelessWidget {
                             ],
                           );
                         },
-                        carouselController: model.carouselController,
-                        options: CarouselOptions(
-                          // autoPlay: true,
-                        ),
+                        options: CarouselOptions(),
                       ),
                     ),
                     const SizedBox(height: 32),
                     Container(
                       padding: const EdgeInsets.only(bottom: 8),
                       width: double.infinity,
-                      decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+                      decoration: const BoxDecoration(
+                          border: Border(
+                              bottom:
+                                  BorderSide(color: Colors.grey, width: 1))),
                       child: const Text(
                         '商品の情報',
                         style: TextStyle(
@@ -108,9 +104,9 @@ class GoodsDetailPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                model.bodyValueString,
-                                style: const TextStyle(
+                              const Text(
+                                '本体価格',
+                                style: TextStyle(
                                   fontSize: 20,
                                 ),
                               ),
@@ -118,7 +114,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    goods!.bodyValue!,
+                                    goods.bodyValue!,
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -139,9 +135,9 @@ class GoodsDetailPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                model.totalValueString,
-                                style: const TextStyle(
+                              const Text(
+                                '支払い総額',
+                                style: TextStyle(
                                   fontSize: 20,
                                 ),
                               ),
@@ -149,7 +145,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    goods!.totalValue!,
+                                    goods.totalValue!,
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -175,7 +171,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                goods!.modelYear!,
+                                goods.modelYear!,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -192,7 +188,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                goods!.mileage!,
+                                goods.mileage!,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -209,7 +205,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                goods!.inspection!,
+                                goods.inspection!,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -226,7 +222,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                goods!.repair!,
+                                goods.repair!,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -243,7 +239,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                goods!.area!,
+                                goods.area!,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,

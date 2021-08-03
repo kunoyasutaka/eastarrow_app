@@ -20,8 +20,7 @@ class Goods {
   final String? id;
   final String? name;
   final String? introduction;
-  final List<dynamic>? imageUrl;
-  // ↑List<String>?ではエラーになったので<dynamic>でリクエストします。
+  final List<String>? imageUrl;
   final String? bodyValue;
   final String? totalValue;
   final String? modelYear;
@@ -55,7 +54,7 @@ class Goods {
       id: data[GoodsField.id] ?? '',
       name: data[GoodsField.name] ?? '',
       introduction: data[GoodsField.introduction] ?? '',
-      imageUrl: (data[GoodsField.imageUrl]) ?? [],
+      imageUrl: List<String>.from(data[GoodsField.imageUrl] ?? []),
       bodyValue: data[GoodsField.bodyValue] ?? '',
       totalValue: data[GoodsField.totalValue] ?? '',
       modelYear: data[GoodsField.modelYear] ?? '',

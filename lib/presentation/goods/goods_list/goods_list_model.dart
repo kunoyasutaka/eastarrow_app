@@ -7,14 +7,12 @@ class GoodsListModel extends ChangeNotifier {
   late List<Goods> goodsList = [];
 
   Future<void> init() async {
-    goodsList = await repository.fetchGoodsList();
+    await fetchGoodsList();
     notifyListeners();
   }
 
-  late Goods goods;
-
-  Future<void> fetchGoods(String goodsId) async {
-    goods = await repository.fetchGoods(goodsId);
+  Future<void> fetchGoodsList() async {
+    goodsList = await repository.fetchGoodsList();
     notifyListeners();
   }
 }
