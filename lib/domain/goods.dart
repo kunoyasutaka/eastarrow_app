@@ -20,7 +20,8 @@ class Goods {
   final String? id;
   final String? name;
   final String? introduction;
-  final List<String>? imageUrl;
+  final List<dynamic>? imageUrl;
+  // ↑List<String>?ではエラーになったので<dynamic>でリクエストします。
   final String? bodyValue;
   final String? totalValue;
   final String? modelYear;

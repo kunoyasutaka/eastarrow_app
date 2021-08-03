@@ -9,7 +9,7 @@ class GoodsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => GoodsListModel(),
+      create: (_) => GoodsListModel()..init(),
       child: Consumer<GoodsListModel>(
         builder: (context, model, child) {
           return Scaffold(
@@ -19,7 +19,7 @@ class GoodsListPage extends StatelessWidget {
             ),
             endDrawer: const Drawer(),
             body: ListView.builder(
-              itemCount: model.imgList.length,
+              itemCount: model.goodsList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -27,13 +27,12 @@ class GoodsListPage extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: InkWell(
                       onTap: () {
+                        model.fetchGoods(model.goodsList[index].id!);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => GoodsDetailPage(
-                                    url: model.imgList[index],
-                                    name: model.goodsName,
-                                    introduction: model.introduction,
+                                goods: model.goodsList[index],
                                   ),
                               fullscreenDialog: true),
                         );
@@ -47,7 +46,7 @@ class GoodsListPage extends StatelessWidget {
                             decoration:
                                 const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
                             child: Text(
-                              model.goodsName,
+                              model.goodsList[index].name!,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -57,7 +56,7 @@ class GoodsListPage extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 12, top: 12),
                             child: Text(
-                              model.introduction,
+                              model.goodsList[index].introduction!,
                               style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -65,12 +64,12 @@ class GoodsListPage extends StatelessWidget {
                           Stack(
                             alignment: Alignment.bottomRight,
                             children: [
-                              Image.network(model.imgList[index]),
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
+                              Image.network(model.goodsList[index].imageUrl!.first),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  '130万円',
-                                  style: TextStyle(
+                                  '${model.goodsList[index].bodyValue!}万円',
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 32,
