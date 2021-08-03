@@ -1,3 +1,4 @@
+import 'package:eastarrow_app/presentation/common/drawer.dart';
 import 'package:eastarrow_app/presentation/information/information_tab/information_all_page.dart';
 import 'package:eastarrow_app/presentation/information/information_tab/information_inspection_page.dart';
 import 'package:eastarrow_app/presentation/information/information_tab/information_instock_page.dart';
@@ -28,7 +29,7 @@ class InformationPage extends StatelessWidget {
                   ],
                 ),
               ),
-              endDrawer: const Drawer(),
+              endDrawer: drawer(),
               body: const TabBarView(
                 children: [
                   InformationAllPage(),

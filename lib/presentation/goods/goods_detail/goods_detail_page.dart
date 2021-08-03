@@ -1,18 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:eastarrow_app/domain/goods.dart';
 import 'package:eastarrow_app/presentation/goods/goods_detail/goods_detail_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GoodsDetailPage extends StatelessWidget {
-  final String? url;
-  final String? name;
-  final String? introduction;
+  final Goods goods;
 
   const GoodsDetailPage({
     Key? key,
-    this.url,
-    this.name,
-    this.introduction,
+    required this.goods,
   }) : super(key: key);
 
   @override
@@ -40,7 +37,7 @@ class GoodsDetailPage extends StatelessWidget {
                               bottom:
                                   BorderSide(color: Colors.grey, width: 1))),
                       child: Text(
-                        name!,
+                        goods.name!,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -50,7 +47,7 @@ class GoodsDetailPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 12, top: 12),
                       child: Text(
-                        introduction!,
+                        goods.introduction!,
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -60,16 +57,16 @@ class GoodsDetailPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: CarouselSlider.builder(
-                        itemCount: model.detailImgList.length,
+                        itemCount: goods.imageUrl!.length,
                         itemBuilder:
                             (BuildContext context, int index, int index2) {
                           return Stack(
                             alignment: Alignment.topRight,
                             children: [
-                              Image.network(model.detailImgList[index]),
+                              Image.network(goods.imageUrl![index]),
                               Container(
                                 child: Text(
-                                  '${index + 1}/${model.detailImgList.length}',
+                                  '${index + 1}/${goods.imageUrl!.length}',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -81,22 +78,14 @@ class GoodsDetailPage extends StatelessWidget {
                             ],
                           );
                         },
-                        carouselController: model.carouselController,
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          // enlargeCenterPage: true,
-                          // viewportFraction: 0.75,
-                        ),
+                        options: CarouselOptions(),
                       ),
                     ),
                     const SizedBox(height: 32),
                     Container(
                       padding: const EdgeInsets.only(bottom: 8),
                       width: double.infinity,
-                      decoration: const BoxDecoration(
-                          border: Border(
-                              bottom:
-                                  BorderSide(color: Colors.grey, width: 1))),
+                      decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
                       child: const Text(
                         '商品の情報',
                         style: TextStyle(
@@ -112,9 +101,9 @@ class GoodsDetailPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                model.bodyValueString,
-                                style: const TextStyle(
+                              const Text(
+                                '本体価格',
+                                style: TextStyle(
                                   fontSize: 20,
                                 ),
                               ),
@@ -122,7 +111,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    model.bodyValue,
+                                    goods.bodyValue!,
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -143,9 +132,9 @@ class GoodsDetailPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                model.totalValueString,
-                                style: const TextStyle(
+                              const Text(
+                                '支払い総額',
+                                style: TextStyle(
                                   fontSize: 20,
                                 ),
                               ),
@@ -153,7 +142,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    model.totalValue,
+                                    goods.totalValue!,
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -179,7 +168,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                model.year,
+                                goods.modelYear!,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -196,7 +185,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                model.mileage,
+                                goods.mileage!,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -213,7 +202,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                model.checkYear,
+                                goods.inspection!,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -230,7 +219,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                model.repair,
+                                goods.repair!,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -247,7 +236,7 @@ class GoodsDetailPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                model.location,
+                                goods.area!,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
