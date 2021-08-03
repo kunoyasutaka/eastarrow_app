@@ -2,6 +2,7 @@ import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_
 import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_repair_page.dart';
 import 'package:eastarrow_app/presentation/admission/emergency_model.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
+import 'package:eastarrow_app/presentation/common/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class EmergencyPage extends StatelessWidget {
               title: const Text('緊急連絡'),
               centerTitle: true,
             ),
-            endDrawer: const Drawer(),
+            endDrawer: drawer(),
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20),

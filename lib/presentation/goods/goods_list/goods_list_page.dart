@@ -1,3 +1,4 @@
+import 'package:eastarrow_app/presentation/common/drawer.dart';
 import 'package:eastarrow_app/presentation/goods/goods_detail/goods_detail_page.dart';
 import 'package:eastarrow_app/presentation/goods/goods_list/goods_list_model.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class GoodsListPage extends StatelessWidget {
               title: const Text('入荷情報'),
               centerTitle: true,
             ),
-            endDrawer: const Drawer(),
+            endDrawer: drawer(),
             body: ListView.builder(
               itemCount: model.goodsList.length,
               itemBuilder: (BuildContext context, int index) {
