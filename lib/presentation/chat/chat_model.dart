@@ -21,6 +21,9 @@ class ChatModel extends ChangeNotifier {
 
   final subjectController = TextEditingController();
   final mainTextController = TextEditingController();
+
+  /// TODO DBからの取得処理をあとで書く
+  Future<void> fetchChatData() async {}
 }
 
 class ChatLog {

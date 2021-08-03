@@ -23,6 +23,9 @@ class InformationModel extends ChangeNotifier {
         .where((Information information) => information.classify == 'inStock')
         .toList();
   }
+
+  /// TODO DBからの取得処理をあとで書く
+  Future<void> fetchInfoData() async {}
 }
 
 class Information {
