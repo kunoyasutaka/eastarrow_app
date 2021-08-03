@@ -85,10 +85,7 @@ class GoodsDetailPage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.only(bottom: 8),
                       width: double.infinity,
-                      decoration: const BoxDecoration(
-                          border: Border(
-                              bottom:
-                                  BorderSide(color: Colors.grey, width: 1))),
+                      decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
                       child: const Text(
                         '商品の情報',
                         style: TextStyle(
