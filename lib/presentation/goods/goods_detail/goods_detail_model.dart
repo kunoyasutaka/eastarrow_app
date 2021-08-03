@@ -5,5 +5,6 @@ class GoodsDetailModel extends ChangeNotifier {
   String bodyValueString = '本体価格';
   String totalValueString = '支払い総額';
 
+
   CarouselController carouselController = CarouselController();
 }
