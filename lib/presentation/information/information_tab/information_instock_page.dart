@@ -16,10 +16,9 @@ class InformationInStockPage extends StatelessWidget {
             body: RefreshIndicator(
               onRefresh: () async => await model.fetchInfoData(),
               child: ListView.builder(
-                itemCount: model.inStockInformation.length,
+                itemCount: model.inStockInformationList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return const InformationPage()
-                      .informationTile(model.inStockInformation[index]);
+                  return const InformationPage().informationTile(model.inStockInformationList[index]);
                 },
               ),
             ),

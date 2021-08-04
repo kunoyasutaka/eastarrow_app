@@ -9,17 +9,17 @@ class InformationAllPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => InformationModel(),
+      create: (_) => InformationModel()
+        ..init(),
       child: Consumer<InformationModel>(
         builder: (context, model, child) {
           return Scaffold(
             body: RefreshIndicator(
               onRefresh: () async => await model.fetchInfoData(),
               child: ListView.builder(
-                itemCount: model.information.length,
+                itemCount: model.informationList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return const InformationPage()
-                      .informationTile(model.information[index]);
+                  return const InformationPage().informationTile(model.informationList[index]);
                 },
               ),
             ),

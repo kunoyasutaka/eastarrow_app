@@ -1,4 +1,6 @@
+import 'package:eastarrow_app/domain/infomation.dart';
 import 'package:eastarrow_app/presentation/common/drawer.dart';
+import 'package:eastarrow_app/presentation/common/time_format.dart';
 import 'package:eastarrow_app/presentation/information/information_tab/information_all_page.dart';
 import 'package:eastarrow_app/presentation/information/information_tab/information_inspection_page.dart';
 import 'package:eastarrow_app/presentation/information/information_tab/information_instock_page.dart';
@@ -33,8 +35,8 @@ class InformationPage extends StatelessWidget {
               body: const TabBarView(
                 children: [
                   InformationAllPage(),
-                  InformationInspectionPage(),
                   InformationInStockPage(),
+                  InformationInspectionPage(),
                 ],
               ),
             ),
@@ -46,13 +48,26 @@ class InformationPage extends StatelessWidget {
 
   Widget informationTile(Information information) {
     return ExpansionTile(
-      title: Text('更新日：${information.date}'),
-      subtitle: Text('タイトル：${information.title}'),
+      subtitle: Text('更新日：${timeFormat(information.createdAt!)}',
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.right),
+      title: Text(
+        information.title!,
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+      tilePadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
       children: [
         Container(
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Text('内容：${information.description}'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(information.body!),
+              information.imageUrl != ''
+                  ? Container(padding: const EdgeInsets.only(top: 16), child: Image.network(information.imageUrl!))
+                  : const SizedBox(),
+            ],
+          ),
         )
       ],
     );

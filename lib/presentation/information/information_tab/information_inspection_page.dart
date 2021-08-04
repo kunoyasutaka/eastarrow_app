@@ -16,10 +16,9 @@ class InformationInspectionPage extends StatelessWidget {
             body: RefreshIndicator(
               onRefresh: () async => await model.fetchInfoData(),
               child: ListView.builder(
-                itemCount: model.inspectionInformation.length,
+                itemCount: model.inspectionInformationList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return const InformationPage()
-                      .informationTile(model.inspectionInformation[index]);
+                  return const InformationPage().informationTile(model.inspectionInformationList[index]);
                 },
               ),
             ),
