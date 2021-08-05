@@ -10,6 +10,12 @@ class InformationField {
   static const updatedAt = 'updatedAt';
 }
 
+class InformationTab {
+  static const String all ='すべて';
+  static const String inspection ='車検情報';
+  static const String inStock ='入荷情報';
+}
+
 class Information {
   final String? id;
   final String? classify;

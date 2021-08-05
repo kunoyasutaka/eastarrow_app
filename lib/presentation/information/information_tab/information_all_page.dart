@@ -1,5 +1,5 @@
 import 'package:eastarrow_app/presentation/information/information_model.dart';
-import 'package:eastarrow_app/presentation/information/information_page.dart';
+import 'package:eastarrow_app/presentation/information/information_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,8 +9,7 @@ class InformationAllPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => InformationModel()
-        ..init(),
+      create: (_) => InformationModel()..init(),
       child: Consumer<InformationModel>(
         builder: (context, model, child) {
           return Scaffold(
@@ -19,7 +18,7 @@ class InformationAllPage extends StatelessWidget {
               child: ListView.builder(
                 itemCount: model.informationList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return const InformationPage().informationTile(model.informationList[index]);
+                  return informationTile(model.informationList[index]);
                 },
               ),
             ),

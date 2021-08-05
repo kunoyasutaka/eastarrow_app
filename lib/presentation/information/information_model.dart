@@ -10,6 +10,8 @@ class InformationModel extends ChangeNotifier {
 
   Future<void> init() async {
     await fetchInfoData();
+    await fetchInspection();
+    await fetchInStock();
     notifyListeners();
   }
 
@@ -18,17 +20,17 @@ class InformationModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> whereInspectionInformation() async {
+  Future<void> fetchInspection() async {
     informationList = await repository.fetchInformationList();
     inspectionInformationList =
-        informationList.where((Information information) => information.classify == '車検情報').toList();
+        informationList.where((Information information) => information.classify == InformationTab.inspection).toList();
     notifyListeners();
   }
 
-  Future<void> whereInStockInformation() async {
+  Future<void> fetchInStock() async {
     informationList = await repository.fetchInformationList();
     inStockInformationList =
-        informationList.where((Information information) => information.classify == '入荷情報').toList();
+        informationList.where((Information information) => information.classify == InformationTab.inStock).toList();
     notifyListeners();
   }
 
