@@ -27,13 +27,15 @@ class InformationPage extends StatelessWidget {
                     Tab(text: InformationTab.inspection),
                   ],
                 ),
+                leading:
+                    IconButton(onPressed: () async => await model.fetchInfoData(), icon: const Icon(Icons.refresh)),
               ),
               endDrawer: drawer(),
               body: TabBarView(
                 children: [
                   InformationTabPage(informationList: model.informationList),
-                  InformationTabPage(informationList: model.inStockInformationList),
-                  InformationTabPage(informationList: model.inspectionInformationList),
+                  InformationTabPage(informationList: model.inStockList),
+                  InformationTabPage(informationList: model.inspectionList),
                 ],
               ),
             ),

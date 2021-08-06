@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class InformationTabPage extends StatelessWidget {
-  const InformationTabPage({Key? key,required this.informationList}) : super(key: key);
+  const InformationTabPage({Key? key, required this.informationList}) : super(key: key);
   final List<Information> informationList;
 
   @override
@@ -15,14 +15,11 @@ class InformationTabPage extends StatelessWidget {
       child: Consumer<InformationModel>(
         builder: (context, model, child) {
           return Scaffold(
-            body: RefreshIndicator(
-              onRefresh: () async => await model.fetchInfoData(),
-              child: ListView.builder(
-                itemCount: informationList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return informationTile(informationList[index]);
-                },
-              ),
+            body: ListView.builder(
+              itemCount: informationList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return informationTile(informationList[index]);
+              },
             ),
           );
         },

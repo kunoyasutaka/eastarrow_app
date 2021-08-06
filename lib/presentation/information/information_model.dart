@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 class InformationModel extends ChangeNotifier {
   final repository = InformationRepository();
   List<Information> informationList = [];
-  List<Information> inspectionInformationList = [];
-  List<Information> inStockInformationList = [];
+  List<Information> inspectionList = [];
+  List<Information> inStockList = [];
 
   Future<void> init() async {
     await fetchInfoData();
@@ -15,9 +15,10 @@ class InformationModel extends ChangeNotifier {
 
   Future<void> fetchInfoData() async {
     informationList = await repository.fetchInformationList();
-    inspectionInformationList =
+    informationList.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+    inspectionList =
         informationList.where((Information information) => information.classify == InformationTab.inspection).toList();
-    inStockInformationList =
+    inStockList =
         informationList.where((Information information) => information.classify == InformationTab.inStock).toList();
     notifyListeners();
   }
