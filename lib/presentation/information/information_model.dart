@@ -10,28 +10,15 @@ class InformationModel extends ChangeNotifier {
 
   Future<void> init() async {
     await fetchInfoData();
-    await fetchInspection();
-    await fetchInStock();
     notifyListeners();
   }
 
   Future<void> fetchInfoData() async {
     informationList = await repository.fetchInformationList();
-    notifyListeners();
-  }
-
-  Future<void> fetchInspection() async {
-    informationList = await repository.fetchInformationList();
     inspectionInformationList =
         informationList.where((Information information) => information.classify == InformationTab.inspection).toList();
-    notifyListeners();
-  }
-
-  Future<void> fetchInStock() async {
-    informationList = await repository.fetchInformationList();
     inStockInformationList =
         informationList.where((Information information) => information.classify == InformationTab.inStock).toList();
     notifyListeners();
   }
-
 }

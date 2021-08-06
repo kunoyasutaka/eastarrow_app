@@ -1,15 +1,15 @@
 import 'package:eastarrow_app/domain/infomation.dart';
-import 'package:eastarrow_app/presentation/common/time_format.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 Widget informationTile(Information information) {
   return ExpansionTile(
-    subtitle: Text('更新日：${timeFormat(information.createdAt!)}',
-        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.right),
     title: Text(
       information.title!,
       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
     ),
+    subtitle: Text((DateFormat('yyyy/MM/dd  HH:mm')).format(information.createdAt!),
+        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.right),
     tilePadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
     children: [
       Container(
