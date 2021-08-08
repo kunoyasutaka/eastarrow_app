@@ -1,38 +1,25 @@
+import 'package:eastarrow_app/domain/infomation.dart';
+import 'package:eastarrow_app/repository/information_repository.dart';
 import 'package:flutter/material.dart';
 
 class InformationModel extends ChangeNotifier {
-  final List<Information> information = [
-    Information('inStock', '新車種の入荷①', '2021/7/20', '新たに〇〇が入荷致しました。'),
-    Information('inspection', '車検のお知らせ①', '2021/7/20', '車検についてお知らせ致します。'),
-    Information('inStock', '新車種の入荷②', '2021/7/20', '新たに〇〇が入荷致しました。'),
-    Information('inspection', '車検のお知らせ②', '2021/7/20', '車検についてお知らせ致します。'),
-    Information('inStock', '新車種の入荷③', '2021/7/20', '新たに〇〇が入荷致しました。'),
-  ];
-  List<Information> inspectionInformation = [];
-  List<Information> inStockInformation = [];
+  final repository = InformationRepository();
+  List<Information> informationList = [];
+  List<Information> inspectionList = [];
+  List<Information> inStockList = [];
 
-  void whereInspectionInformation() {
-    inspectionInformation = information
-        .where(
-            (Information information) => information.classify == 'inspection')
-        .toList();
+  Future<void> init() async {
+    await fetchInfoData();
+    notifyListeners();
   }
 
-  void whereInStockInformation() {
-    inStockInformation = information
-        .where((Information information) => information.classify == 'inStock')
-        .toList();
+  Future<void> fetchInfoData() async {
+    informationList = await repository.fetchInformationList();
+    informationList.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+    inspectionList =
+        informationList.where((Information information) => information.classify == InformationTab.inspection).toList();
+    inStockList =
+        informationList.where((Information information) => information.classify == InformationTab.inStock).toList();
+    notifyListeners();
   }
-
-  /// TODO DBからの取得処理をあとで書く
-  Future<void> fetchInfoData() async {}
-}
-
-class Information {
-  String classify;
-  String title;
-  String date;
-  String description;
-
-  Information(this.classify, this.title, this.date, this.description);
 }
