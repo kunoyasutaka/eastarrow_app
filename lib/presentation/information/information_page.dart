@@ -33,9 +33,9 @@ class InformationPage extends StatelessWidget {
               endDrawer: drawer(),
               body: TabBarView(
                 children: [
-                  InformationTabPage(informationList: model.informationList),
-                  InformationTabPage(informationList: model.inStockList),
-                  InformationTabPage(informationList: model.inspectionList),
+                  informationTab(model.informationList),
+                  informationTab(model.inStockList),
+                  informationTab(model.inspectionList),
                 ],
               ),
             ),
