@@ -9,7 +9,6 @@ class RepairField {
   static const remark = 'remark';
 
   static const createdAt = 'createdAt';
-  static const updatedAt = 'updatedAt';
 }
 
 class Repair {
@@ -22,7 +21,6 @@ class Repair {
   final String? remark;
 
   final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   Repair({
     this.id,
@@ -33,7 +31,6 @@ class Repair {
     this.inquiry,
     this.remark,
     this.createdAt,
-    this.updatedAt,
   });
 
 }

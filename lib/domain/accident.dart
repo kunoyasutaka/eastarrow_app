@@ -9,7 +9,7 @@ class AccidentField {
   static const accidentSituation = 'accidentSituation';
 
   static const createdAt = 'createdAt';
-  static const updatedAt = 'updatedAt';
+
 }
 
 class Accident {
@@ -22,7 +22,6 @@ class Accident {
   final String? accidentSituation;
 
   final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   Accident({
     this.id,
@@ -33,7 +32,6 @@ class Accident {
     this.opponent,
     this.accidentSituation,
     this.createdAt,
-    this.updatedAt,
   });
 
 }
