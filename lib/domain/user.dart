@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eastarrow_app/domain/chattitle.dart';
 
 class UserField {
   static const id = 'id';
@@ -61,5 +60,23 @@ class User {
       updatedAt: data[UserField.updatedAt].toDate(),
     );
   }
+}
+
+class ChatTitleField {
+  static const docId = 'docId';
+  static const title = 'title';
+  static const createdAt = 'createdAt';
+}
+
+class ChatTitle {
+  final String? docId;
+  final String? title;
+  final DateTime? createdAt;
+
+  ChatTitle({
+    this.docId,
+    this.title,
+    this.createdAt,
+  });
 }
 
