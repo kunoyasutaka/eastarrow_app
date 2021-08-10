@@ -9,6 +9,8 @@ class UserField {
   static const phoneNumber = 'phoneNumber';
   static const carType = 'carType';
   static const inspectionDay = 'inspectionDay';
+  static const chatTitle = 'chatTitle';
+
   static const createdAt = 'createdAt';
   static const updatedAt = 'updatedAt';
 }
@@ -22,6 +24,8 @@ class User {
   final String? phoneNumber;
   final String? carType;
   final String? inspectionDay;
+  final List<ChatTitle>? chatTitle;
+
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -34,6 +38,7 @@ class User {
     this.phoneNumber,
     this.carType,
     this.inspectionDay,
+    this.chatTitle,
     this.createdAt,
     this.updatedAt,
   });
@@ -50,8 +55,22 @@ class User {
       phoneNumber: data[UserField.phoneNumber] ?? '',
       carType: data[UserField.carType] ?? '',
       inspectionDay: data[UserField.inspectionDay] ?? '',
+      chatTitle: List<ChatTitle>.from(data[UserField.chatTitle] ?? []),
       createdAt: data[UserField.createdAt].toDate(),
       updatedAt: data[UserField.updatedAt].toDate(),
     );
   }
 }
+
+class ChatTitle {
+  final String? docId;
+  final String? title;
+  final DateTime? createdAt;
+
+  ChatTitle({
+    this.docId,
+    this.title,
+    this.createdAt,
+  });
+}
+
