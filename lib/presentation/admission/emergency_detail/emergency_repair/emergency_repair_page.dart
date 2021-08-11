@@ -1,16 +1,16 @@
-import 'package:eastarrow_app/presentation/admission/emergency_model.dart';
+import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_repair/repair_model.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EmergencyAccidentPage extends StatelessWidget {
-  const EmergencyAccidentPage({Key? key}) : super(key: key);
+class EmergencyRepairPage extends StatelessWidget {
+  const EmergencyRepairPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => EmergencyModel(),
-      child: Consumer<EmergencyModel>(
+      create: (_) => RepairModel(),
+      child: Consumer<RepairModel>(
         builder: (context, model, child) {
           return Column(
             children: [
@@ -24,7 +24,7 @@ class EmergencyAccidentPage extends StatelessWidget {
                   ),
                 ),
                 child: const Text(
-                  '事故・保険についての詳細入力',
+                  '修理・整備についての詳細入力',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -36,66 +36,57 @@ class EmergencyAccidentPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'ご自身の証券番号',
+                          'メーカー',
                           style: TextStyle(fontSize: 20),
                         ),
                         TextField(
                           autofocus: false,
-                          controller: model.policyNumberController,
+                          controller: model.carMakerController,
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 16),
                         const Text(
-                          '車両の損傷状況',
+                          '車種',
                           style: TextStyle(fontSize: 20),
                         ),
                         TextField(
                           autofocus: false,
-                          controller: model.carDamageController,
-                          maxLines: 2,
-                          decoration: const InputDecoration(border: OutlineInputBorder()),
+                          controller: model.carTypeController,
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 16),
                         const Text(
-                          'ケガの有無',
+                          '車検有効期限',
                           style: TextStyle(fontSize: 20),
                         ),
                         TextField(
                           autofocus: false,
-                          controller: model.injuryController,
-                          maxLines: 2,
-                          decoration: const InputDecoration(border: OutlineInputBorder()),
-                          keyboardType: TextInputType.text,
-                          onChanged: (text) {},
+                          controller: model.inspectionExpirationController,
+                          onTap: () async => model.selectInspectionDay(context),
                         ),
                         const SizedBox(height: 16),
                         const Text(
-                          '相手方の情報',
+                          'お問い合わせ詳細',
                           style: TextStyle(fontSize: 20),
                         ),
                         TextField(
                           autofocus: false,
-                          controller: model.opponentController,
+                          controller: model.inquiryController,
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 16),
                         const Text(
-                          '事故の状況',
+                          '備考',
                           style: TextStyle(fontSize: 20),
                         ),
                         TextField(
                           autofocus: false,
-                          controller: model.accidentSituationController,
+                          controller: model.remarkController,
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 20),
                         Container(
@@ -105,8 +96,13 @@ class EmergencyAccidentPage extends StatelessWidget {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () async {
-                                await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？');
-                                Navigator.of(context).pop();
+                                await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')
+                                    ? {
+                                        await model.onPushSendRepair(),
+                                        await showTextDialog(context, '送信しました。\n担当者からの返信をお待ちください。'),
+                                        Navigator.of(context).pop(),
+                                      }
+                                    : null;
                               },
                               child: const Text('こちらの内容で送信'),
                             ),

@@ -62,6 +62,11 @@ class User {
   }
 }
 
+class ChatTitleField{
+  static const docId = 'docId';
+  static const title = 'title';
+}
+
 class ChatTitle {
   final String? docId;
   final String? title;
