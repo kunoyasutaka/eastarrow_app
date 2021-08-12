@@ -24,7 +24,7 @@ class User {
   final String? phoneNumber;
   final String? carType;
   final String? inspectionDay;
-  final List<ChatTitle>? chatTitle;
+  final List<Map>? chatTitle;
 
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -55,7 +55,7 @@ class User {
       phoneNumber: data[UserField.phoneNumber] ?? '',
       carType: data[UserField.carType] ?? '',
       inspectionDay: data[UserField.inspectionDay] ?? '',
-      chatTitle: List<ChatTitle>.from(data[UserField.chatTitle] ?? []),
+      chatTitle: List<Map>.from(data[UserField.chatTitle] ?? []),
       createdAt: data[UserField.createdAt].toDate(),
       updatedAt: data[UserField.updatedAt].toDate(),
     );
@@ -66,16 +66,16 @@ class ChatTitleField{
   static const docId = 'docId';
   static const title = 'title';
 }
-
-class ChatTitle {
-  final String? docId;
-  final String? title;
-  final DateTime? createdAt;
-
-  ChatTitle({
-    this.docId,
-    this.title,
-    this.createdAt,
-  });
-}
+//
+// class ChatTitle {
+//   final String? docId;
+//   final String? title;
+//   final DateTime? createdAt;
+//
+//   ChatTitle({
+//     this.docId,
+//     this.title,
+//     this.createdAt,
+//   });
+// }
 

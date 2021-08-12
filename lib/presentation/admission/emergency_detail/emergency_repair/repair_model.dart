@@ -33,7 +33,6 @@ class RepairModel extends ChangeNotifier {
       context,
       showTitleActions: true,
       minTime: DateTime(2000, 1, 1),
-      // maxTime: DateTime.now(),
     );
     if (_selectedInspectionDay != null) {
       inspectionExpirationController.text =

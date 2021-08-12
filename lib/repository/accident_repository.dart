@@ -11,14 +11,14 @@ class AccidentRepository {
     try {
       _docRef = _db.collection(_collectionPath).doc();
       await _docRef.set({
-        AccidentField.id: _docRef.id, //IDの取得方法？
+        AccidentField.id: _docRef.id,
         AccidentField.userId: 'ZIMFU3g9CuQxuXJMFi1L', //仮で設定(AuthのUIDを指定)
         AccidentField.policyNumber: accident.policyNumber,
         AccidentField.carDamage: accident.carDamage,
         AccidentField.injury: accident.injury,
         AccidentField.opponent: accident.opponent,
         AccidentField.accidentSituation: accident.accidentSituation,
-        AccidentField.createdAt: Timestamp.fromDate(DateTime.now()), //Datetime.now()→Timestampに変換
+        AccidentField.createdAt: Timestamp.fromDate(DateTime.now()),
       });
     } catch (e) {
       Logger().e(e.toString());
