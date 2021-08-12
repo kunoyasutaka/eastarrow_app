@@ -31,6 +31,7 @@ class ChatDetail {
     final Map<String, dynamic> data = snap.data() as Map<String, dynamic>;
 
     return ChatDetail(
+      id: data[ChatDetailField.id] ?? '',
       sender: data[ChatDetailField.sender] ?? '',
       body: data[ChatDetailField.body] ?? '',
       imageUrl: List<String>.from(data[ChatDetailField.imageUrl] ?? []),

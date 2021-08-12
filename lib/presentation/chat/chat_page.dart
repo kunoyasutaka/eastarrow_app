@@ -65,7 +65,7 @@ class ChatPage extends StatelessWidget {
                                         style: const TextStyle(fontSize: 16),
                                       ),
                                       IconButton(
-                                          onPressed: () => model.subjectController.text =
+                                          onPressed: () => model.titleController.text =
                                               model.chatTitleList[logIndex][ChatTitleField.title],
                                           icon: const Icon(Icons.reply)),
                                     ],
@@ -73,75 +73,6 @@ class ChatPage extends StatelessWidget {
                             );
                           }),
                     ),
-
-                    ///仮で表示
-                    // Expanded(
-                    //   child: ListView.builder(
-                    //     itemCount: model.chatLog.length,
-                    //     itemBuilder: (BuildContext context, int logIndex) {
-                    //       return Container(
-                    //         decoration: const BoxDecoration(
-                    //           border: Border(
-                    //             bottom: BorderSide(color: Colors.grey, width: 1),
-                    //           ),
-                    //         ),
-                    //         child: ExpansionTile(
-                    //           trailing: IconButton(
-                    //               onPressed: () => model.subjectController.text = model.chatLog[logIndex].title,
-                    //               icon: const Icon(Icons.reply)),
-                    //           title: Text('件名：${model.chatLog[logIndex].title}'),
-                    //           children: [
-                    //             ListView.builder(
-                    //               shrinkWrap: true,
-                    //               physics: const NeverScrollableScrollPhysics(),
-                    //               itemCount: model.chatLog[logIndex].chatDetail.length,
-                    //               itemBuilder: (BuildContext context, int detailIndex) {
-                    //                 return Container(
-                    //                   decoration: BoxDecoration(
-                    //                     border: Border(
-                    //                       top: BorderSide(color: Colors.grey.shade400, width: 1),
-                    //                     ),
-                    //                   ),
-                    //                   alignment: Alignment.centerLeft,
-                    //                   padding: const EdgeInsets.only(left: 40, top: 12, right: 20, bottom: 12),
-                    //                   child: Column(
-                    //                     crossAxisAlignment: CrossAxisAlignment.start,
-                    //                     children: [
-                    //                       Row(
-                    //                         children: [
-                    //                           model.chatLog[logIndex].chatDetail[detailIndex].sender == '管理者'
-                    //                               ? const Icon(Icons.mail, size: 20)
-                    //                               : const Icon(Icons.person, size: 20),
-                    //                           const SizedBox(width: 12),
-                    //                           Text(model.chatLog[logIndex].chatDetail[detailIndex].sender),
-                    //                           const Expanded(child: SizedBox()),
-                    //                           Text(model.chatLog[logIndex].chatDetail[detailIndex].date),
-                    //                         ],
-                    //                       ),
-                    //                       Container(
-                    //                         padding: const EdgeInsets.all(12),
-                    //                         child: Text(model.chatLog[logIndex].chatDetail[detailIndex].description),
-                    //                       ),
-                    //                       model.chatLog[logIndex].chatDetail[detailIndex].imageURL != ''
-                    //                           ? Container(
-                    //                               padding: const EdgeInsets.all(12),
-                    //                               child: Image.network(
-                    //                                 model.chatLog[logIndex].chatDetail[detailIndex].imageURL,
-                    //                                 width: double.infinity,
-                    //                               ),
-                    //                             )
-                    //                           : Container(),
-                    //                     ],
-                    //                   ),
-                    //                 );
-                    //               },
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: const BoxDecoration(
@@ -157,7 +88,7 @@ class ChatPage extends StatelessWidget {
                                 child: TextField(
                                   decoration: const InputDecoration(hintText: '件名'),
                                   keyboardType: TextInputType.text,
-                                  controller: model.subjectController,
+                                  controller: model.titleController,
                                 ),
                               ),
                               IconButton(
@@ -171,8 +102,9 @@ class ChatPage extends StatelessWidget {
                               ),
                               //TODO カメラを開く
                               IconButton(
-                                onPressed: () async => await showConfirmDialog(context, '送信しますか？'),
-                                icon: const Icon(Icons.send),
+                                onPressed: () async {
+                                  await showTextDialog(context, 'まだ編集中です。');
+                                },                                icon: const Icon(Icons.send),
                               ), //TODO 送信処理
                             ],
                           ),
@@ -186,7 +118,7 @@ class ChatPage extends StatelessWidget {
                             ),
                             keyboardType: TextInputType.multiline,
                             maxLines: 3,
-                            controller: model.mainTextController,
+                            controller: model.bodyController,
                           ),
                         ],
                       ),

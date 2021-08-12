@@ -34,18 +34,25 @@ class ChatRepository {
     }
   }
 
-  Future<void> chatToFirestore(Chat chat) async {
+  Future<void> chatToFirestore(ChatDetail chatDetail, Map chatTitle) async {
     try {
-      _docRef = _db.collection(_chatCollectionPath).doc();
+      _docRef = _db
+          .collection(_chatCollectionPath)
+          .doc(chatTitle[ChatTitleField.docId])
+          .collection(_chatDetailCollectionPath)
+          .doc();
       _user = await UserRepository().fetchUser('ZIMFU3g9CuQxuXJMFi1L');
-      await _db.collection(_chatCollectionPath).doc(_docRef.id).set({
-        ChatField.docId: _docRef.id, //IDの取得方法？
-        ChatField.userId: 'ZIMFU3g9CuQxuXJMFi1L', //仮で設定(AuthのUIDを指定)
-        ChatField.userName: _user.name, //仮で設定（DBからの取得方法？）
-        ChatField.title: chat.title,
-        ChatField.detail: chat.detail,
-        ChatField.createdAt: Timestamp.fromDate(DateTime.now()),
-        ChatField.updatedAt: Timestamp.fromDate(DateTime.now()),
+      await _docRef.set({
+        ChatDetailField.id: _docRef.id,
+        ChatDetailField.sender: _user.name,
+        ChatDetailField.body: chatDetail.body,
+
+        ///仮で登録
+        ChatDetailField.imageUrl: [
+          'https://ccsrpcma.carsensor.net/CSphoto/bkkn/933/463/U00034933463/U00034933463_001.JPG?ver=detail001&impolicy=car_002',
+        ],
+        ChatDetailField.createdAt: Timestamp.fromDate(DateTime.now()),
+        ChatDetailField.updatedAt: Timestamp.fromDate(DateTime.now()),
       });
     } catch (e) {
       Logger().e(e.toString());
