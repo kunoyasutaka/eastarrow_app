@@ -1,32 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eastarrow_app/domain/chat.dart';
-import 'package:eastarrow_app/domain/chatdetail.dart';
 import 'package:eastarrow_app/domain/user.dart';
 import 'package:eastarrow_app/repository/user_repository.dart';
 import 'package:logger/logger.dart';
 
 class ChatRepository {
   final _db = FirebaseFirestore.instance;
-  final _chatCollectionPath = 'chat';
-  final _usersCollectionPath = 'users';
-  final _chatDetailCollectionPath = 'detail';
-  late DocumentReference _docRef;
-  late User _user;
+  final _collectionPath = 'chat';
+  late DocumentReference _chatDocRef;
+  late List<Map> _chatTitleList;
 
-  Future<List<ChatDetail>> fetchChatDetail(String docId) async {
-    try {
-      final snaps = await _db.collection(_chatCollectionPath).doc(docId).collection(_chatDetailCollectionPath).get();
-      return snaps.docs.map((e) => ChatDetail.fromFirestore(e)).toList();
-    } catch (e) {
-      Logger().e(e.toString());
-      rethrow;
-    }
-  }
-
-  ///使わなければ削除
+  ///chatのdocを呼んでChat型を返す
   Future<Chat> fetchChat(String docId) async {
     try {
-      final snapshot = await _db.collection(_chatCollectionPath).doc(docId).get();
+      final snapshot = await _db.collection(_collectionPath).doc(docId).get();
       return Chat.fromFirestore(snapshot);
     } catch (e) {
       Logger().e(e.toString());
@@ -34,25 +21,11 @@ class ChatRepository {
     }
   }
 
-  Future<void> chatToFirestore(ChatDetail chatDetail, Map chatTitle) async {
+  ///chatDetail<List<Map>>をアップデート（ChatDetail画面から送信した場合の処理）
+  Future<void> updateChatToFirestore(List<Map> chatDetailList, Map chatTitle) async {
     try {
-      _docRef = _db
-          .collection(_chatCollectionPath)
-          .doc(chatTitle[ChatTitleField.docId])
-          .collection(_chatDetailCollectionPath)
-          .doc();
-      _user = await UserRepository().fetchUser('ZIMFU3g9CuQxuXJMFi1L');
-      await _docRef.set({
-        ChatDetailField.id: _docRef.id,
-        ChatDetailField.sender: _user.name,
-        ChatDetailField.body: chatDetail.body,
-
-        ///仮で登録
-        ChatDetailField.imageUrl: [
-          'https://ccsrpcma.carsensor.net/CSphoto/bkkn/933/463/U00034933463/U00034933463_001.JPG?ver=detail001&impolicy=car_002',
-        ],
-        ChatDetailField.createdAt: Timestamp.fromDate(DateTime.now()),
-        ChatDetailField.updatedAt: Timestamp.fromDate(DateTime.now()),
+      await _db.collection(_collectionPath).doc(chatTitle[ChatTitleField.docId]).update({
+        ChatField.chatDetail: chatDetailList,
       });
     } catch (e) {
       Logger().e(e.toString());
@@ -60,16 +33,28 @@ class ChatRepository {
     }
   }
 
-  ///編集中
-  Future<void> chatTitleToFirestore(Chat chat) async {
-    await _db.collection(_usersCollectionPath).doc('ZIMFU3g9CuQxuXJMFi1L')
+  ///新規の連絡開始時に使う ///工事中
+  Future<void> newChatToFirestore(
+      List<Map> chatDetailList, List<Map> chatTitleList, String title, String userId) async {
+    try {
+      _chatDocRef = _db.collection(_collectionPath).doc();
+      await _chatDocRef.set({
+        ChatField.docId: _chatDocRef.id,
+        ChatField.userId: 'ZIMFU3g9CuQxuXJMFi1L',
+        ChatField.title: title,
+        ChatField.chatDetail: chatDetailList,
+        ChatField.createdAt: Timestamp.fromDate(DateTime.now()),
+        ChatField.updatedAt: Timestamp.fromDate(DateTime.now()),
+      });
 
-        ///仮で設定（AuthのUIDを指定）
-        .update({
-      ChatTitleField.docId: '',
-
-      ///chatと同じdocIDを代入
-      ChatTitleField.title: chat.title,
-    });
+      ///userIdのdocのchatTitleを更新
+      Map _chatTitle = {ChatTitleField.docId: _chatDocRef.id, ChatTitleField.title: title};
+      _chatTitleList = chatTitleList;
+      _chatTitleList.add(_chatTitle);
+      await UserRepository().updateUserToFirestore(_chatTitleList, userId);
+    } catch (e) {
+      Logger().e(e.toString());
+      rethrow;
+    }
   }
 }

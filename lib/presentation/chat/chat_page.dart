@@ -32,46 +32,45 @@ class ChatPage extends StatelessWidget {
                 onRefresh: () async => await model.fetchChatTitle('ZIMFU3g9CuQxuXJMFi1L'),
                 child: Column(
                   children: [
-                    ///仮で表示
                     Expanded(
                       child: ListView.builder(
-                          itemCount: model.chatTitleList.length,
-                          itemBuilder: (BuildContext context, int logIndex) {
-                            return InkWell(
-                              onTap: () async {
-                                await model.fetchChatDetail(model.chatTitleList[logIndex][ChatTitleField.docId]);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ChatDetailPage(
-                                            chatTitle: model.chatTitleList[logIndex],
-                                            chatDetailList: model.chatDetailList,
-                                          ),
-                                      fullscreenDialog: true),
-                                );
-                              },
-                              child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                                  decoration: const BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(color: Colors.grey, width: 1),
-                                    ),
+                        itemCount: model.chatTitleList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return InkWell(
+                            onTap: () async {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ChatDetailPage(
+                                          chatTitle: model.chatTitleList[index],
+                                        ),
+                                    fullscreenDialog: true),
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: Colors.grey, width: 1),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '件名：${model.chatTitleList[index][ChatTitleField.title]}',
+                                    style: const TextStyle(fontSize: 16),
                                   ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        '件名：${model.chatTitleList[logIndex][ChatTitleField.title]}',
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                      IconButton(
-                                          onPressed: () => model.titleController.text =
-                                              model.chatTitleList[logIndex][ChatTitleField.title],
-                                          icon: const Icon(Icons.reply)),
-                                    ],
-                                  )),
-                            );
-                          }),
+                                  IconButton(
+                                      onPressed: () =>
+                                          model.titleController.text = model.chatTitleList[index][ChatTitleField.title],
+                                      icon: const Icon(Icons.reply)),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(12),
@@ -103,8 +102,15 @@ class ChatPage extends StatelessWidget {
                               //TODO カメラを開く
                               IconButton(
                                 onPressed: () async {
-                                  await showTextDialog(context, 'まだ編集中です。');
-                                },                                icon: const Icon(Icons.send),
+                                  await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')
+                                      ? {
+                                          await model.onPushSendNewChat(model.chatTitleList, 'ZIMFU3g9CuQxuXJMFi1L'),
+                                          await showTextDialog(context, '送信しました。'),
+                                          await model.fetchChatTitle('ZIMFU3g9CuQxuXJMFi1L'),
+                                        }
+                                      : null;
+                                },
+                                icon: const Icon(Icons.send),
                               ), //TODO 送信処理
                             ],
                           ),

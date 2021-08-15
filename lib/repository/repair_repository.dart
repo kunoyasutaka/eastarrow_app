@@ -10,7 +10,7 @@ class RepairRepository {
   Future<void> repairToFirestore(Repair repair) async {
     try {
       _docRef = _db.collection(_collectionPath).doc();
-      await _db.collection(_collectionPath).doc().set({
+      await _docRef.set({
         RepairField.id: _docRef.id,
         RepairField.userId: 'ZIMFU3g9CuQxuXJMFi1L', //仮で設定(AuthのUIDを指定)
         RepairField.carMaker: repair.carMaker,
