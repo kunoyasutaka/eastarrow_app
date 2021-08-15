@@ -1,5 +1,6 @@
 import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_repair/repair_model.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
+import 'package:eastarrow_app/presentation/common/select_inspection_day.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -62,7 +63,7 @@ class EmergencyRepairPage extends StatelessWidget {
                         TextField(
                           autofocus: false,
                           controller: model.inspectionExpirationController,
-                          onTap: () async => model.selectInspectionDay(context),
+                          onTap: () async => selectInspectionDay(context,model.inspectionExpirationController),
                         ),
                         const SizedBox(height: 16),
                         const Text(
