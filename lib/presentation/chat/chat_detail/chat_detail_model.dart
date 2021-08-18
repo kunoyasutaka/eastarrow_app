@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eastarrow_app/domain/chat.dart';
-import 'package:eastarrow_app/domain/user.dart';
+import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/repository/chat_repository.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,6 @@
 import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/common/drawer.dart';
+import 'package:eastarrow_app/presentation/common/select_inspection_day.dart';
 import 'package:eastarrow_app/presentation/my/my_page_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

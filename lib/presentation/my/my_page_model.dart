@@ -1,5 +1,5 @@
-import 'package:eastarrow_app/domain/user.dart';
-import 'package:eastarrow_app/repository/user_repository.dart';
+import 'package:eastarrow_app/domain/member.dart';
+import 'package:eastarrow_app/repository/member_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -12,8 +12,8 @@ class MyPageModel extends ChangeNotifier {
   final carTypeController = TextEditingController();
   final phoneNumberController = TextEditingController();
 
-  final repository = UserRepository();
-  late User user;
+  final repository = MemberRepository();
+  late Member _member;
 
   Future<void> selectBirthday(BuildContext context) async {
     final selectedBirthday = await DatePicker.showDatePicker(
@@ -29,22 +29,22 @@ class MyPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchUser() async {
+  Future<void> fetchMember() async {
     // TODO auth処理が完成するまでの暫定定義
     const userId = 'ZIMFU3g9CuQxuXJMFi1L';
-    user = await repository.fetchUser(userId);
+    _member = await repository.fetchMember(userId);
   }
 
   Future<void> init() async {
-    await fetchUser();
+    await fetchMember();
 
     /// DBがNullだった場合、空文字を返すようにUserモデルでケアしているため!で代入
-    nameController.text = user.name!;
-    mailController.text = user.email!;
-    birthdayController.text = user.birthDate!;
-    locationController.text = user.location!;
-    phoneNumberController.text = user.phoneNumber!;
-    carTypeController.text = user.carType!;
-    inspectionController.text = user.inspectionDay!;
+    nameController.text = _member.name!;
+    mailController.text = _member.email!;
+    birthdayController.text = _member.birthDate!;
+    locationController.text = _member.location!;
+    phoneNumberController.text = _member.phoneNumber!;
+    carTypeController.text = _member.carType!;
+    inspectionController.text = _member.inspectionDay!;
   }
 }

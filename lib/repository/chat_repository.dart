@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eastarrow_app/domain/chat.dart';
-import 'package:eastarrow_app/domain/user.dart';
-import 'package:eastarrow_app/repository/user_repository.dart';
+import 'package:eastarrow_app/domain/member.dart';
+import 'package:eastarrow_app/repository/member_repository.dart';
 import 'package:logger/logger.dart';
 
 class ChatRepository {
@@ -33,7 +33,7 @@ class ChatRepository {
     }
   }
 
-  ///新規の連絡開始時に使う ///工事中
+  ///新規の連絡開始時に使う
   Future<void> addChat(
       List<Map> chatDetailList, List<Map> chatTitleList, String title, String userId) async {
     try {
@@ -51,7 +51,7 @@ class ChatRepository {
       Map _chatTitle = {ChatTitleField.docId: _chatDocRef.id, ChatTitleField.title: title};
       _chatTitleList = chatTitleList;
       _chatTitleList.add(_chatTitle);
-      await UserRepository().updateChatTitle(_chatTitleList, userId);
+      await MemberRepository().updateChatTitle(_chatTitleList, userId);
     } catch (e) {
       Logger().e(e.toString());
       rethrow;

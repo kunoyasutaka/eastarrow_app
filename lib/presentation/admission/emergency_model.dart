@@ -1,17 +1,14 @@
+import 'package:eastarrow_app/domain/member.dart';
+import 'package:eastarrow_app/repository/member_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class EmergencyModel extends ChangeNotifier {
-  final policyNumberController = TextEditingController();
-  final carDamageController = TextEditingController();
-  final injuryController = TextEditingController();
-  final opponentController = TextEditingController();
-  final accidentSituationController = TextEditingController();
+  final repository = MemberRepository();
+  late Member _member;
 
-  final carMakerController = TextEditingController();
-  final carTypeController = TextEditingController();
-  final inspectionExpirationController = TextEditingController();
-  final inquiryController = TextEditingController();
-  final remarkController = TextEditingController();
-
-
+  Future<void> init() async {
+    _member = await repository.fetchMember(FirebaseAuth.instance.currentUser!.uid);
+    notifyListeners();
+  }
 }

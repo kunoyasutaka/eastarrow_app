@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eastarrow_app/domain/chatdetail.dart';
-import 'package:eastarrow_app/domain/user.dart';
+import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/repository/chat_repository.dart';
-import 'package:eastarrow_app/repository/user_repository.dart';
+import 'package:eastarrow_app/repository/member_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ChatModel extends ChangeNotifier {
   final titleController = TextEditingController();
   final bodyController = TextEditingController();
-  final userRepository = UserRepository();
+  final memberRepository = MemberRepository();
   final chatRepository = ChatRepository();
-  late User user;
+  late Member _member;
   List<Map> chatTitleList = [];
 
   ///画像選択時にリスト化
@@ -24,10 +24,10 @@ class ChatModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  ///userのdocを呼んでchatTitleListにList<Map>を入れる
+  ///memberのdocを呼んでchatTitleListにList<Map>を入れる
   Future<void> fetchChatTitle(String userId) async {
-    user = await userRepository.fetchUser(userId);
-    chatTitleList = user.chatTitle ?? [];
+    _member = await memberRepository.fetchMember(userId);
+    chatTitleList = _member.chatTitle ?? [];
     notifyListeners();
   }
 

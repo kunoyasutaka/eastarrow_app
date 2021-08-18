@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserField {
+class MemberField {
   static const id = 'id';
   static const name = 'name';
   static const email = 'email';
@@ -15,7 +15,7 @@ class UserField {
   static const updatedAt = 'updatedAt';
 }
 
-class User {
+class Member {
   final String? id;
   final String? name;
   final String? email;
@@ -29,7 +29,7 @@ class User {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  User({
+  Member({
     this.id,
     this.name,
     this.email,
@@ -43,21 +43,21 @@ class User {
     this.updatedAt,
   });
 
-  factory User.fromFirestore(DocumentSnapshot snap) {
+  factory Member.fromFirestore(DocumentSnapshot snap) {
     final Map<String, dynamic> data = snap.data() as Map<String, dynamic>;
 
-    return User(
-      id: data[UserField.id] ?? '',
-      name: data[UserField.name] ?? '',
-      email: data[UserField.email] ?? '',
-      birthDate: data[UserField.birthDate] ?? '',
-      location: data[UserField.location] ?? '',
-      phoneNumber: data[UserField.phoneNumber] ?? '',
-      carType: data[UserField.carType] ?? '',
-      inspectionDay: data[UserField.inspectionDay] ?? '',
-      chatTitle: List<Map>.from(data[UserField.chatTitle] ?? []),
-      createdAt: data[UserField.createdAt].toDate(),
-      updatedAt: data[UserField.updatedAt].toDate(),
+    return Member(
+      id: data[MemberField.id] ?? '',
+      name: data[MemberField.name] ?? '',
+      email: data[MemberField.email] ?? '',
+      birthDate: data[MemberField.birthDate] ?? '',
+      location: data[MemberField.location] ?? '',
+      phoneNumber: data[MemberField.phoneNumber] ?? '',
+      carType: data[MemberField.carType] ?? '',
+      inspectionDay: data[MemberField.inspectionDay] ?? '',
+      chatTitle: List<Map>.from(data[MemberField.chatTitle] ?? []),
+      createdAt: data[MemberField.createdAt].toDate(),
+      updatedAt: data[MemberField.updatedAt].toDate(),
     );
   }
 }
@@ -66,16 +66,5 @@ class ChatTitleField{
   static const docId = 'docId';
   static const title = 'title';
 }
-//
-// class ChatTitle {
-//   final String? docId;
-//   final String? title;
-//   final DateTime? createdAt;
-//
-//   ChatTitle({
-//     this.docId,
-//     this.title,
-//     this.createdAt,
-//   });
-// }
+
 

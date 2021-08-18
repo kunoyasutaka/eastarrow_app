@@ -1,5 +1,5 @@
 import 'package:eastarrow_app/domain/chatdetail.dart';
-import 'package:eastarrow_app/domain/user.dart';
+import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/presentation/chat/chat_detail/chat_detail_model.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:flutter/material.dart';

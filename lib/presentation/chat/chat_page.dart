@@ -1,4 +1,4 @@
-import 'package:eastarrow_app/domain/user.dart';
+import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/presentation/chat/chat_detail/chat_detail_page.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/common/drawer.dart';
