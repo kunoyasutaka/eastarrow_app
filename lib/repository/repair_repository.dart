@@ -7,12 +7,12 @@ class RepairRepository {
   final _collectionPath = 'repair';
   late DocumentReference _docRef;
 
-  Future<void> addRepair(Repair repair) async {
+  Future<void> addRepair(Repair repair,String uid) async {
     try {
       _docRef = _db.collection(_collectionPath).doc();
       await _docRef.set({
         RepairField.id: _docRef.id,
-        RepairField.userId: 'ZIMFU3g9CuQxuXJMFi1L', //仮で設定(AuthのUIDを指定)
+        RepairField.userId: uid,
         RepairField.carMaker: repair.carMaker,
         RepairField.carType: repair.carType,
         RepairField.inspectionExpiration: repair.inspectionExpiration,

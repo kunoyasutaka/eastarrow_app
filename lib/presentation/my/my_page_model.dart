@@ -1,5 +1,6 @@
 import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/repository/member_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -15,6 +16,24 @@ class MyPageModel extends ChangeNotifier {
   final repository = MemberRepository();
   late Member _member;
 
+  Future<void> init() async {
+    await fetchMember();
+
+    /// DBがNullだった場合、空文字を返すようにUserモデルでケアしているため!で代入
+    nameController.text = _member.name!;
+    mailController.text = _member.email!;
+    birthdayController.text = _member.birthDate!;
+    locationController.text = _member.location!;
+    phoneNumberController.text = _member.phoneNumber!;
+    carTypeController.text = _member.carType!;
+    inspectionController.text = _member.inspectionDay!;
+  }
+
+
+  Future<void> fetchMember() async {
+    _member = await repository.fetchMember(FirebaseAuth.instance.currentUser!.uid);
+  }
+
   Future<void> selectBirthday(BuildContext context) async {
     final selectedBirthday = await DatePicker.showDatePicker(
       context,
@@ -29,22 +48,5 @@ class MyPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchMember() async {
-    // TODO auth処理が完成するまでの暫定定義
-    const userId = 'ZIMFU3g9CuQxuXJMFi1L';
-    _member = await repository.fetchMember(userId);
-  }
 
-  Future<void> init() async {
-    await fetchMember();
-
-    /// DBがNullだった場合、空文字を返すようにUserモデルでケアしているため!で代入
-    nameController.text = _member.name!;
-    mailController.text = _member.email!;
-    birthdayController.text = _member.birthDate!;
-    locationController.text = _member.location!;
-    phoneNumberController.text = _member.phoneNumber!;
-    carTypeController.text = _member.carType!;
-    inspectionController.text = _member.inspectionDay!;
-  }
 }

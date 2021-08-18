@@ -2,6 +2,7 @@ import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/presentation/chat/chat_detail/chat_detail_page.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/common/drawer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'chat_model.dart';
@@ -31,7 +32,7 @@ class ChatPage extends StatelessWidget {
                 }
               },
               child: RefreshIndicator(
-                onRefresh: () async => await model.fetchChatTitle('ZIMFU3g9CuQxuXJMFi1L'),
+                onRefresh: () async => await model.fetchChatTitle(FirebaseAuth.instance.currentUser!.uid),
                 child: Column(
                   children: [
                     Expanded(
@@ -112,9 +113,9 @@ class ChatPage extends StatelessWidget {
                                 onPressed: () async {
                                   await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')
                                       ? {
-                                    await model.onPushSendNewChat(model.chatTitleList, 'ZIMFU3g9CuQxuXJMFi1L'),
+                                    await model.onPushSendNewChat(model.chatTitleList, FirebaseAuth.instance.currentUser!.uid),
                                     await showTextDialog(context, '送信しました。'),
-                                    await model.fetchChatTitle('ZIMFU3g9CuQxuXJMFi1L'),
+                                    await model.fetchChatTitle(FirebaseAuth.instance.currentUser!.uid),
                                   }
                                       : null;
                                 },

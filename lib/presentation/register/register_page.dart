@@ -90,7 +90,7 @@ class RegisterPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const QuestionPage(),
+                              builder: (context) => QuestionPage(mail: model.mail),
                             ),
                           );
                         },

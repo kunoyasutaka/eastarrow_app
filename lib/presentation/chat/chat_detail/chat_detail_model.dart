@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eastarrow_app/domain/chat.dart';
 import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/repository/chat_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatDetailModel extends ChangeNotifier {
@@ -42,7 +43,7 @@ class ChatDetailModel extends ChangeNotifier {
       'imageUrl': selectImageUrl,
 
       ///senderの表示をどうするか。仮でUIDを登録
-      'sender': 'ZIMFU3g9CuQxuXJMFi1L',
+      'sender': FirebaseAuth.instance.currentUser!.uid,
       'createdAt': Timestamp.fromDate(DateTime.now()),
     };
     notifyListeners();

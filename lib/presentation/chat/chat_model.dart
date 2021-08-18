@@ -3,6 +3,7 @@ import 'package:eastarrow_app/domain/chatdetail.dart';
 import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/repository/chat_repository.dart';
 import 'package:eastarrow_app/repository/member_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class ChatModel extends ChangeNotifier {
   List<Map> chatDetailList = [];
 
   Future<void> init() async {
-    await fetchChatTitle('ZIMFU3g9CuQxuXJMFi1L');
+    await fetchChatTitle(FirebaseAuth.instance.currentUser!.uid);
     notifyListeners();
   }
 

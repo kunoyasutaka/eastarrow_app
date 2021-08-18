@@ -1,5 +1,6 @@
 import 'package:eastarrow_app/domain/accident.dart';
 import 'package:eastarrow_app/repository/accident_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AccidentModel extends ChangeNotifier {
@@ -14,7 +15,7 @@ class AccidentModel extends ChangeNotifier {
 
   Future<void> onPushSendAccident() async {
     _accident = createAccident();
-    await repository.addAccident(_accident);
+    await repository.addAccident(_accident,FirebaseAuth.instance.currentUser!.uid);
     notifyListeners();
   }
 

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class QuestionPage extends StatelessWidget {
-  const QuestionPage({Key? key}) : super(key: key);
+  final String mail;
+
+  const QuestionPage({Key? key, required this.mail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,7 @@ class QuestionPage extends StatelessWidget {
                       ),
                       TextField(
                         autofocus: false,
-                        controller: model.birthdayController,
+                        controller: model.birthdateController,
                         textAlign: TextAlign.start,
                         onTap: () async => await model.selectBirthday(context),
                       ),
@@ -69,7 +71,7 @@ class QuestionPage extends StatelessWidget {
                       ),
                       TextField(
                         autofocus: false,
-                        controller: model.addressController,
+                        controller: model.locationController,
                         keyboardType: TextInputType.streetAddress,
                         textAlign: TextAlign.start,
                       ),
@@ -91,7 +93,7 @@ class QuestionPage extends StatelessWidget {
                       ),
                       TextField(
                         autofocus: false,
-                        controller: model.vehicleTypeController,
+                        controller: model.carTypeController,
                         keyboardType: TextInputType.text,
                         textAlign: TextAlign.start,
                       ),
@@ -104,8 +106,7 @@ class QuestionPage extends StatelessWidget {
                         autofocus: false,
                         controller: model.inspectionController,
                         textAlign: TextAlign.start,
-                        onTap: () async =>
-                            await model.selectInspectionDay(context),
+                        onTap: () async => await model.selectInspectionDay(context),
                       ),
                       const SizedBox(
                         height: 40,
@@ -117,8 +118,7 @@ class QuestionPage extends StatelessWidget {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () async {
-                              if (await showConfirmDialog(
-                                  context, 'この内容で登録しますか？')) {
+                              if (await showConfirmDialog(context, 'この内容で登録しますか？')) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

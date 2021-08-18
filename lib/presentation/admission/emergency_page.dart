@@ -12,7 +12,7 @@ class EmergencyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => EmergencyModel()..init(),
+      create: (_) => EmergencyModel(),
       child: Consumer<EmergencyModel>(
         builder: (context, model, child) {
           return Scaffold(
