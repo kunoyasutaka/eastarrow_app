@@ -124,7 +124,7 @@ class MyPage extends StatelessWidget {
                               autofocus: false,
                               controller: model.inspectionController,
                               textAlign: TextAlign.start,
-                              onTap: () async => await model.selectInspectionDay(context),
+                              onTap: () async => await selectInspectionDay(context,model.inspectionController),
                             ),
                             const Text(
                               '※車検日の1ヶ月前にお知らせいたします。',

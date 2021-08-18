@@ -15,7 +15,6 @@ class InformationModel extends ChangeNotifier {
 
   Future<void> fetchInfoData() async {
     informationList = await repository.fetchInformationList();
-    informationList.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
     inspectionList =
         informationList.where((Information information) => information.classify == InformationTab.inspection).toList();
     inStockList =

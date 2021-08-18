@@ -29,20 +29,6 @@ class MyPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> selectInspectionDay(BuildContext context) async {
-    final selectedInspectionDay = await DatePicker.showDatePicker(
-      context,
-      showTitleActions: true,
-      minTime: DateTime(2000, 1, 1),
-      maxTime: DateTime.now(),
-    );
-    if (selectedInspectionDay != null) {
-      inspectionController.text =
-          '${selectedInspectionDay.year}年${selectedInspectionDay.month}月${selectedInspectionDay.day}日';
-    }
-    notifyListeners();
-  }
-
   Future<void> fetchUser() async {
     // TODO auth処理が完成するまでの暫定定義
     const userId = 'ZIMFU3g9CuQxuXJMFi1L';

@@ -1,4 +1,4 @@
-import 'package:eastarrow_app/presentation/admission/emergency_model.dart';
+import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_accident/accident_model.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,8 +9,8 @@ class EmergencyAccidentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => EmergencyModel(),
-      child: Consumer<EmergencyModel>(
+      create: (_) => AccidentModel(),
+      child: Consumer<AccidentModel>(
         builder: (context, model, child) {
           return Column(
             children: [
@@ -43,7 +43,6 @@ class EmergencyAccidentPage extends StatelessWidget {
                           autofocus: false,
                           controller: model.policyNumberController,
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 16),
                         const Text(
@@ -56,7 +55,6 @@ class EmergencyAccidentPage extends StatelessWidget {
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 16),
                         const Text(
@@ -69,7 +67,6 @@ class EmergencyAccidentPage extends StatelessWidget {
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 16),
                         const Text(
@@ -82,7 +79,6 @@ class EmergencyAccidentPage extends StatelessWidget {
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 16),
                         const Text(
@@ -95,7 +91,6 @@ class EmergencyAccidentPage extends StatelessWidget {
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 20),
                         Container(
@@ -105,8 +100,13 @@ class EmergencyAccidentPage extends StatelessWidget {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () async {
-                                await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？');
-                                Navigator.of(context).pop();
+                                await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')
+                                    ? {
+                                        await model.onPushSendAccident(),
+                                        await showTextDialog(context, '送信しました。\n担当者からの返信をお待ちください。'),
+                                        Navigator.of(context).pop(),
+                                      }
+                                    : null;
                               },
                               child: const Text('こちらの内容で送信'),
                             ),
