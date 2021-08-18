@@ -12,7 +12,9 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => ChatModel()..init(),
+      create: (_) =>
+      ChatModel()
+        ..init(),
       child: Consumer<ChatModel>(
         builder: (context, model, child) {
           return Scaffold(
@@ -41,7 +43,8 @@ class ChatPage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ChatDetailPage(
+                                    builder: (context) =>
+                                        ChatDetailPage(
                                           chatTitle: model.chatTitleList[index],
                                         ),
                                     fullscreenDialog: true),
@@ -49,6 +52,7 @@ class ChatPage extends StatelessWidget {
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                              height: 60,
                               decoration: const BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(color: Colors.grey, width: 1),
@@ -69,10 +73,6 @@ class ChatPage extends StatelessWidget {
                                       maxLines: 2,
                                     ),
                                   ),
-                                  IconButton(
-                                      onPressed: () =>
-                                          model.titleController.text = model.chatTitleList[index][ChatTitleField.title],
-                                      icon: const Icon(Icons.reply)),
                                 ],
                               ),
                             ),
@@ -112,10 +112,10 @@ class ChatPage extends StatelessWidget {
                                 onPressed: () async {
                                   await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')
                                       ? {
-                                          await model.onPushSendNewChat(model.chatTitleList, 'ZIMFU3g9CuQxuXJMFi1L'),
-                                          await showTextDialog(context, '送信しました。'),
-                                          await model.fetchChatTitle('ZIMFU3g9CuQxuXJMFi1L'),
-                                        }
+                                    await model.onPushSendNewChat(model.chatTitleList, 'ZIMFU3g9CuQxuXJMFi1L'),
+                                    await showTextDialog(context, '送信しました。'),
+                                    await model.fetchChatTitle('ZIMFU3g9CuQxuXJMFi1L'),
+                                  }
                                       : null;
                                 },
                                 icon: const Icon(Icons.send),
