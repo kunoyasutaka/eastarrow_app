@@ -58,8 +58,7 @@ class MyPage extends StatelessWidget {
                               autofocus: false,
                               controller: model.nameController,
                               keyboardType: TextInputType.text,
-                              textAlign: TextAlign.end,
-                              onChanged: (text) => model.nameController.text = text,
+                              textAlign: TextAlign.start,
                             ),
                             const SizedBox(height: 16),
                             const Text(
@@ -70,8 +69,7 @@ class MyPage extends StatelessWidget {
                               autofocus: false,
                               controller: model.mailController,
                               keyboardType: TextInputType.emailAddress,
-                              textAlign: TextAlign.end,
-                              onChanged: (text) {},
+                              textAlign: TextAlign.start,
                             ),
                             const SizedBox(height: 16),
                             const Text(
@@ -81,8 +79,7 @@ class MyPage extends StatelessWidget {
                             TextField(
                               autofocus: false,
                               controller: model.birthdayController,
-                              textAlign: TextAlign.end,
-                              onChanged: (text) {},
+                              textAlign: TextAlign.start,
                               onTap: () async => await model.selectBirthday(context),
                             ),
                             const SizedBox(height: 16),
@@ -94,8 +91,7 @@ class MyPage extends StatelessWidget {
                               autofocus: false,
                               controller: model.locationController,
                               keyboardType: TextInputType.streetAddress,
-                              textAlign: TextAlign.end,
-                              onChanged: (text) {},
+                              textAlign: TextAlign.start,
                             ),
                             const SizedBox(height: 16),
                             const Text(
@@ -106,8 +102,7 @@ class MyPage extends StatelessWidget {
                               autofocus: false,
                               controller: model.phoneNumberController,
                               keyboardType: TextInputType.phone,
-                              textAlign: TextAlign.end,
-                              onChanged: (text) {},
+                              textAlign: TextAlign.start,
                             ),
                             const SizedBox(height: 16),
                             const Text(
@@ -118,8 +113,7 @@ class MyPage extends StatelessWidget {
                               autofocus: false,
                               controller: model.carTypeController,
                               keyboardType: TextInputType.text,
-                              textAlign: TextAlign.end,
-                              onChanged: (text) {},
+                              textAlign: TextAlign.start,
                             ),
                             const SizedBox(height: 16),
                             const Text(
@@ -129,8 +123,7 @@ class MyPage extends StatelessWidget {
                             TextField(
                               autofocus: false,
                               controller: model.inspectionController,
-                              textAlign: TextAlign.end,
-                              onChanged: (text) {},
+                              textAlign: TextAlign.start,
                               onTap: () async => await model.selectInspectionDay(context),
                             ),
                             const Text(
