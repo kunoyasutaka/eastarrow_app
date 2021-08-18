@@ -8,7 +8,7 @@ class InformationRepository{
 
   Future<List<Information>> fetchInformationList() async {
     try {
-      final snapshot = await _db.collection(_collectionPath).get();
+      final snapshot = await _db.collection(_collectionPath).orderBy(InformationField.createdAt, descending: true).get();
 
       return snapshot.docs.map((e) => Information.fromFirestore(e)).toList();
     } catch (e) {

@@ -1,5 +1,5 @@
-import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_accident_page.dart';
-import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_repair_page.dart';
+import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_accident/emergency_accident_page.dart';
+import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_repair/emergency_repair_page.dart';
 import 'package:eastarrow_app/presentation/admission/emergency_model.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/common/drawer.dart';

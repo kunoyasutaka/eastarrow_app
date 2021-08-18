@@ -1,45 +1,64 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eastarrow_app/domain/chatdetail.dart';
+import 'package:eastarrow_app/domain/user.dart';
+import 'package:eastarrow_app/repository/chat_repository.dart';
+import 'package:eastarrow_app/repository/user_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ChatModel extends ChangeNotifier {
-  final List<ChatLog> chatLog = [
-    ChatLog('お客様ご検討の車種について', chatDetail),
-    ChatLog('車検について', chatDetail),
-    ChatLog('車の整備について', chatDetail),
-  ];
+  final titleController = TextEditingController();
+  final bodyController = TextEditingController();
+  final userRepository = UserRepository();
+  final chatRepository = ChatRepository();
+  late User user;
+  List<Map> chatTitleList = [];
 
-  static List<ChatDetail> chatDetail = [
-    ChatDetail('管理者', '新車種の入荷①', '2021/7/20 20:00', '新たに〇〇が入荷致しました。', ''),
-    ChatDetail('ユーザー', '車検のお知らせ①', '2021/7/20 19:00', '車検についてお知らせ致します。',
-        'https://ccsrpcma.carsensor.net/CSphoto/bkkn/933/463/U00034933463/U00034933463_001.JPG?ver=detail001&impolicy=car_002'),
-    ChatDetail('管理者', '新車種の入荷②', '2021/7/20 18:00', '新たに〇〇が入荷致しました。',
-        'https://ccsrpcma.carsensor.net/CSphoto/bkkn/322/213/U00033322213/U00033322213_001.JPG?ver=detail001&impolicy=car_002'),
-    ChatDetail('ユーザー', '車検のお知らせ②', '2021/7/20 17:00', '車検についてお知らせ致します。',
-        'https://ccsrpcma.carsensor.net/CSphoto/bkkn/903/223/U00034903223/U00034903223_001.JPG?ver=detail001&impolicy=car_002'),
-    ChatDetail('管理者', '新車種の入荷③', '2021/7/20 16:00', '新たに〇〇が入荷致しました。', ''),
-  ];
+  ///画像選択時にリスト化
+  List<String> selectImageUrl = [];
+  late Map chatDetail;
+  List<Map> chatDetailList = [];
 
-  final subjectController = TextEditingController();
-  final mainTextController = TextEditingController();
+  Future<void> init() async {
+    await fetchChatTitle('ZIMFU3g9CuQxuXJMFi1L');
+    notifyListeners();
+  }
 
-  /// TODO DBからの取得処理をあとで書く
-  Future<void> fetchChatData() async {}
-}
+  ///userのdocを呼んでchatTitleListにList<Map>を入れる
+  Future<void> fetchChatTitle(String userId) async {
+    user = await userRepository.fetchUser(userId);
+    chatTitleList = user.chatTitle ?? [];
+    notifyListeners();
+  }
 
-class ChatLog {
-  String title;
-  List<ChatDetail> chatDetail;
+  ///chat入力内容をListに入れてDB(chatDetail)を更新
+  Future<void> onPushSendNewChat(List<Map> chatTitleList, String userId) async {
+    createChatDetailList(userId);
+    await chatRepository.addChat(
+        chatDetailList, chatTitleList, titleController.text, userId);
+    resetChatDetail();
+    notifyListeners();
+  }
 
-  ChatLog(this.title, this.chatDetail);
-}
+  ///chatの入力内容を空のchatDetailListにMap型で入れる
+  void createChatDetailList(String userId) {
+    chatDetail = {
+      ChatDetailField.body: bodyController.text,
+      ChatDetailField.imageUrl: selectImageUrl,
 
-class ChatDetail {
-  String sender;
-  String title;
-  String date;
-  String description;
-  String imageURL;
+      ///senderの表示をどうするか。仮でUIDを登録
+      ChatDetailField.sender: userId,
+      ChatDetailField.createdAt: Timestamp.fromDate(DateTime.now()),
+    };
+    chatDetailList.add(chatDetail);
+    notifyListeners();
+  }
 
-  ChatDetail(
-      this.sender, this.title, this.date, this.description, this.imageURL);
+  ///本文と選択画像をリセット
+  void resetChatDetail() {
+    titleController.text = '';
+    bodyController.text = '';
+    selectImageUrl = [];
+    notifyListeners();
+  }
 }

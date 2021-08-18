@@ -1,5 +1,6 @@
-import 'package:eastarrow_app/presentation/admission/emergency_model.dart';
+import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_repair/repair_model.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
+import 'package:eastarrow_app/presentation/common/select_inspection_day.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,8 +10,8 @@ class EmergencyRepairPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => EmergencyModel(),
-      child: Consumer<EmergencyModel>(
+      create: (_) => RepairModel(),
+      child: Consumer<RepairModel>(
         builder: (context, model, child) {
           return Column(
             children: [
@@ -43,7 +44,6 @@ class EmergencyRepairPage extends StatelessWidget {
                           autofocus: false,
                           controller: model.carMakerController,
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 16),
                         const Text(
@@ -54,7 +54,6 @@ class EmergencyRepairPage extends StatelessWidget {
                           autofocus: false,
                           controller: model.carTypeController,
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 16),
                         const Text(
@@ -64,8 +63,7 @@ class EmergencyRepairPage extends StatelessWidget {
                         TextField(
                           autofocus: false,
                           controller: model.inspectionExpirationController,
-                          keyboardType: TextInputType.text,
-                          onChanged: (text) {},
+                          onTap: () async => selectInspectionDay(context,model.inspectionExpirationController),
                         ),
                         const SizedBox(height: 16),
                         const Text(
@@ -78,7 +76,6 @@ class EmergencyRepairPage extends StatelessWidget {
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 16),
                         const Text(
@@ -91,7 +88,6 @@ class EmergencyRepairPage extends StatelessWidget {
                           maxLines: 2,
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                           keyboardType: TextInputType.text,
-                          onChanged: (text) {},
                         ),
                         const SizedBox(height: 20),
                         Container(
@@ -101,8 +97,13 @@ class EmergencyRepairPage extends StatelessWidget {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () async {
-                                await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？');
-                                Navigator.of(context).pop();
+                                await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')
+                                    ? {
+                                        await model.onPushSendRepair(),
+                                        await showTextDialog(context, '送信しました。\n担当者からの返信をお待ちください。'),
+                                        Navigator.of(context).pop(),
+                                      }
+                                    : null;
                               },
                               child: const Text('こちらの内容で送信'),
                             ),

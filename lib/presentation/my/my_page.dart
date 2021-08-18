@@ -1,5 +1,6 @@
 import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/common/drawer.dart';
+import 'package:eastarrow_app/presentation/common/select_inspection_day.dart';
 import 'package:eastarrow_app/presentation/my/my_page_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +132,7 @@ class MyPage extends StatelessWidget {
                               controller: model.inspectionController,
                               textAlign: TextAlign.end,
                               onChanged: (text) {},
-                              onTap: () async => await model.selectInspectionDay(context),
+                              onTap: () async => await selectInspectionDay(context,model.inspectionController),
                             ),
                             const Text(
                               '※車検日の1ヶ月前にお知らせいたします。',
