@@ -22,7 +22,7 @@ class ChatRepository {
   }
 
   ///chatDetail<List<Map>>をアップデート（ChatDetail画面から送信した場合の処理）
-  Future<void> updateChatToFirestore(List<Map> chatDetailList, Map chatTitle) async {
+  Future<void> updateChat(List<Map> chatDetailList, Map chatTitle) async {
     try {
       await _db.collection(_collectionPath).doc(chatTitle[ChatTitleField.docId]).update({
         ChatField.chatDetail: chatDetailList,
@@ -34,7 +34,7 @@ class ChatRepository {
   }
 
   ///新規の連絡開始時に使う ///工事中
-  Future<void> newChatToFirestore(
+  Future<void> addChat(
       List<Map> chatDetailList, List<Map> chatTitleList, String title, String userId) async {
     try {
       _chatDocRef = _db.collection(_collectionPath).doc();
@@ -51,7 +51,7 @@ class ChatRepository {
       Map _chatTitle = {ChatTitleField.docId: _chatDocRef.id, ChatTitleField.title: title};
       _chatTitleList = chatTitleList;
       _chatTitleList.add(_chatTitle);
-      await UserRepository().updateUserToFirestore(_chatTitleList, userId);
+      await UserRepository().updateChatTitle(_chatTitleList, userId);
     } catch (e) {
       Logger().e(e.toString());
       rethrow;

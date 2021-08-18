@@ -7,7 +7,7 @@ class RepairRepository {
   final _collectionPath = 'repair';
   late DocumentReference _docRef;
 
-  Future<void> repairToFirestore(Repair repair) async {
+  Future<void> addRepair(Repair repair) async {
     try {
       _docRef = _db.collection(_collectionPath).doc();
       await _docRef.set({

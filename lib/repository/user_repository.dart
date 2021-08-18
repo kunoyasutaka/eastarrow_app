@@ -19,7 +19,7 @@ class UserRepository {
   }
 
   ///usersのdocのchatTitleをアップデート（新規件名作成時に使用）
-  Future<void> updateUserToFirestore(List<Map> chatTitleList,String userId) async {
+  Future<void> updateChatTitle(List<Map> chatTitleList,String userId) async {
     try {
       await _db.collection(_collectionPath).doc(userId).update({
         UserField.chatTitle: chatTitleList,

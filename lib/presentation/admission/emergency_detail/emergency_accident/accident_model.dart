@@ -14,7 +14,7 @@ class AccidentModel extends ChangeNotifier {
 
   Future<void> onPushSendAccident() async {
     _accident = createAccident();
-    await repository.accidentToFirestore(_accident);
+    await repository.addAccident(_accident);
     notifyListeners();
   }
 

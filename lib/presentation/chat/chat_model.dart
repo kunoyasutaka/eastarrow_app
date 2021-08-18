@@ -34,7 +34,7 @@ class ChatModel extends ChangeNotifier {
   ///chat入力内容をListに入れてDB(chatDetail)を更新
   Future<void> onPushSendNewChat(List<Map> chatTitleList, String userId) async {
     createChatDetailList(userId);
-    await chatRepository.newChatToFirestore(
+    await chatRepository.addChat(
         chatDetailList, chatTitleList, titleController.text, userId);
     resetChatDetail();
     notifyListeners();

@@ -30,7 +30,7 @@ class ChatDetailModel extends ChangeNotifier {
   Future<void> onPushSendChatDetail(Map chatTitle) async {
     createChatDetail();
     chatDetailList.add(chatDetail);
-    await repository.updateChatToFirestore(chatDetailList, chatTitle);
+    await repository.updateChat(chatDetailList, chatTitle);
     resetChatDetail();
     notifyListeners();
   }

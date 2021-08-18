@@ -57,9 +57,17 @@ class ChatPage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    '件名：${model.chatTitleList[index][ChatTitleField.title]}',
-                                    style: const TextStyle(fontSize: 16),
+                                  Container(
+                                    child: const Text('件名', style: TextStyle(fontSize: 16)),
+                                    padding: const EdgeInsets.only(right: 16),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      model.chatTitleList[index][ChatTitleField.title],
+                                      style: const TextStyle(fontSize: 16),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    ),
                                   ),
                                   IconButton(
                                       onPressed: () =>

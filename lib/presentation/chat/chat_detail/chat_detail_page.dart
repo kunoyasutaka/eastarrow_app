@@ -93,16 +93,8 @@ class ChatDetailPage extends StatelessWidget {
                       child: Column(
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              const Text(
-                                '件名：',
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                chatTitle[ChatTitleField.title],
-                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              const Expanded(child: SizedBox()),
                               IconButton(
                                 onPressed: () async => await showTextDialog(context, '画像を選択してください。'),
                                 icon: const Icon(Icons.image),
@@ -119,7 +111,6 @@ class ChatDetailPage extends StatelessWidget {
                                       ? {
                                           await model.onPushSendChatDetail(chatTitle),
                                           await showTextDialog(context, '送信しました。'),
-                                          await model.fetchChat(chatTitle[ChatTitleField.docId]),
                                         }
                                       : null;
                                 },

@@ -1,7 +1,6 @@
 import 'package:eastarrow_app/domain/repair.dart';
 import 'package:eastarrow_app/repository/repair_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class RepairModel extends ChangeNotifier {
   final carMakerController = TextEditingController();
@@ -15,7 +14,7 @@ class RepairModel extends ChangeNotifier {
 
   Future<void> onPushSendRepair() async {
     _repair = createRepair();
-    await repository.repairToFirestore(_repair);
+    await repository.addRepair(_repair);
     notifyListeners();
   }
 
