@@ -1,3 +1,4 @@
+import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/login/login_model.dart';
 import 'package:eastarrow_app/presentation/register/register_page.dart';
 import 'package:eastarrow_app/presentation/root.dart';
@@ -63,7 +64,9 @@ class LoginPage extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(32)),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
+                          await model.login();
+                          await showTextDialog(context, 'ログインが完了しました。');
                           Navigator.push(
                             context,
                             MaterialPageRoute(

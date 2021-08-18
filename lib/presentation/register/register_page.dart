@@ -85,7 +85,8 @@ class RegisterPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async{
+                          await model.addAuth();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
