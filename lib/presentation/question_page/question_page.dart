@@ -119,6 +119,7 @@ class QuestionPage extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () async {
                               if (await showConfirmDialog(context, 'この内容で登録しますか？')) {
+                                model.onPushAddMember(mail);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
