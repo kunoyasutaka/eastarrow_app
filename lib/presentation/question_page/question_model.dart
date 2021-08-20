@@ -1,13 +1,17 @@
+import 'package:eastarrow_app/domain/member.dart';
+import 'package:eastarrow_app/repository/member_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class QuestionModel extends ChangeNotifier {
   final nameController = TextEditingController();
-  final birthdayController = TextEditingController();
-  final addressController = TextEditingController();
+  final birthdateController = TextEditingController();
+  final locationController = TextEditingController();
   final inspectionController = TextEditingController();
-  final vehicleTypeController = TextEditingController();
+  final carTypeController = TextEditingController();
   final phoneNumberController = TextEditingController();
+  final repository = MemberRepository();
+  late Member member;
 
   Future<void> selectBirthday(BuildContext context) async {
     final selectedBirthday = await DatePicker.showDatePicker(
@@ -17,8 +21,7 @@ class QuestionModel extends ChangeNotifier {
       maxTime: DateTime.now(),
     );
     if (selectedBirthday != null) {
-      birthdayController.text =
-          '${selectedBirthday.year}年${selectedBirthday.month}月${selectedBirthday.day}日';
+      birthdateController.text = '${selectedBirthday.year}年${selectedBirthday.month}月${selectedBirthday.day}日';
     }
     notifyListeners();
   }
@@ -34,6 +37,27 @@ class QuestionModel extends ChangeNotifier {
       inspectionController.text =
           '${selectedInspectionDay.year}年${selectedInspectionDay.month}月${selectedInspectionDay.day}日';
     }
+    notifyListeners();
+  }
+
+  ///member入力内容をDBに追加
+  Future<void> onPushAddMember(String mail) async {
+    createMember(mail);
+    await repository.addMember(member);
+    notifyListeners();
+  }
+
+  ///入力内容をMemberにする
+  void createMember(String mail) {
+    member = Member(
+      name: nameController.text,
+      email: mail,
+      location: locationController.text,
+      phoneNumber: phoneNumberController.text,
+      birthDate: birthdateController.text,
+      carType: carTypeController.text,
+      inspectionDay: inspectionController.text,
+    );
     notifyListeners();
   }
 }

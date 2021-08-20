@@ -7,12 +7,12 @@ class AccidentRepository {
   final _collectionPath = 'accident';
   late DocumentReference _docRef;
 
-  Future<void> addAccident(Accident accident) async {
+  Future<void> addAccident(Accident accident, String uid) async {
     try {
       _docRef = _db.collection(_collectionPath).doc();
       await _docRef.set({
         AccidentField.id: _docRef.id,
-        AccidentField.userId: 'ZIMFU3g9CuQxuXJMFi1L', //仮で設定(AuthのUIDを指定)
+        AccidentField.userId: uid,
         AccidentField.policyNumber: accident.policyNumber,
         AccidentField.carDamage: accident.carDamage,
         AccidentField.injury: accident.injury,

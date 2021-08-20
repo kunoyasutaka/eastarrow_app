@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eastarrow_app/domain/chat.dart';
-import 'package:eastarrow_app/domain/user.dart';
-import 'package:eastarrow_app/repository/user_repository.dart';
+import 'package:eastarrow_app/domain/member.dart';
+import 'package:eastarrow_app/repository/member_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/logger.dart';
 
 class ChatRepository {
@@ -24,7 +25,10 @@ class ChatRepository {
   ///chatDetail<List<Map>>をアップデート（ChatDetail画面から送信した場合の処理）
   Future<void> updateChat(List<Map> chatDetailList, Map chatTitle) async {
     try {
-      await _db.collection(_collectionPath).doc(chatTitle[ChatTitleField.docId]).update({
+      await _db
+          .collection(_collectionPath)
+          .doc(chatTitle[ChatTitleField.docId])
+          .update({
         ChatField.chatDetail: chatDetailList,
       });
     } catch (e) {
@@ -33,14 +37,14 @@ class ChatRepository {
     }
   }
 
-  ///新規の連絡開始時に使う ///工事中
-  Future<void> addChat(
-      List<Map> chatDetailList, List<Map> chatTitleList, String title, String userId) async {
+  ///新規の連絡開始時に使う
+  Future<void> addChat(List<Map> chatDetailList, List<Map> chatTitleList,
+      String title, String userId) async {
     try {
       _chatDocRef = _db.collection(_collectionPath).doc();
       await _chatDocRef.set({
         ChatField.docId: _chatDocRef.id,
-        ChatField.userId: 'ZIMFU3g9CuQxuXJMFi1L',
+        ChatField.userId: FirebaseAuth.instance.currentUser!.uid,
         ChatField.title: title,
         ChatField.chatDetail: chatDetailList,
         ChatField.createdAt: Timestamp.fromDate(DateTime.now()),
@@ -48,10 +52,13 @@ class ChatRepository {
       });
 
       ///userIdのdocのchatTitleを更新
-      Map _chatTitle = {ChatTitleField.docId: _chatDocRef.id, ChatTitleField.title: title};
+      Map _chatTitle = {
+        ChatTitleField.docId: _chatDocRef.id,
+        ChatTitleField.title: title
+      };
       _chatTitleList = chatTitleList;
       _chatTitleList.add(_chatTitle);
-      await UserRepository().updateChatTitle(_chatTitleList, userId);
+      await MemberRepository().updateChatTitle(_chatTitleList, userId);
     } catch (e) {
       Logger().e(e.toString());
       rethrow;

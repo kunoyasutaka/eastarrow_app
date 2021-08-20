@@ -18,7 +18,7 @@ class GoodsListPage extends StatelessWidget {
               title: const Text('入荷情報'),
               centerTitle: true,
             ),
-            endDrawer: drawer(),
+            endDrawer: const DrawerList(),
             body: RefreshIndicator(
               onRefresh: () async => await model.fetchGoodsList(),
               child: ListView.builder(

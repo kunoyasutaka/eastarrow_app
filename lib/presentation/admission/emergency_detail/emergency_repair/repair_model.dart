@@ -1,5 +1,6 @@
 import 'package:eastarrow_app/domain/repair.dart';
 import 'package:eastarrow_app/repository/repair_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RepairModel extends ChangeNotifier {
@@ -14,7 +15,7 @@ class RepairModel extends ChangeNotifier {
 
   Future<void> onPushSendRepair() async {
     _repair = createRepair();
-    await repository.addRepair(_repair);
+    await repository.addRepair(_repair, FirebaseAuth.instance.currentUser!.uid);
     notifyListeners();
   }
 

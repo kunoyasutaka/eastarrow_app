@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class QuestionPage extends StatelessWidget {
-  const QuestionPage({Key? key}) : super(key: key);
+  final String mail;
+
+  const QuestionPage({Key? key, required this.mail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +51,7 @@ class QuestionPage extends StatelessWidget {
                         autofocus: false,
                         controller: model.nameController,
                         keyboardType: TextInputType.text,
-                        textAlign: TextAlign.end,
-                        onChanged: (text) => model.nameController.text = text,
+                        textAlign: TextAlign.start,
                       ),
                       const SizedBox(height: 16),
                       const Text(
@@ -59,9 +60,8 @@ class QuestionPage extends StatelessWidget {
                       ),
                       TextField(
                         autofocus: false,
-                        controller: model.birthdayController,
-                        textAlign: TextAlign.end,
-                        onChanged: (text) {},
+                        controller: model.birthdateController,
+                        textAlign: TextAlign.start,
                         onTap: () async => await model.selectBirthday(context),
                       ),
                       const SizedBox(height: 16),
@@ -71,10 +71,9 @@ class QuestionPage extends StatelessWidget {
                       ),
                       TextField(
                         autofocus: false,
-                        controller: model.addressController,
+                        controller: model.locationController,
                         keyboardType: TextInputType.streetAddress,
-                        textAlign: TextAlign.end,
-                        onChanged: (text) {},
+                        textAlign: TextAlign.start,
                       ),
                       const SizedBox(height: 16),
                       const Text(
@@ -85,8 +84,7 @@ class QuestionPage extends StatelessWidget {
                         autofocus: false,
                         controller: model.phoneNumberController,
                         keyboardType: TextInputType.phone,
-                        textAlign: TextAlign.end,
-                        onChanged: (text) {},
+                        textAlign: TextAlign.start,
                       ),
                       const SizedBox(height: 16),
                       const Text(
@@ -95,10 +93,9 @@ class QuestionPage extends StatelessWidget {
                       ),
                       TextField(
                         autofocus: false,
-                        controller: model.vehicleTypeController,
+                        controller: model.carTypeController,
                         keyboardType: TextInputType.text,
-                        textAlign: TextAlign.end,
-                        onChanged: (text) {},
+                        textAlign: TextAlign.start,
                       ),
                       const SizedBox(height: 16),
                       const Text(
@@ -108,10 +105,8 @@ class QuestionPage extends StatelessWidget {
                       TextField(
                         autofocus: false,
                         controller: model.inspectionController,
-                        textAlign: TextAlign.end,
-                        onChanged: (text) {},
-                        onTap: () async =>
-                            await model.selectInspectionDay(context),
+                        textAlign: TextAlign.start,
+                        onTap: () async => await model.selectInspectionDay(context),
                       ),
                       const SizedBox(
                         height: 40,
@@ -123,8 +118,8 @@ class QuestionPage extends StatelessWidget {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () async {
-                              if (await showConfirmDialog(
-                                  context, 'この内容で登録しますか？')) {
+                              if (await showConfirmDialog(context, 'この内容で登録しますか？')) {
+                                model.onPushAddMember(mail);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

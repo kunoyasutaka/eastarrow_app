@@ -1,19 +1,38 @@
-import 'package:eastarrow_app/domain/user.dart';
-import 'package:eastarrow_app/repository/user_repository.dart';
+import 'package:eastarrow_app/domain/member.dart';
+import 'package:eastarrow_app/repository/member_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class MyPageModel extends ChangeNotifier {
   final nameController = TextEditingController();
   final mailController = TextEditingController();
-  final birthdayController = TextEditingController();
+  final birthdateController = TextEditingController();
   final locationController = TextEditingController();
   final inspectionController = TextEditingController();
   final carTypeController = TextEditingController();
   final phoneNumberController = TextEditingController();
 
-  final repository = UserRepository();
-  late User user;
+  final repository = MemberRepository();
+  late Member member;
+
+  Future<void> init() async {
+    await fetchMember();
+
+    nameController.text = member.name!;
+    mailController.text = member.email!;
+    birthdateController.text = member.birthDate!;
+    locationController.text = member.location!;
+    phoneNumberController.text = member.phoneNumber!;
+    carTypeController.text = member.carType!;
+    inspectionController.text = member.inspectionDay!;
+  }
+
+  ///Authログインしているmember情報を呼ぶ
+  Future<void> fetchMember() async {
+    member =
+        await repository.fetchMember(FirebaseAuth.instance.currentUser!.uid);
+  }
 
   Future<void> selectBirthday(BuildContext context) async {
     final selectedBirthday = await DatePicker.showDatePicker(
@@ -23,28 +42,31 @@ class MyPageModel extends ChangeNotifier {
       maxTime: DateTime.now(),
     );
     if (selectedBirthday != null) {
-      birthdayController.text =
+      birthdateController.text =
           '${selectedBirthday.year}年${selectedBirthday.month}月${selectedBirthday.day}日';
     }
     notifyListeners();
   }
 
-  Future<void> fetchUser() async {
-    // TODO auth処理が完成するまでの暫定定義
-    const userId = 'ZIMFU3g9CuQxuXJMFi1L';
-    user = await repository.fetchUser(userId);
+  ///member入力内容をDBに追加
+  ///TODO Authのemailの更新処理（現状はDBのみmailが変わってしまう）
+  Future<void> onPushUpdateMember() async {
+    createMember();
+    await repository.updateMember(member);
+    notifyListeners();
   }
 
-  Future<void> init() async {
-    await fetchUser();
-
-    /// DBがNullだった場合、空文字を返すようにUserモデルでケアしているため!で代入
-    nameController.text = user.name!;
-    mailController.text = user.email!;
-    birthdayController.text = user.birthDate!;
-    locationController.text = user.location!;
-    phoneNumberController.text = user.phoneNumber!;
-    carTypeController.text = user.carType!;
-    inspectionController.text = user.inspectionDay!;
+  ///入力内容をMember型にする
+  void createMember() {
+    member = Member(
+      name: nameController.text,
+      email: mailController.text,
+      location: locationController.text,
+      phoneNumber: phoneNumberController.text,
+      birthDate: birthdateController.text,
+      carType: carTypeController.text,
+      inspectionDay: inspectionController.text,
+    );
+    notifyListeners();
   }
 }

@@ -1,7 +1,8 @@
-import 'package:eastarrow_app/domain/user.dart';
+import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/presentation/chat/chat_detail/chat_detail_page.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/common/drawer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'chat_model.dart';
@@ -12,9 +13,7 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) =>
-      ChatModel()
-        ..init(),
+      create: (_) => ChatModel()..init(),
       child: Consumer<ChatModel>(
         builder: (context, model, child) {
           return Scaffold(
@@ -22,7 +21,7 @@ class ChatPage extends StatelessWidget {
               title: const Text('連絡'),
               centerTitle: true,
             ),
-            endDrawer: drawer(),
+            endDrawer: const DrawerList(),
             body: GestureDetector(
               onTap: () {
                 FocusScopeNode currentFocus = FocusScope.of(context);
@@ -31,7 +30,8 @@ class ChatPage extends StatelessWidget {
                 }
               },
               child: RefreshIndicator(
-                onRefresh: () async => await model.fetchChatTitle('ZIMFU3g9CuQxuXJMFi1L'),
+                onRefresh: () async => await model
+                    .fetchChatTitle(FirebaseAuth.instance.currentUser!.uid),
                 child: Column(
                   children: [
                     Expanded(
@@ -43,31 +43,35 @@ class ChatPage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        ChatDetailPage(
+                                    builder: (context) => ChatDetailPage(
                                           chatTitle: model.chatTitleList[index],
                                         ),
                                     fullscreenDialog: true),
                               );
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 8),
                               height: 60,
                               decoration: const BoxDecoration(
                                 border: Border(
-                                  bottom: BorderSide(color: Colors.grey, width: 1),
+                                  bottom:
+                                      BorderSide(color: Colors.grey, width: 1),
                                 ),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    child: const Text('件名', style: TextStyle(fontSize: 16)),
+                                    child: const Text('件名',
+                                        style: TextStyle(fontSize: 16)),
                                     padding: const EdgeInsets.only(right: 16),
                                   ),
                                   Expanded(
                                     child: Text(
-                                      model.chatTitleList[index][ChatTitleField.title],
+                                      model.chatTitleList[index]
+                                          [ChatTitleField.title],
                                       style: const TextStyle(fontSize: 16),
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
@@ -93,29 +97,39 @@ class ChatPage extends StatelessWidget {
                             children: [
                               Flexible(
                                 child: TextField(
-                                  decoration: const InputDecoration(hintText: '件名'),
+                                  decoration:
+                                      const InputDecoration(hintText: '件名'),
                                   keyboardType: TextInputType.text,
                                   controller: model.titleController,
                                 ),
                               ),
                               IconButton(
-                                onPressed: () async => await showTextDialog(context, '画像を選択してください。'),
+                                onPressed: () async => await showTextDialog(
+                                    context, '画像を選択してください。'),
                                 icon: const Icon(Icons.image),
                               ),
                               //TODO ImagePickerでファイルを取得
                               IconButton(
-                                onPressed: () async => await showTextDialog(context, '写真を撮影してください。'),
+                                onPressed: () async => await showTextDialog(
+                                    context, '写真を撮影してください。'),
                                 icon: const Icon(Icons.camera_alt),
                               ),
                               //TODO カメラを開く
                               IconButton(
                                 onPressed: () async {
-                                  await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')
+                                  await showConfirmDialog(context,
+                                          'ご記入いただいた内容を送信します。\nよろしいですか？')
                                       ? {
-                                    await model.onPushSendNewChat(model.chatTitleList, 'ZIMFU3g9CuQxuXJMFi1L'),
-                                    await showTextDialog(context, '送信しました。'),
-                                    await model.fetchChatTitle('ZIMFU3g9CuQxuXJMFi1L'),
-                                  }
+                                          await model.onPushSendNewChat(
+                                              model.chatTitleList,
+                                              FirebaseAuth
+                                                  .instance.currentUser!.uid),
+                                          await showTextDialog(
+                                              context, '送信しました。'),
+                                          await model.fetchChatTitle(
+                                              FirebaseAuth
+                                                  .instance.currentUser!.uid),
+                                        }
                                       : null;
                                 },
                                 icon: const Icon(Icons.send),

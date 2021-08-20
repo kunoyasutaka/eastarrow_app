@@ -1,25 +1,24 @@
+import 'package:eastarrow_app/repository/auth_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class LoginModel extends ChangeNotifier {
-  String mail = '';
-  String password = '';
+  final mailController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  Future login() async {
-    if (mail.isEmpty) {
-      throw ('メールアドレスを入力してください');
-    }
-    if (password.isEmpty) {
-      throw ('パスワードを入力してください');
-    }
+  final repository = AuthRepository();
 
-    // try {
-    //   await FirebaseAuth.instance.signInWithEmailAndPassword(
-    //     email: mail,
-    //     password: password,
-    //   );
-    // } catch (e) {
-    //   print(e.code);
-    //   throw (_convertErrorMessage(e.code));
-    // }
+  Future<UserCredential?> login() async {
+    try {
+      return await repository.signIn(
+          mailController.text, passwordController.text);
+    } on MyAuthException catch (e) {
+      Logger().e(e.toString());
+      return null;
+    } catch (e) {
+      Logger().e(e.toString());
+      return null;
+    }
   }
 }
