@@ -8,10 +8,6 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mailController = TextEditingController();
-    final passwordController = TextEditingController();
-    final passwordConfirmController = TextEditingController();
-
     return ChangeNotifierProvider(
       create: (_) => RegisterModel(),
       child: Consumer<RegisterModel>(
@@ -44,29 +40,20 @@ class RegisterPage extends StatelessWidget {
                       autofocus: false,
                       decoration:
                           const InputDecoration(hintText: 'example@gmail.com'),
-                      controller: mailController,
-                      onChanged: (text) {
-                        model.mail = text.trim();
-                      },
+                      controller: model.mailController,
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       decoration: const InputDecoration(hintText: 'password'),
-                      controller: passwordController,
+                      controller: model.passwordController,
                       obscureText: true,
-                      onChanged: (text) {
-                        model.password = text;
-                      },
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       decoration:
                           const InputDecoration(hintText: 'password(確認用)'),
-                      controller: passwordConfirmController,
+                      controller: model.passwordConfirmController,
                       obscureText: true,
-                      onChanged: (text) {
-                        model.passwordConfirm = text;
-                      },
                     ),
                     const SizedBox(height: 32),
                     SizedBox(
@@ -85,12 +72,18 @@ class RegisterPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        onPressed: () async{
-                          await model.addAuth();
+                        onPressed: () async {
+                          if (!model.checkPassword()) {
+                            return;
+                          }
+                          if (await model.createUser() == null) {
+                            return;
+                          }
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => QuestionPage(mail: model.mail),
+                              builder: (context) =>
+                                  QuestionPage(mail: model.mailController.text),
                             ),
                           );
                         },

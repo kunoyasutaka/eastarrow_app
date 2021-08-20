@@ -1,32 +1,28 @@
+import 'package:eastarrow_app/repository/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 class RegisterModel extends ChangeNotifier {
-  String mail = '';
-  String password = '';
-  String passwordConfirm = '';
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final mailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final passwordConfirmController = TextEditingController();
+
+  final repository = AuthRepository();
+
+  bool checkPassword() {
+    return passwordController.text == passwordConfirmController.text;
+  }
 
   ///auth登録処理
   ///TODO バリデーション：mail,pass未入力時・同じmail登録時・passと確認用が異なる場合
-  Future<void> addAuth() async {
-    // if (mail.isEmpty) {
-    //   throw ('メールアドレスを入力してください');
-    // }
-    // if (password.isEmpty) {
-    //   throw ('パスワードを入力してください');
-    // }
-    // if (passwordConfirm.isEmpty) {
-    //   throw ('確認用パスワードを入力してください');
-    // }
-
+  Future<UserCredential?> createUser() async {
     try {
-      await _auth.createUserWithEmailAndPassword(email: mail, password: password);
-      notifyListeners();
+      return await repository.createUserWithEmail(
+          mailController.text, passwordController.text);
     } catch (e) {
       Logger().e(e.toString());
-      rethrow;
+      return null;
     }
   }
 }
