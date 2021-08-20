@@ -7,7 +7,7 @@ class AccidentRepository {
   final _collectionPath = 'accident';
   late DocumentReference _docRef;
 
-  Future<void> addAccident(Accident accident,String uid) async {
+  Future<void> addAccident(Accident accident, String uid) async {
     try {
       _docRef = _db.collection(_collectionPath).doc();
       await _docRef.set({

@@ -15,7 +15,8 @@ class AccidentModel extends ChangeNotifier {
 
   Future<void> onPushSendAccident() async {
     _accident = createAccident();
-    await repository.addAccident(_accident,FirebaseAuth.instance.currentUser!.uid);
+    await repository.addAccident(
+        _accident, FirebaseAuth.instance.currentUser!.uid);
     notifyListeners();
   }
 

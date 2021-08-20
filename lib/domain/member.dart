@@ -62,9 +62,7 @@ class Member {
   }
 }
 
-class ChatTitleField{
+class ChatTitleField {
   static const docId = 'docId';
   static const title = 'title';
 }
-
-

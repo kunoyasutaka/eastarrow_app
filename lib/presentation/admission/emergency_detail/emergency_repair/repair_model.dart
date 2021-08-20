@@ -15,7 +15,7 @@ class RepairModel extends ChangeNotifier {
 
   Future<void> onPushSendRepair() async {
     _repair = createRepair();
-    await repository.addRepair(_repair,FirebaseAuth.instance.currentUser!.uid);
+    await repository.addRepair(_repair, FirebaseAuth.instance.currentUser!.uid);
     notifyListeners();
   }
 

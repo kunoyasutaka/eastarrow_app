@@ -25,7 +25,10 @@ class ChatRepository {
   ///chatDetail<List<Map>>をアップデート（ChatDetail画面から送信した場合の処理）
   Future<void> updateChat(List<Map> chatDetailList, Map chatTitle) async {
     try {
-      await _db.collection(_collectionPath).doc(chatTitle[ChatTitleField.docId]).update({
+      await _db
+          .collection(_collectionPath)
+          .doc(chatTitle[ChatTitleField.docId])
+          .update({
         ChatField.chatDetail: chatDetailList,
       });
     } catch (e) {
@@ -35,8 +38,8 @@ class ChatRepository {
   }
 
   ///新規の連絡開始時に使う
-  Future<void> addChat(
-      List<Map> chatDetailList, List<Map> chatTitleList, String title, String userId) async {
+  Future<void> addChat(List<Map> chatDetailList, List<Map> chatTitleList,
+      String title, String userId) async {
     try {
       _chatDocRef = _db.collection(_collectionPath).doc();
       await _chatDocRef.set({
@@ -49,7 +52,10 @@ class ChatRepository {
       });
 
       ///userIdのdocのchatTitleを更新
-      Map _chatTitle = {ChatTitleField.docId: _chatDocRef.id, ChatTitleField.title: title};
+      Map _chatTitle = {
+        ChatTitleField.docId: _chatDocRef.id,
+        ChatTitleField.title: title
+      };
       _chatTitleList = chatTitleList;
       _chatTitleList.add(_chatTitle);
       await MemberRepository().updateChatTitle(_chatTitleList, userId);

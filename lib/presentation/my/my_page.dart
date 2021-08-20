@@ -35,7 +35,8 @@ class MyPage extends StatelessWidget {
                         width: double.infinity,
                         child: const Text(
                           '会員情報',
-                          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 28, fontWeight: FontWeight.bold),
                         ),
                         decoration: const BoxDecoration(
                           border: Border(
@@ -53,7 +54,8 @@ class MyPage extends StatelessWidget {
                           children: [
                             const Text(
                               '名前',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             TextField(
                               autofocus: false,
@@ -64,7 +66,8 @@ class MyPage extends StatelessWidget {
                             const SizedBox(height: 16),
                             const Text(
                               'メールアドレス',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             TextField(
                               autofocus: false,
@@ -75,18 +78,21 @@ class MyPage extends StatelessWidget {
                             const SizedBox(height: 16),
                             const Text(
                               '生年月日',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             TextField(
                               autofocus: false,
                               controller: model.birthdateController,
                               textAlign: TextAlign.start,
-                              onTap: () async => await model.selectBirthday(context),
+                              onTap: () async =>
+                                  await model.selectBirthday(context),
                             ),
                             const SizedBox(height: 16),
                             const Text(
                               '住所',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             TextField(
                               autofocus: false,
@@ -97,7 +103,8 @@ class MyPage extends StatelessWidget {
                             const SizedBox(height: 16),
                             const Text(
                               '電話番号',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             TextField(
                               autofocus: false,
@@ -108,7 +115,8 @@ class MyPage extends StatelessWidget {
                             const SizedBox(height: 16),
                             const Text(
                               '車種',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             TextField(
                               autofocus: false,
@@ -119,36 +127,44 @@ class MyPage extends StatelessWidget {
                             const SizedBox(height: 16),
                             const Text(
                               '車検日',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             TextField(
                               autofocus: false,
                               controller: model.inspectionController,
                               textAlign: TextAlign.start,
-                              onTap: () async => await selectInspectionDay(context, model.inspectionController),
+                              onTap: () async => await selectInspectionDay(
+                                  context, model.inspectionController),
                             ),
                             const Text(
                               '※車検日の1ヶ月前にお知らせいたします。',
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
                               height: 40,
                             ),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                               child: SizedBox(
                                 height: 40,
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                  onPressed: () async => await showConfirmDialog(context, '会員情報を更新しますか？')
-                                      ? {
-                                          await model.onPushUpdateMember(),
-                                          await showTextDialog(context, '更新しました。'),
-                                        }
-                                      : null,
+                                  onPressed: () async =>
+                                      await showConfirmDialog(
+                                              context, '会員情報を更新しますか？')
+                                          ? {
+                                              await model.onPushUpdateMember(),
+                                              await showTextDialog(
+                                                  context, '更新しました。'),
+                                            }
+                                          : null,
                                   child: const Text(
                                     '会員情報を更新',
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),

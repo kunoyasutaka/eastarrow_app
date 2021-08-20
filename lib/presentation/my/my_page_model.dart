@@ -30,7 +30,8 @@ class MyPageModel extends ChangeNotifier {
 
   ///Authログインしているmember情報を呼ぶ
   Future<void> fetchMember() async {
-    member = await repository.fetchMember(FirebaseAuth.instance.currentUser!.uid);
+    member =
+        await repository.fetchMember(FirebaseAuth.instance.currentUser!.uid);
   }
 
   Future<void> selectBirthday(BuildContext context) async {
@@ -68,6 +69,4 @@ class MyPageModel extends ChangeNotifier {
     );
     notifyListeners();
   }
-
-
 }

@@ -7,7 +7,7 @@ class RepairRepository {
   final _collectionPath = 'repair';
   late DocumentReference _docRef;
 
-  Future<void> addRepair(Repair repair,String uid) async {
+  Future<void> addRepair(Repair repair, String uid) async {
     try {
       _docRef = _db.collection(_collectionPath).doc();
       await _docRef.set({
@@ -20,7 +20,6 @@ class RepairRepository {
         RepairField.remark: repair.remark,
         RepairField.createdAt: Timestamp.fromDate(DateTime.now()),
       });
-
     } catch (e) {
       Logger().e(e.toString());
       rethrow;
