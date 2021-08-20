@@ -57,7 +57,9 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         onPressed: () async {
-                          await model.login();
+                          if (await model.login() == null) {
+                            return;
+                          }
                           await showTextDialog(context, 'ログインが完了しました。');
                           Navigator.push(
                             context,
