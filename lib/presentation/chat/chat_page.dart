@@ -21,7 +21,7 @@ class ChatPage extends StatelessWidget {
               title: const Text('連絡'),
               centerTitle: true,
             ),
-            endDrawer: drawer(),
+            endDrawer: const DrawerList(),
             body: GestureDetector(
               onTap: () {
                 FocusScopeNode currentFocus = FocusScope.of(context);
