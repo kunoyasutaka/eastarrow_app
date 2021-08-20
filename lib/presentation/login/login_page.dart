@@ -11,8 +11,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final mailController = TextEditingController();
-    final passwordController = TextEditingController();
 
     return ChangeNotifierProvider(
       create: (_) => LoginModel(),
@@ -35,19 +33,13 @@ class LoginPage extends StatelessWidget {
                       autofocus: false,
                       decoration:
                           const InputDecoration(hintText: 'example@gmail.com'),
-                      controller: mailController,
-                      onChanged: (text) {
-                        model.mail = text.trim();
-                      },
+                      controller: model.mailController,
                     ),
                     const SizedBox(height: 8),
                     TextField(
                       decoration: const InputDecoration(hintText: 'password'),
-                      controller: passwordController,
+                      controller: model.passwordController,
                       obscureText: true,
-                      onChanged: (text) {
-                        model.password = text;
-                      },
                     ),
                     const SizedBox(height: 32),
                     SizedBox(

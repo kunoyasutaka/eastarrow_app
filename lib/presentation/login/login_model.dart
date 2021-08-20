@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 class LoginModel extends ChangeNotifier {
-  String mail = '';
-  String password = '';
+  final mailController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  Future login() async {
+  Future<UserCredential?> login() async {
     // if (mail.isEmpty) {
     //   throw ('メールアドレスを入力してください');
     // }
@@ -15,12 +15,13 @@ class LoginModel extends ChangeNotifier {
     // }
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: mail,
-        password: password,
+      return await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: mailController.text,
+        password: passwordController.text,
       );
     } catch (e) {
       Logger().e(e.toString());
+      return null;
     }
   }
 }
