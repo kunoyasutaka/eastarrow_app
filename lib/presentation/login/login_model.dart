@@ -3,16 +3,14 @@ import 'package:eastarrow_app/presentation/root.dart';
 import 'package:eastarrow_app/repository/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:logger/logger.dart';
 
 class LoginModel extends ChangeNotifier {
-  final mailController = TextEditingController();
-  final passwordController = TextEditingController();
-
   final repository = AuthRepository();
 
-  Future<void> onPushLogin(context) async {
-    if (await login() == null) {
+  Future<void> onPushLogin(context, GlobalKey<FormBuilderState> formKey) async {
+    if (await login(formKey) == null) {
       Logger().e('ログインに失敗しました。');
       return;
     }
@@ -23,9 +21,10 @@ class LoginModel extends ChangeNotifier {
     );
   }
 
-  Future<UserCredential?> login() async {
+  Future<UserCredential?> login(GlobalKey<FormBuilderState> formKey) async {
     try {
-      return await repository.signIn(mailController.text, passwordController.text);
+      return await repository.signIn(
+          formKey.currentState!.fields['mail']!.value, formKey.currentState!.fields['password']!.value);
     } on MyAuthException catch (e) {
       Logger().e(e.toString());
       return null;

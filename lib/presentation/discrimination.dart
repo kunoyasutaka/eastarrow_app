@@ -10,7 +10,7 @@ class DiscriminationPage extends StatelessWidget {
     if (AuthRepository().isSignedIn) {
       return const Root();
     } else {
-      return const LoginPage();
+      return  LoginPage();
     }
   }
 }

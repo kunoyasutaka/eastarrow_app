@@ -1,25 +1,35 @@
+import 'package:eastarrow_app/presentation/common/dialog.dart';
+import 'package:eastarrow_app/presentation/question_page/question_page.dart';
 import 'package:eastarrow_app/repository/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:logger/logger.dart';
 
 class RegisterModel extends ChangeNotifier {
-  final mailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final passwordConfirmController = TextEditingController();
-
   final repository = AuthRepository();
 
-  bool checkPassword() {
-    return passwordController.text == passwordConfirmController.text;
+  Future<void> onPushSignup(context, GlobalKey<FormBuilderState> formKey) async {
+    if (formKey.currentState!.validate()){
+      if (await createUser(formKey) == null) {
+        Logger().e('登録に失敗しました。\n再度登録してください。');
+        return;
+      }
+      await showTextDialog(context, '新規登録に成功しました。');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QuestionPage(mail: formKey.currentState!.fields['mail']!.value)),
+      );
+    }
   }
 
   ///auth登録処理
-  ///TODO バリデーション：mail,pass未入力時・同じmail登録時・passと確認用が異なる場合
-  Future<UserCredential?> createUser() async {
+  Future<UserCredential?> createUser(GlobalKey<FormBuilderState> formKey) async {
     try {
       return await repository.createUserWithEmail(
-          mailController.text, passwordController.text);
+        formKey.currentState!.fields['mail']!.value,
+        formKey.currentState!.fields['password']!.value,
+      );
     } catch (e) {
       Logger().e(e.toString());
       return null;
