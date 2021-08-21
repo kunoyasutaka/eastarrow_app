@@ -3,6 +3,7 @@ import 'package:eastarrow_app/presentation/login/login_model.dart';
 import 'package:eastarrow_app/presentation/register/register_page.dart';
 import 'package:eastarrow_app/presentation/root.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -11,6 +12,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final _formKey = GlobalKey<FormBuilderState>();
 
     return ChangeNotifierProvider(
       create: (_) => LoginModel(),
@@ -29,17 +31,53 @@ class LoginPage extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: size.height / 10),
-                    TextField(
-                      autofocus: false,
-                      decoration:
-                          const InputDecoration(hintText: 'example@gmail.com'),
-                      controller: model.mailController,
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      decoration: const InputDecoration(hintText: 'password'),
-                      controller: model.passwordController,
-                      obscureText: true,
+                    // TextField(
+                    //   autofocus: false,
+                    //   decoration: const InputDecoration(hintText: 'example@gmail.com'),
+                    //   controller: model.mailController,
+                    // ),
+                    // const SizedBox(height: 8),
+                    // TextField(
+                    //   decoration: const InputDecoration(hintText: 'password'),
+                    //   controller: model.passwordController,
+                    //   obscureText: true,
+                    // ),
+                    FormBuilder(
+                      key: _formKey,
+                      autovalidateMode: AutovalidateMode.always,
+                      child: Column(
+                        children: [
+                          FormBuilderTextField(
+                            name: 'mail',
+                            decoration: const InputDecoration(
+                              hintText: 'example@email.com',
+                            ),
+                            controller: model.mailController,
+                            // onChanged: _onChanged,
+                            // valueTransformer: (text) => num.tryParse(text),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(context,errorText: 'メールアドレスを入力してください'),
+                              FormBuilderValidators.email(context),
+                            ]),
+                            keyboardType: TextInputType.emailAddress,
+                          ),
+                          const SizedBox(height: 8),
+                          FormBuilderTextField(
+                            name: 'password',
+                            decoration: const InputDecoration(
+                              hintText: 'password',
+                            ),
+                            controller: model.passwordController,
+                            // onChanged: _onChanged,
+                            // valueTransformer: (text) => num.tryParse(text),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.minLength(context, 6),
+                            ]),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 32),
                     SizedBox(
@@ -56,17 +94,7 @@ class LoginPage extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(32)),
                           ),
                         ),
-                        onPressed: () async {
-                          if (await model.login() == null) {
-                            return;
-                          }
-                          await showTextDialog(context, 'ログインが完了しました。');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Root()),
-                          );
-                        },
+                        onPressed: () async => model.onPushLogin(context),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -87,8 +115,7 @@ class LoginPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const RegisterPage()),
+                            MaterialPageRoute(builder: (context) => const RegisterPage()),
                           );
                         },
                       ),
