@@ -32,6 +32,10 @@ class LoginPage extends StatelessWidget {
                       FormBuilder(
                         key: _formKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        initialValue: const {
+                          'mail': '',
+                          'password': '',
+                        },
                         child: Column(
                           children: [
                             FormBuilderTextField(
@@ -41,7 +45,7 @@ class LoginPage extends StatelessWidget {
                               ),
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(context,errorText: 'メールアドレスを入力してください'),
-                                FormBuilderValidators.email(context,errorText: '正しいメールアドレスを入力してください'),
+                                FormBuilderValidators.email(context,errorText: 'メールアドレスを正しい形式で入力してください'),
                               ]),
                               keyboardType: TextInputType.emailAddress,
                             ),
@@ -54,7 +58,6 @@ class LoginPage extends StatelessWidget {
                               obscureText: true,
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(context,errorText: 'パスワードを入力してください'),
-                                FormBuilderValidators.minLength(context, 6,errorText: 'パスワードは6文字以上で入力してください'),
                               ]),
                             ),
                           ],

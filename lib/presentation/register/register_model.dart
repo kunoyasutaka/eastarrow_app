@@ -9,26 +9,26 @@ import 'package:logger/logger.dart';
 class RegisterModel extends ChangeNotifier {
   final repository = AuthRepository();
 
-  Future<void> onPushSignup(context, GlobalKey<FormBuilderState> formKey) async {
-    if (formKey.currentState!.validate()){
-      if (await createUser(formKey) == null) {
-        Logger().e('登録に失敗しました。\n再度登録してください。');
-        return;
-      }
-      await showTextDialog(context, '新規登録に成功しました。');
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => QuestionPage(mail: formKey.currentState!.fields['mail']!.value)),
-      );
+  Future<void> onPushSignup(BuildContext context, GlobalKey<FormBuilderState> formKey) async {
+    if (await createUser(context, formKey) == null) {
+      Logger().e('登録に失敗しました。\n再度登録してください。');
+      return;
     }
+    await showTextDialog(context, '新規登録に成功しました。');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => QuestionPage(mail: formKey.currentState!.fields['mail']!.value)),
+    );
   }
 
   ///auth登録処理
-  Future<UserCredential?> createUser(GlobalKey<FormBuilderState> formKey) async {
+  Future<UserCredential?> createUser(BuildContext context, GlobalKey<FormBuilderState> formKey) async {
     try {
       return await repository.createUserWithEmail(
+        context,
         formKey.currentState!.fields['mail']!.value,
         formKey.currentState!.fields['password']!.value,
+        formKey.currentState!.fields['passwordConfirm']!.value,
       );
     } catch (e) {
       Logger().e(e.toString());

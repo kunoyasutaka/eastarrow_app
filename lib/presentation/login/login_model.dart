@@ -10,7 +10,7 @@ class LoginModel extends ChangeNotifier {
   final repository = AuthRepository();
 
   Future<void> onPushLogin(context, GlobalKey<FormBuilderState> formKey) async {
-    if (await login(formKey) == null) {
+    if (await login(context, formKey) == null) {
       Logger().e('ログインに失敗しました。');
       return;
     }
@@ -21,13 +21,10 @@ class LoginModel extends ChangeNotifier {
     );
   }
 
-  Future<UserCredential?> login(GlobalKey<FormBuilderState> formKey) async {
+  Future<UserCredential?> login(BuildContext context, GlobalKey<FormBuilderState> formKey) async {
     try {
-      return await repository.signIn(
+      return await repository.signIn(context,
           formKey.currentState!.fields['mail']!.value, formKey.currentState!.fields['password']!.value);
-    } on MyAuthException catch (e) {
-      Logger().e(e.toString());
-      return null;
     } catch (e) {
       Logger().e(e.toString());
       return null;
