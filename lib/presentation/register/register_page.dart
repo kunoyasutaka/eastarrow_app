@@ -1,11 +1,13 @@
+import 'package:eastarrow_app/presentation/common/dialog.dart';
+import 'package:eastarrow_app/presentation/question_page/question_page.dart';
 import 'package:eastarrow_app/presentation/register/register_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget {
-  RegisterPage({Key? key}) : super(key: key);
-  final _formKey = GlobalKey<FormBuilderState>();
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +19,16 @@ class RegisterPage extends StatelessWidget {
             appBar: AppBar(
               title: const Text('新規登録'),
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: GestureDetector(
-                  onTap: () {
-                    FocusScopeNode currentFocus = FocusScope.of(context);
-                    if (!currentFocus.hasPrimaryFocus) {
-                      currentFocus.unfocus();
-                    }
-                  },
+            body: GestureDetector(
+              onTap: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+              },
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
                       const SizedBox(height: 40),
@@ -37,9 +39,9 @@ class RegisterPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 32),
                       FormBuilder(
-                        key: _formKey,
+                        key: model.formKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         initialValue: const {
                           'mail': '',
@@ -52,10 +54,12 @@ class RegisterPage extends StatelessWidget {
                               name: 'mail',
                               decoration: const InputDecoration(
                                 hintText: 'example@email.com',
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.mail),
                               ),
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(context, errorText: 'メールアドレスを入力してください'),
-                                FormBuilderValidators.email(context, errorText: '正しいメールアドレスを入力してください'),
+                                FormBuilderValidators.email(context, errorText: 'メールアドレスを正しい形式で入力してください'),
                               ]),
                               keyboardType: TextInputType.emailAddress,
                             ),
@@ -64,6 +68,8 @@ class RegisterPage extends StatelessWidget {
                               name: 'password',
                               decoration: const InputDecoration(
                                 hintText: 'password',
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.lock),
                               ),
                               obscureText: true,
                               validator: FormBuilderValidators.compose([
@@ -77,11 +83,13 @@ class RegisterPage extends StatelessWidget {
                               name: 'passwordConfirm',
                               decoration: const InputDecoration(
                                 hintText: 'password(確認用)',
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.lock),
                               ),
                               obscureText: true,
                               validator: FormBuilderValidators.compose([
                                 (value) {
-                                  if (value != _formKey.currentState?.fields['password']?.value) {
+                                  if (value != model.formKey.currentState!.fields['password']!.value) {
                                     return 'パスワードが一致しません';
                                   }
                                   return null;
@@ -110,7 +118,17 @@ class RegisterPage extends StatelessWidget {
                             ),
                           ),
                           onPressed: () async {
-                            _formKey.currentState != null ? await model.onPushSignup(context, _formKey) : null;
+                            await model.createUser() == null
+                                ? Logger().e('登録に失敗しました。\n再度登録してください。')
+                                : [
+                                    await showTextDialog(context, '新規登録に成功しました。'),
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              QuestionPage(mail: model.formKey.currentState!.fields['mail']!.value)),
+                                    )
+                                  ];
                           },
                         ),
                       ),

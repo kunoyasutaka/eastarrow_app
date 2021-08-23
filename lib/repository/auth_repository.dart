@@ -1,6 +1,4 @@
-import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:logger/logger.dart';
 import 'package:eastarrow_app/extension/string_extension.dart';
 
@@ -15,13 +13,11 @@ class AuthRepository {
   bool get isNotSignedIn => _auth.currentUser == null;
 
   /// [email]と[password]を使ってサインインする
-  Future<UserCredential?> signIn(BuildContext context, String email, String password) async {
+  Future<UserCredential?> signIn(String email, String password) async {
     if (email.isBlank()) {
-      await showTextDialog(context, 'メールアドレスを入力してください');
       throw const FormatException('メールアドレスを入力してください');
     }
     if (password.isBlank()) {
-      await showTextDialog(context, 'パスワードを入力してください');
       throw const FormatException('パスワードを入力してください');
     }
     try {
@@ -30,13 +26,11 @@ class AuthRepository {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
-      await showTextDialog(context, _convertErrorMessage(e.code));
       throw MyAuthException(
         e.code,
         _convertErrorMessage(e.code),
       );
     } catch (e) {
-      await showTextDialog(context, _convertErrorMessage(e.toString()));
       Logger().e(_convertErrorMessage(e.toString()));
       return null;
     }
@@ -47,18 +41,14 @@ class AuthRepository {
   }
 
   /// [email]と[password]を使ってfirebaseAuthに登録し、認証メールを送信
-  Future<UserCredential?> createUserWithEmail(BuildContext context,
-      String email, String password,String passwordConfirm) async {
+  Future<UserCredential?> createUserWithEmail(String email, String password, String passwordConfirm) async {
     if (email.isBlank()) {
-      await showTextDialog(context, 'メールアドレスを入力してください');
       throw const FormatException('メールアドレスを入力してください');
     }
     if (password.isBlank()) {
-      await showTextDialog(context, 'パスワードを入力してください');
       throw const FormatException('パスワードを入力してください');
     }
-    if (password != passwordConfirm ) {
-      await showTextDialog(context, 'パスワードが一致しません');
+    if (password != passwordConfirm) {
       throw const FormatException('パスワードが一致しません');
     }
     try {
@@ -68,13 +58,11 @@ class AuthRepository {
       );
       return user;
     } on FirebaseAuthException catch (e) {
-      await showTextDialog(context, _convertErrorMessage(e.code));
       throw MyAuthException(
         e.code,
         _convertErrorMessage(e.code),
       );
     } catch (e) {
-      await showTextDialog(context, _convertErrorMessage(e.toString()));
       Logger().e(e.toString());
       return null;
     }
@@ -104,6 +92,7 @@ class AuthRepository {
 
 class MyAuthException implements Exception {
   MyAuthException(this.code, this.message);
+
   final String code;
   final String message;
 

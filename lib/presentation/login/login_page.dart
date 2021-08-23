@@ -1,12 +1,14 @@
+import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/login/login_model.dart';
 import 'package:eastarrow_app/presentation/register/register_page.dart';
+import 'package:eastarrow_app/presentation/root.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
-  final _formKey = GlobalKey<FormBuilderState>();
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,21 +18,21 @@ class LoginPage extends StatelessWidget {
       child: Consumer<LoginModel>(
         builder: (context, model, child) {
           return Scaffold(
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: GestureDetector(
-                  onTap: () {
-                    FocusScopeNode currentFocus = FocusScope.of(context);
-                    if (!currentFocus.hasPrimaryFocus) {
-                      currentFocus.unfocus();
-                    }
-                  },
+            body: GestureDetector(
+              onTap: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+              },
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
                       SizedBox(height: size.height / 10),
                       FormBuilder(
-                        key: _formKey,
+                        key: model.formKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         initialValue: const {
                           'mail': '',
@@ -42,10 +44,12 @@ class LoginPage extends StatelessWidget {
                               name: 'mail',
                               decoration: const InputDecoration(
                                 hintText: 'example@email.com',
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.mail),
                               ),
                               validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.required(context,errorText: 'メールアドレスを入力してください'),
-                                FormBuilderValidators.email(context,errorText: 'メールアドレスを正しい形式で入力してください'),
+                                FormBuilderValidators.required(context, errorText: 'メールアドレスを入力してください'),
+                                FormBuilderValidators.email(context, errorText: 'メールアドレスを正しい形式で入力してください'),
                               ]),
                               keyboardType: TextInputType.emailAddress,
                             ),
@@ -54,10 +58,12 @@ class LoginPage extends StatelessWidget {
                               name: 'password',
                               decoration: const InputDecoration(
                                 hintText: 'password',
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.lock),
                               ),
                               obscureText: true,
                               validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.required(context,errorText: 'パスワードを入力してください'),
+                                FormBuilderValidators.required(context, errorText: 'パスワードを入力してください'),
                               ]),
                             ),
                           ],
@@ -79,9 +85,15 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           onPressed: () async {
-                            _formKey.currentState != null
-                            ? await model.onPushLogin(context,_formKey)
-                            : null;
+                            await model.login() == null
+                                ? Logger().e('ログインに失敗しました。')
+                                : [
+                                    await showTextDialog(context, 'ログインが完了しました。'),
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const Root()),
+                                    )
+                                  ];
                           },
                         ),
                       ),
@@ -103,7 +115,7 @@ class LoginPage extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => RegisterPage()),
+                              MaterialPageRoute(builder: (context) => const RegisterPage()),
                             );
                           },
                         ),
