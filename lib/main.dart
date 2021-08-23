@@ -1,4 +1,4 @@
-import 'package:eastarrow_app/presentation/login/login_page.dart';
+import 'package:eastarrow_app/presentation/discrimination.dart';
 import 'package:eastarrow_app/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: myTheme(),
-      home: LoginPage(),
+      home: const DiscriminationPage(),
     );
   }
 }

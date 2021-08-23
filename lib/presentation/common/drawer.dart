@@ -4,7 +4,6 @@ import 'package:eastarrow_app/presentation/login/login_page.dart';
 import 'package:eastarrow_app/presentation/my/my_page.dart';
 import 'package:eastarrow_app/repository/auth_repository.dart';
 import 'package:eastarrow_app/theme/app_colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DrawerList extends StatelessWidget {
@@ -58,7 +57,7 @@ class DrawerList extends StatelessWidget {
                 child: drawerTile(Icons.assignment_outlined, '利用規約'),
                 onTap: () async {
                   await showTextDialog(
-                      context, FirebaseAuth.instance.currentUser!.uid);
+                      context, '利用規約');
                 }),
             const Divider(),
             InkWell(
