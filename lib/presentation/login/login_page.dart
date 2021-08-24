@@ -4,7 +4,6 @@ import 'package:eastarrow_app/presentation/register/register_page.dart';
 import 'package:eastarrow_app/presentation/root.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -85,15 +84,14 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           onPressed: () async {
-                            await model.login() == null
-                                ? Logger().e('ログインに失敗しました。')
-                                : [
-                                    await showTextDialog(context, 'ログインが完了しました。'),
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => const Root()),
-                                    )
-                                  ];
+                            if (await model.login() == null) {
+                              return;
+                            }
+                            await showTextDialog(context, 'ログインが完了しました。');
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const Root()),
+                            );
                           },
                         ),
                       ),

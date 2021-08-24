@@ -3,7 +3,6 @@ import 'package:eastarrow_app/presentation/question_page/question_page.dart';
 import 'package:eastarrow_app/presentation/register/register_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -118,17 +117,16 @@ class RegisterPage extends StatelessWidget {
                             ),
                           ),
                           onPressed: () async {
-                            await model.createUser() == null
-                                ? Logger().e('登録に失敗しました。\n再度登録してください。')
-                                : [
-                                    await showTextDialog(context, '新規登録に成功しました。'),
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              QuestionPage(mail: model.formKey.currentState!.fields['mail']!.value)),
-                                    )
-                                  ];
+                            if (await model.createUser() == null) {
+                              return;
+                            }
+                            await showTextDialog(context, '新規登録に成功しました。');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      QuestionPage(mail: model.formKey.currentState!.fields['mail']!.value)),
+                            );
                           },
                         ),
                       ),
