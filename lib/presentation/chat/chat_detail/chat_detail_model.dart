@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eastarrow_app/domain/chat.dart';
 import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/repository/chat_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 
 class ChatDetailModel extends ChangeNotifier {
   final repository = ChatRepository();
@@ -11,6 +15,7 @@ class ChatDetailModel extends ChangeNotifier {
   List<Map> chatDetailList = [];
   late Chat chat;
   late Map chatDetail;
+  late File imageFile;
 
   ///画像選択時にリスト化
   List<String> selectImageUrl = [];
@@ -55,4 +60,18 @@ class ChatDetailModel extends ChangeNotifier {
     selectImageUrl = [];
     notifyListeners();
   }
+
+  final ImagePicker _picker = ImagePicker();
+
+  ///imagePickerを起動
+  Future<void> showImagePicker(BuildContext context, File imageFile) async {
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+      notifyListeners();
+    } else {
+      return;
+    }
+  }
+
 }

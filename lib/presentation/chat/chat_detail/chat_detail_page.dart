@@ -2,6 +2,7 @@ import 'package:eastarrow_app/domain/chatdetail.dart';
 import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/presentation/chat/chat_detail/chat_detail_model.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
+import 'package:eastarrow_app/repository/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -104,8 +105,7 @@ class ChatDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               IconButton(
-                                onPressed: () async => await showTextDialog(
-                                    context, '画像を選択してください。'),
+                                onPressed: () async => await showImagePicker(context, model.imageFile),
                                 icon: const Icon(Icons.image),
                               ),
                               //TODO ImagePickerでファイルを取得
