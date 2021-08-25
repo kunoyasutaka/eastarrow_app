@@ -41,13 +41,15 @@ class AuthRepository {
   }
 
   /// [email]と[password]を使ってfirebaseAuthに登録し、認証メールを送信
-  Future<UserCredential?> createUserWithEmail(
-      String email, String password) async {
+  Future<UserCredential?> createUserWithEmail(String email, String password, String passwordConfirm) async {
     if (email.isBlank()) {
       throw const FormatException('メールアドレスを入力してください');
     }
     if (password.isBlank()) {
       throw const FormatException('パスワードを入力してください');
+    }
+    if (password != passwordConfirm) {
+      throw const FormatException('パスワードが一致しません');
     }
     try {
       final user = await _auth.createUserWithEmailAndPassword(
@@ -90,6 +92,7 @@ class AuthRepository {
 
 class MyAuthException implements Exception {
   MyAuthException(this.code, this.message);
+
   final String code;
   final String message;
 
