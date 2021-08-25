@@ -6,12 +6,14 @@ import 'package:logger/logger.dart';
 
 class LoginModel extends ChangeNotifier {
   final formKey = GlobalKey<FormBuilderState>();
+  final mailController = TextEditingController();
+  final passwordController = TextEditingController();
   final repository = AuthRepository();
 
   Future<UserCredential?> login() async {
     try {
       return await repository.signIn(
-          formKey.currentState!.fields['mail']!.value, formKey.currentState!.fields['password']!.value);
+          mailController.text, passwordController.text);
     } catch (e) {
       Logger().e(e.toString());
       return null;

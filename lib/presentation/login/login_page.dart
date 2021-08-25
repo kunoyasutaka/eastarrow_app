@@ -34,13 +34,12 @@ class LoginPage extends StatelessWidget {
                         key: model.formKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         initialValue: const {
-                          'mail': '',
-                          'password': '',
                         },
                         child: Column(
                           children: [
                             FormBuilderTextField(
                               name: 'mail',
+                              controller: model.mailController,
                               decoration: const InputDecoration(
                                 hintText: 'example@email.com',
                                 border: OutlineInputBorder(),
@@ -55,6 +54,7 @@ class LoginPage extends StatelessWidget {
                             const SizedBox(height: 8),
                             FormBuilderTextField(
                               name: 'password',
+                              controller: model.passwordController,
                               decoration: const InputDecoration(
                                 hintText: 'password',
                                 border: OutlineInputBorder(),

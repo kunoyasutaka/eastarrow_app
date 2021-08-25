@@ -6,15 +6,18 @@ import 'package:logger/logger.dart';
 
 class RegisterModel extends ChangeNotifier {
   final formKey = GlobalKey<FormBuilderState>();
+  final mailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final passwordConfirmController = TextEditingController();
   final repository = AuthRepository();
 
   ///auth登録処理
   Future<UserCredential?> createUser() async {
     try {
       return await repository.createUserWithEmail(
-        formKey.currentState!.fields['mail']!.value,
-        formKey.currentState!.fields['password']!.value,
-        formKey.currentState!.fields['passwordConfirm']!.value,
+        mailController.text,
+        passwordController.text,
+        passwordConfirmController.text,
       );
     } catch (e) {
       Logger().e(e.toString());

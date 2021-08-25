@@ -51,6 +51,7 @@ class RegisterPage extends StatelessWidget {
                           children: [
                             FormBuilderTextField(
                               name: 'mail',
+                              controller: model.mailController,
                               decoration: const InputDecoration(
                                 hintText: 'example@email.com',
                                 border: OutlineInputBorder(),
@@ -65,6 +66,7 @@ class RegisterPage extends StatelessWidget {
                             const SizedBox(height: 16),
                             FormBuilderTextField(
                               name: 'password',
+                              controller: model.passwordController,
                               decoration: const InputDecoration(
                                 hintText: 'password',
                                 border: OutlineInputBorder(),
@@ -80,6 +82,7 @@ class RegisterPage extends StatelessWidget {
                             const SizedBox(height: 16),
                             FormBuilderTextField(
                               name: 'passwordConfirm',
+                              controller: model.passwordConfirmController,
                               decoration: const InputDecoration(
                                 hintText: 'password(確認用)',
                                 border: OutlineInputBorder(),
@@ -88,7 +91,7 @@ class RegisterPage extends StatelessWidget {
                               obscureText: true,
                               validator: FormBuilderValidators.compose([
                                 (value) {
-                                  if (value != model.formKey.currentState!.fields['password']!.value) {
+                                  if (value != model.passwordController.text) {
                                     return 'パスワードが一致しません';
                                   }
                                   return null;
@@ -125,7 +128,7 @@ class RegisterPage extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      QuestionPage(mail: model.formKey.currentState!.fields['mail']!.value)),
+                                      QuestionPage(mail: model.mailController.text)),
                             );
                           },
                         ),
