@@ -42,11 +42,6 @@ class RegisterPage extends StatelessWidget {
                       FormBuilder(
                         key: model.formKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        initialValue: const {
-                          'mail': '',
-                          'password': '',
-                          'passwordConfirm': '',
-                        },
                         child: Column(
                           children: [
                             FormBuilderTextField(
@@ -90,12 +85,7 @@ class RegisterPage extends StatelessWidget {
                               ),
                               obscureText: true,
                               validator: FormBuilderValidators.compose([
-                                (value) {
-                                  if (value != model.passwordController.text) {
-                                    return 'パスワードが一致しません';
-                                  }
-                                  return null;
-                                }
+                                (value)=> model.checkPassword(value)
                               ]),
                               keyboardType: TextInputType.visiblePassword,
                             ),

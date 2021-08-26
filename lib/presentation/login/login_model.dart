@@ -14,6 +14,9 @@ class LoginModel extends ChangeNotifier {
     try {
       return await repository.signIn(
           mailController.text, passwordController.text);
+    } on MyAuthException catch (e) {
+      Logger().e(e.toString());
+      return null;
     } catch (e) {
       Logger().e(e.toString());
       return null;

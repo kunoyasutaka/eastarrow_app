@@ -33,8 +33,6 @@ class LoginPage extends StatelessWidget {
                       FormBuilder(
                         key: model.formKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        initialValue: const {
-                        },
                         child: Column(
                           children: [
                             FormBuilderTextField(
