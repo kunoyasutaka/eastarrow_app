@@ -19,9 +19,19 @@ class RegisterModel extends ChangeNotifier {
         passwordController.text,
         passwordConfirmController.text,
       );
+    } on MyAuthException catch (e) {
+      Logger().e(e.toString());
+      return null;
     } catch (e) {
       Logger().e(e.toString());
       return null;
     }
+  }
+
+  String? checkPassword(value) {
+    if (value != passwordController.text) {
+      return 'パスワードが一致しません';
+    }
+    return null;
   }
 }
