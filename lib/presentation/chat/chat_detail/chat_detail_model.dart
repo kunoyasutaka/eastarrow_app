@@ -15,7 +15,7 @@ class ChatDetailModel extends ChangeNotifier {
   List<Map> chatDetailList = [];
   late Chat chat;
   late Map chatDetail;
-  late File imageFile;
+  File? imageFile;
 
   ///画像選択時にリスト化
   List<String> selectImageUrl = [];
