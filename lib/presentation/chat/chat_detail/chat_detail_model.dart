@@ -36,7 +36,10 @@ class ChatDetailModel extends ChangeNotifier {
 
   ///chat入力内容をListに入れてDB(chatDetail)を更新
   Future<void> onPushSendChatDetail(Map chatTitle) async {
-    await uploadImage();
+    // await uploadImage();
+    if (imageList != []) {
+      imageUrlList = (await storageRepository.uploadImageToStorage(imageList, chat.title!, bodyController.text))!;
+    }
     createChatDetail();
     chatDetailList.add(chatDetail);
     await chatRepository.updateChat(chatDetailList, chatTitle);
@@ -78,25 +81,6 @@ class ChatDetailModel extends ChangeNotifier {
       } else {
         return;
       }
-    } catch (e) {
-      Logger().e(e.toString());
-      return;
-    }
-  }
-
-  ///imageFileをStorageに入れて返ったimageUrlをimageUrlListにURLを追加
-  ///imageFileが選択された後に呼ばれる
-  Future<void> uploadImage() async {
-    try {
-      final _storageUpdate = await storageRepository.uploadImageToStorage(imageList, bodyController.text);
-      if (_storageUpdate == null) {
-        return;
-      }
-      imageUrlList = _storageUpdate;
-      notifyListeners();
-    } on FirebaseException catch (e) {
-      Logger().e(e.toString());
-      return;
     } catch (e) {
       Logger().e(e.toString());
       return;

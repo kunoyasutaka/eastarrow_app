@@ -10,14 +10,33 @@ import 'package:path/path.dart';
 class StorageRepository {
   final firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
 
+  ///imageFileをStorageに入れて返ったimageUrlをimageUrlListにURLを追加
+  ///imageFileが選択された後に呼ばれる
+  Future<List<String?>> uploadImage(List<File> imageList, String title, String body) async {
+    try {
+      final _storageUpdate = await uploadImageToStorage(imageList, title, body);
+      if (_storageUpdate == null) {
+        return [];
+      }
+      List<String?> _imageUrlList = _storageUpdate;
+      return _imageUrlList;
+    } on FirebaseException catch (e) {
+      Logger().e(e.toString());
+      return [];
+    } catch (e) {
+      Logger().e(e.toString());
+      return [];
+    }
+  }
+
   ///todo Storageへのアップロード
-  Future<List<String?>?> uploadImageToStorage(List<File> fileList,String detail) async {
+  Future<List<String?>?> uploadImageToStorage(List<File> fileList, String title, String body) async {
     try {
       List<String?> _downloadUrlList = [];
 
       await Future.wait(fileList.map((e) async {
         firebase_storage.Reference _ref =
-            storage.ref().child('chat/${FirebaseAuth.instance.currentUser!.uid}/$detail/${basename(e.path)}');
+            storage.ref().child('chat/${FirebaseAuth.instance.currentUser!.uid}/$title/$body/${basename(e.path)}');
         TaskSnapshot _snapshot = await _ref.putFile(e);
         String _downloadUrl = await _snapshot.ref.getDownloadURL();
         _downloadUrlList.add(_downloadUrl);
