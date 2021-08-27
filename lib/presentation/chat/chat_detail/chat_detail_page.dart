@@ -83,80 +83,74 @@ class ChatDetailPage extends StatelessWidget {
                         },
                       ),
                     ),
-                    Column(
-                      children: [
-                        if (model.imageFile != null)
-                          Container(
-                            height: 80,
-                            width: double.infinity,
-                            color: Colors.grey.withOpacity(0.3),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: model.imageList.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Image.file(model.imageList[index]),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        // const SizedBox(),
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              top: BorderSide(color: Colors.grey),
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    onPressed: () async => await model.showImagePicker(context),
-                                    icon: const Icon(Icons.image),
-                                  ),
-                                  //TODO ImagePickerでファイルを取得
-                                  IconButton(
-                                    onPressed: () async => await showTextDialog(context, '写真を撮影してください。'),
-                                    icon: const Icon(Icons.camera_alt),
-                                  ),
-                                  //TODO カメラを開く
-                                  IconButton(
-                                    onPressed: () async {
-                                      await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')
-                                          ? {
-                                              // await model.uploadImage(),
-                                              await model.onPushSendChatDetail(chatTitle),
-                                              await showTextDialog(context, '送信しました。'),
-                                            }
-                                          : null;
-                                    },
-                                    icon: const Icon(Icons.send),
-                                  ), //TODO 送信処理
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              TextField(
-                                decoration: const InputDecoration(
-                                  hintText: '本文',
-                                  border: OutlineInputBorder(),
-                                ),
-                                keyboardType: TextInputType.multiline,
-                                maxLines: 3,
-                                controller: model.bodyController,
-                              ),
-                            ],
+                    if (model.imageFile != null)
+                      Container(
+                        height: 80,
+                        width: double.infinity,
+                        color: Colors.grey.withOpacity(0.3),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: model.imageList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Image.file(model.imageList[index]),
+                              );
+                            },
                           ),
                         ),
-                      ],
+                      ),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          top: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () async => await model.showImagePicker(context),
+                                icon: const Icon(Icons.image),
+                              ),
+                              //TODO ImagePickerでファイルを取得
+                              IconButton(
+                                onPressed: () async => await showTextDialog(context, '写真を撮影してください。'),
+                                icon: const Icon(Icons.camera_alt),
+                              ),
+                              //TODO カメラを開く
+                              IconButton(
+                                onPressed: () async {
+                                  await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')
+                                      ? {
+                                          await model.onPushSendChatDetail(chatTitle),
+                                          await showTextDialog(context, '送信しました。'),
+                                        }
+                                      : null;
+                                },
+                                icon: const Icon(Icons.send),
+                              ), //TODO 送信処理
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          TextField(
+                            decoration: const InputDecoration(
+                              hintText: '本文',
+                              border: OutlineInputBorder(),
+                            ),
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 3,
+                            controller: model.bodyController,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

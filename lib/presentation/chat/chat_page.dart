@@ -84,6 +84,25 @@ class ChatPage extends StatelessWidget {
                         },
                       ),
                     ),
+                    if (model.imageFile != null)
+                      Container(
+                        height: 80,
+                        width: double.infinity,
+                        color: Colors.grey.withOpacity(0.3),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: model.imageList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Image.file(model.imageList[index]),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: const BoxDecoration(
@@ -104,17 +123,15 @@ class ChatPage extends StatelessWidget {
                                 ),
                               ),
                               IconButton(
-                                onPressed: () async => await showTextDialog(
-                                    context, '画像を選択してください。'),
+                                onPressed: () async => await model.showImagePicker(context),
                                 icon: const Icon(Icons.image),
                               ),
-                              //TODO ImagePickerでファイルを取得
+                              //TODO カメラを開く
                               IconButton(
                                 onPressed: () async => await showTextDialog(
                                     context, '写真を撮影してください。'),
                                 icon: const Icon(Icons.camera_alt),
                               ),
-                              //TODO カメラを開く
                               IconButton(
                                 onPressed: () async {
                                   await showConfirmDialog(context,
