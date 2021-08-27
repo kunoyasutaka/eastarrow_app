@@ -64,19 +64,22 @@ class ChatDetailPage extends StatelessWidget {
                                   padding: const EdgeInsets.all(12),
                                   child: Text(model.chatDetailList[index][ChatDetailField.body]),
                                 ),
-                                // chatDetailList[index].imageUrl != []
-                                //     ? ListView.builder(
-                                //         itemCount: chatDetailList[index].imageUrl!.length,
-                                //         itemBuilder: (context, imageIndex) {
-                                //           return Container(
-                                //             padding: const EdgeInsets.all(12),
-                                //             child: Image.network(
-                                //               chatDetailList[index].imageUrl![imageIndex],
-                                //               width: double.infinity,
-                                //             ),
-                                //           );
-                                //         })
-                                //     : Container(),
+                                model.chatDetailList[index][ChatDetailField.imageUrl].isNotEmpty
+                                    ? ListView.builder(
+                                        itemCount: model.chatDetailList[index][ChatDetailField.imageUrl].length,
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, imageIndex) {
+                                          return Container(
+                                            padding: const EdgeInsets.all(12),
+                                            child: Image.network(
+                                              model.chatDetailList[index][ChatDetailField.imageUrl][imageIndex],
+                                              // width: double.infinity,
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    : Container(),
                               ],
                             ),
                           );
