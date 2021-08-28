@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+///選択したimageをグレーのエリアに表示
+///TODO 最大表示上限・選択解除の機能
 Widget selectImageArea(List<File> imageList){
   return Container(
     height: 80,

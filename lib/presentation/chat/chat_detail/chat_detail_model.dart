@@ -34,7 +34,7 @@ class ChatDetailModel extends ChangeNotifier {
   ///chat入力内容をListに入れてDB(chatDetail)を更新
   Future<void> onPushSendChatDetail(Map chatTitle) async {
     if (imageList != []) {
-      imageUrlList = (await storageRepository.uploadImageToStorage(imageList))!;
+      imageUrlList = await storageRepository.uploadImage(imageList);
     }
     createChatDetail();
     chatDetailList.add(chatDetail);

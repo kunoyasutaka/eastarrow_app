@@ -14,7 +14,7 @@ class StorageRepository {
   ///imageFileが選択された後に呼ばれる
   Future<List<String?>> uploadImage(List<File> imageList) async {
     try {
-      final _storageUpdate = await uploadImageToStorage(imageList);
+      List<String?>? _storageUpdate = await uploadImageToStorage(imageList);
       if (_storageUpdate == null) {
         return [];
       }
@@ -30,18 +30,16 @@ class StorageRepository {
   }
 
   ///todo Storageへのアップロード
-  Future<List<String?>?> uploadImageToStorage(List<File> fileList) async {
+  Future<List<String?>?> uploadImageToStorage(List<File> imageList) async {
     try {
       List<String?> _downloadUrlList = [];
-
-      _downloadUrlList = await Future.wait(fileList.map((e) async {
+      _downloadUrlList = await Future.wait(imageList.map((e) async {
         firebase_storage.Reference _ref =
             storage.ref().child('chat/${FirebaseAuth.instance.currentUser!.uid}/${basename(e.path)}');
         TaskSnapshot _snapshot = await _ref.putFile(e);
         String _downloadUrl = await _snapshot.ref.getDownloadURL();
         return _downloadUrl;
       }).toList());
-
       return _downloadUrlList;
     } on FirebaseException catch (e) {
       Logger().e(e.toString());
