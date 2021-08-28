@@ -3,7 +3,7 @@ import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/presentation/chat/chat_detail/chat_detail_model.dart';
 import 'package:eastarrow_app/presentation/chat/select_image_area.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
-import 'package:eastarrow_app/repository/image_picker.dart';
+import 'package:eastarrow_app/presentation/common/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
