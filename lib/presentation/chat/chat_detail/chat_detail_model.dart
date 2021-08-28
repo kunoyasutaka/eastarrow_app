@@ -7,9 +7,7 @@ import 'package:eastarrow_app/repository/chat_repository.dart';
 import 'package:eastarrow_app/repository/storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
-import 'package:logger/logger.dart';
+
 
 class ChatDetailModel extends ChangeNotifier {
   final chatRepository = ChatRepository();
@@ -18,7 +16,6 @@ class ChatDetailModel extends ChangeNotifier {
   List<Map> chatDetailList = [];
   late Chat chat;
   late Map chatDetail;
-  File? imageFile;
   List<File> imageList = [];
   List<String?> imageUrlList = [];
 
@@ -36,9 +33,8 @@ class ChatDetailModel extends ChangeNotifier {
 
   ///chat入力内容をListに入れてDB(chatDetail)を更新
   Future<void> onPushSendChatDetail(Map chatTitle) async {
-    // await uploadImage();
     if (imageList != []) {
-      imageUrlList = (await storageRepository.uploadImageToStorage(imageList, chat.title!, bodyController.text))!;
+      imageUrlList = (await storageRepository.uploadImageToStorage(imageList))!;
     }
     createChatDetail();
     chatDetailList.add(chatDetail);
@@ -65,25 +61,12 @@ class ChatDetailModel extends ChangeNotifier {
     bodyController.text = '';
     imageList = [];
     imageUrlList = [];
-    imageFile = null;
     notifyListeners();
   }
 
-  ///imagePickerを起動
-  Future<void> showImagePicker(BuildContext context) async {
-    try {
-      final ImagePicker _picker = ImagePicker();
-      final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        imageFile = File(pickedFile.path);
-        imageList.add(imageFile!);
-        notifyListeners();
-      } else {
-        return;
-      }
-    } catch (e) {
-      Logger().e(e.toString());
-      return;
-    }
+  ///showImagePickerで選択したFileをimageListに追加
+  void addImage(File pickedImage){
+    imageList.add(pickedImage);
+    notifyListeners();
   }
 }

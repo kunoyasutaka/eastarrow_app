@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/presentation/chat/chat_detail/chat_detail_page.dart';
+import 'package:eastarrow_app/presentation/chat/select_image_area.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/common/drawer.dart';
+import 'package:eastarrow_app/repository/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,8 +34,7 @@ class ChatPage extends StatelessWidget {
                 }
               },
               child: RefreshIndicator(
-                onRefresh: () async => await model
-                    .fetchChatTitle(FirebaseAuth.instance.currentUser!.uid),
+                onRefresh: () async => await model.fetchChatTitle(FirebaseAuth.instance.currentUser!.uid),
                 child: Column(
                   children: [
                     Expanded(
@@ -50,28 +53,23 @@ class ChatPage extends StatelessWidget {
                               );
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                               height: 60,
                               decoration: const BoxDecoration(
                                 border: Border(
-                                  bottom:
-                                      BorderSide(color: Colors.grey, width: 1),
+                                  bottom: BorderSide(color: Colors.grey, width: 1),
                                 ),
                               ),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    child: const Text('件名',
-                                        style: TextStyle(fontSize: 16)),
+                                    child: const Text('件名', style: TextStyle(fontSize: 16)),
                                     padding: const EdgeInsets.only(right: 16),
                                   ),
                                   Expanded(
                                     child: Text(
-                                      model.chatTitleList[index]
-                                          [ChatTitleField.title],
+                                      model.chatTitleList[index][ChatTitleField.title],
                                       style: const TextStyle(fontSize: 16),
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
@@ -84,25 +82,7 @@ class ChatPage extends StatelessWidget {
                         },
                       ),
                     ),
-                    if (model.imageFile != null)
-                      Container(
-                        height: 80,
-                        width: double.infinity,
-                        color: Colors.grey.withOpacity(0.3),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: model.imageList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Image.file(model.imageList[index]),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                    if (model.imageList.isNotEmpty) selectImageArea(model.imageList),
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: const BoxDecoration(
@@ -116,36 +96,35 @@ class ChatPage extends StatelessWidget {
                             children: [
                               Flexible(
                                 child: TextField(
-                                  decoration:
-                                      const InputDecoration(hintText: '件名'),
+                                  decoration: const InputDecoration(hintText: '件名'),
                                   keyboardType: TextInputType.text,
                                   controller: model.titleController,
                                 ),
                               ),
                               IconButton(
-                                onPressed: () async => await model.showImagePicker(context),
+                                onPressed: () async {
+                                  File? _pickedImage = await showImagePicker(context);
+                                  if (_pickedImage != null) {
+                                    model.addImage(_pickedImage);
+                                  } else {
+                                    return;
+                                  }
+                                },
                                 icon: const Icon(Icons.image),
                               ),
                               //TODO カメラを開く
                               IconButton(
-                                onPressed: () async => await showTextDialog(
-                                    context, '写真を撮影してください。'),
+                                onPressed: () async => await showTextDialog(context, '写真を撮影してください。'),
                                 icon: const Icon(Icons.camera_alt),
                               ),
                               IconButton(
                                 onPressed: () async {
-                                  await showConfirmDialog(context,
-                                          'ご記入いただいた内容を送信します。\nよろしいですか？')
+                                  await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')
                                       ? {
                                           await model.onPushSendNewChat(
-                                              model.chatTitleList,
-                                              FirebaseAuth
-                                                  .instance.currentUser!.uid),
-                                          await showTextDialog(
-                                              context, '送信しました。'),
-                                          await model.fetchChatTitle(
-                                              FirebaseAuth
-                                                  .instance.currentUser!.uid),
+                                              model.chatTitleList, FirebaseAuth.instance.currentUser!.uid),
+                                          await showTextDialog(context, '送信しました。'),
+                                          await model.fetchChatTitle(FirebaseAuth.instance.currentUser!.uid),
                                         }
                                       : null;
                                 },

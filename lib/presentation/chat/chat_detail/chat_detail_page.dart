@@ -1,10 +1,13 @@
 import 'package:eastarrow_app/domain/chatdetail.dart';
 import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/presentation/chat/chat_detail/chat_detail_model.dart';
+import 'package:eastarrow_app/presentation/chat/select_image_area.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
+import 'package:eastarrow_app/repository/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:universal_io/io.dart';
 
 class ChatDetailPage extends StatelessWidget {
   final Map chatTitle;
@@ -86,25 +89,7 @@ class ChatDetailPage extends StatelessWidget {
                         },
                       ),
                     ),
-                    if (model.imageFile != null)
-                      Container(
-                        height: 80,
-                        width: double.infinity,
-                        color: Colors.grey.withOpacity(0.3),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: model.imageList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Image.file(model.imageList[index]),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                    if (model.imageList.isNotEmpty) selectImageArea(model.imageList),
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: const BoxDecoration(
@@ -118,15 +103,21 @@ class ChatDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               IconButton(
-                                onPressed: () async => await model.showImagePicker(context),
+                                onPressed: () async {
+                                  File? _pickedImage = await showImagePicker(context);
+                                  if (_pickedImage != null) {
+                                    model.addImage(_pickedImage);
+                                  } else {
+                                    return;
+                                  }
+                                },
                                 icon: const Icon(Icons.image),
                               ),
-                              //TODO ImagePickerでファイルを取得
+                              //TODO カメラを開く
                               IconButton(
                                 onPressed: () async => await showTextDialog(context, '写真を撮影してください。'),
                                 icon: const Icon(Icons.camera_alt),
                               ),
-                              //TODO カメラを開く
                               IconButton(
                                 onPressed: () async {
                                   await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')

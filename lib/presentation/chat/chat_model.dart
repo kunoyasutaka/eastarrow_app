@@ -9,8 +9,7 @@ import 'package:eastarrow_app/repository/storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:logger/logger.dart';
+
 
 class ChatModel extends ChangeNotifier {
   final titleController = TextEditingController();
@@ -20,12 +19,8 @@ class ChatModel extends ChangeNotifier {
   final storageRepository = StorageRepository();
   late Member _member;
   List<Map> chatTitleList = [];
-
-  ///画像選択時にリスト化
-  List<String> selectImageUrl = [];
   late Map chatDetail;
   List<Map> chatDetailList = [];
-  File? imageFile;
   List<File> imageList = [];
   List<String?> imageUrlList = [];
 
@@ -43,9 +38,8 @@ class ChatModel extends ChangeNotifier {
 
   ///chat入力内容をListに入れてDB(chatDetail)を更新
   Future<void> onPushSendNewChat(List<Map> chatTitleList, String userId) async {
-    // await uploadImage();
     if (imageList != []) {
-      imageUrlList = (await storageRepository.uploadImageToStorage(imageList, titleController.text, bodyController.text))!;
+      imageUrlList = (await storageRepository.uploadImageToStorage(imageList))!;
     }
     createChatDetailList(userId);
     await chatRepository.addChat(chatDetailList, chatTitleList, titleController.text, userId);
@@ -73,26 +67,11 @@ class ChatModel extends ChangeNotifier {
     bodyController.text = '';
     imageList = [];
     imageUrlList = [];
-    imageFile = null;
     notifyListeners();
   }
 
-  ///imagePickerを起動
-  Future<void> showImagePicker(BuildContext context) async {
-    try {
-      final ImagePicker _picker = ImagePicker();
-      final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        imageFile = File(pickedFile.path);
-        imageList.add(imageFile!);
-        notifyListeners();
-      } else {
-        return;
-      }
-    } catch (e) {
-      Logger().e(e.toString());
-      return;
-    }
+  void addImage(File pickedImage){
+    imageList.add(pickedImage);
+    notifyListeners();
   }
-
 }
