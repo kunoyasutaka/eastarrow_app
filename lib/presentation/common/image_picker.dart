@@ -10,8 +10,7 @@ Future<File?> showImagePicker(BuildContext context) async {
     final ImagePicker _picker = ImagePicker();
     final XFile? _pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (_pickedFile != null) {
-      File _imageFile = File(_pickedFile.path);
-      return _imageFile;
+      return File(_pickedFile.path);
     } else {
       return null;
     }
