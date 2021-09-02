@@ -8,7 +8,6 @@ import 'package:eastarrow_app/repository/storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class ChatDetailModel extends ChangeNotifier {
   final chatRepository = ChatRepository();
   final storageRepository = StorageRepository();
@@ -34,13 +33,18 @@ class ChatDetailModel extends ChangeNotifier {
   ///chat入力内容をListに入れてDB(chatDetail)を更新
   Future<void> onPushSendChatDetail(Map chatTitle) async {
     if (imageList != []) {
-      imageUrlList = await storageRepository.uploadImage(imageList);
+      imageUrlList = await Future.wait(imageList.map((e) async => await uploadToStorage(e)).toList());
     }
     createChatDetail();
     chatDetailList.add(chatDetail);
     await chatRepository.updateChat(chatDetailList, chatTitle);
     resetChatDetail();
     notifyListeners();
+  }
+
+  Future<String> uploadToStorage(File imageFile) async {
+    final path = 'chat/${FirebaseAuth.instance.currentUser!.uid}/${DateTime.now().toString()}.png';
+    return await storageRepository.uploadImage(imageFile, path);
   }
 
   ///chatの入力内容をMap型で返す
@@ -65,7 +69,7 @@ class ChatDetailModel extends ChangeNotifier {
   }
 
   ///showImagePickerで選択したFileをimageListに追加
-  void addImage(File pickedImage){
+  void addImage(File pickedImage) {
     imageList.add(pickedImage);
     notifyListeners();
   }

@@ -39,12 +39,17 @@ class ChatModel extends ChangeNotifier {
   ///chat入力内容をListに入れてDB(chatDetail)を更新
   Future<void> onPushSendNewChat(List<Map> chatTitleList, String userId) async {
     if (imageList != []) {
-      imageUrlList = await storageRepository.uploadImage(imageList);
+      imageUrlList = await Future.wait(imageList.map((e) async => await uploadToStorage(e)).toList());
     }
     createChatDetailList(userId);
     await chatRepository.addChat(chatDetailList, chatTitleList, titleController.text, userId);
     resetChatDetail();
     notifyListeners();
+  }
+
+  Future<String> uploadToStorage(File imageFile) async {
+    final path = 'chat/${FirebaseAuth.instance.currentUser!.uid}/${DateTime.now().toString()}.png';
+    return await storageRepository.uploadImage(imageFile, path);
   }
 
   ///chatの入力内容を空のchatDetailListにMap型で入れる
