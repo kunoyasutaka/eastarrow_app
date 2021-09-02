@@ -68,6 +68,20 @@ class AuthRepository {
     }
   }
 
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw MyAuthException(
+        e.code,
+        _convertErrorMessage(e.code),
+      );
+    } catch (e) {
+      Logger().e(e.toString());
+      return;
+    }
+  }
+
   String _convertErrorMessage(String errorMassage) {
     switch (errorMassage) {
       case 'weak-password':
