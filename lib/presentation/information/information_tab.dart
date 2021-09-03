@@ -22,6 +22,7 @@ Widget informationTab(List<Information> informationList) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(informationList[index].body!),
+                ///TODO informationのimageUrlを複数表示する必要があるか？
                 informationList[index].imageUrl != ''
                     ? Container(padding: const EdgeInsets.only(top: 16), child: Image.network(informationList[index].imageUrl!))
                     : const SizedBox(),

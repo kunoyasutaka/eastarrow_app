@@ -1,10 +1,13 @@
 import 'package:eastarrow_app/domain/chatdetail.dart';
 import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/presentation/chat/chat_detail/chat_detail_model.dart';
+import 'package:eastarrow_app/presentation/chat/select_image_area.dart';
 import 'package:eastarrow_app/presentation/common/dialog.dart';
+import 'package:eastarrow_app/presentation/common/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:universal_io/io.dart';
 
 class ChatDetailPage extends StatelessWidget {
   final Map chatTitle;
@@ -26,8 +29,7 @@ class ChatDetailPage extends StatelessWidget {
               centerTitle: true,
             ),
             body: RefreshIndicator(
-              onRefresh: () async =>
-                  await model.fetchChat(chatTitle[ChatTitleField.docId]),
+              onRefresh: () async => await model.fetchChat(chatTitle[ChatTitleField.docId]),
               child: SafeArea(
                 child: Column(
                   children: [
@@ -38,8 +40,7 @@ class ChatDetailPage extends StatelessWidget {
                           return Container(
                             decoration: BoxDecoration(
                               border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.grey.shade400, width: 1),
+                                bottom: BorderSide(color: Colors.grey.shade400, width: 1),
                               ),
                             ),
                             alignment: Alignment.centerLeft,
@@ -52,45 +53,42 @@ class ChatDetailPage extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    model.chatDetailList[index]
-                                                [ChatDetailField.sender] ==
-                                            '管理者'
+                                    model.chatDetailList[index][ChatDetailField.sender] == '管理者'
                                         ? const Icon(Icons.mail, size: 20)
                                         : const Icon(Icons.person, size: 20),
                                     const SizedBox(width: 12),
-                                    Text(model.chatDetailList[index]
-                                        [ChatDetailField.sender]),
+                                    const Text('ユーザー'),
                                     const Expanded(child: SizedBox()),
                                     Text((DateFormat('yyyy/MM/dd  HH:mm'))
-                                        .format(model.chatDetailList[index]
-                                                [ChatDetailField.createdAt]
-                                            .toDate()))
+                                        .format(model.chatDetailList[index][ChatDetailField.createdAt].toDate()))
                                   ],
                                 ),
                                 Container(
                                   padding: const EdgeInsets.all(12),
-                                  child: Text(model.chatDetailList[index]
-                                      [ChatDetailField.body]),
+                                  child: Text(model.chatDetailList[index][ChatDetailField.body]),
                                 ),
-                                // chatDetailList[index].imageUrl != []
-                                //     ? ListView.builder(
-                                //         itemCount: chatDetailList[index].imageUrl!.length,
-                                //         itemBuilder: (context, imageIndex) {
-                                //           return Container(
-                                //             padding: const EdgeInsets.all(12),
-                                //             child: Image.network(
-                                //               chatDetailList[index].imageUrl![imageIndex],
-                                //               width: double.infinity,
-                                //             ),
-                                //           );
-                                //         })
-                                //     : Container(),
+                                if (model.chatDetailList[index][ChatDetailField.imageUrl].isNotEmpty)
+                                  ListView.builder(
+                                    itemCount: model.chatDetailList[index][ChatDetailField.imageUrl].length,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, imageIndex) {
+                                      ///TODO imageのサイズを要検討
+                                      return Container(
+                                        padding: const EdgeInsets.all(12),
+                                        child: Image.network(
+                                          model.chatDetailList[index][ChatDetailField.imageUrl][imageIndex],
+                                        ),
+                                      );
+                                    },
+                                  ),
                               ],
                             ),
                           );
                         },
                       ),
                     ),
+                    if (model.imageList.isNotEmpty) selectImageArea(model.imageList),
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: const BoxDecoration(
@@ -104,26 +102,27 @@ class ChatDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               IconButton(
-                                onPressed: () async => await showTextDialog(
-                                    context, '画像を選択してください。'),
+                                onPressed: () async {
+                                  File? _pickedImage = await showImagePicker(context);
+                                  if (_pickedImage != null) {
+                                    model.addImage(_pickedImage);
+                                  } else {
+                                    return;
+                                  }
+                                },
                                 icon: const Icon(Icons.image),
-                              ),
-                              //TODO ImagePickerでファイルを取得
-                              IconButton(
-                                onPressed: () async => await showTextDialog(
-                                    context, '写真を撮影してください。'),
-                                icon: const Icon(Icons.camera_alt),
                               ),
                               //TODO カメラを開く
                               IconButton(
+                                onPressed: () async => await showTextDialog(context, '写真を撮影してください。'),
+                                icon: const Icon(Icons.camera_alt),
+                              ),
+                              IconButton(
                                 onPressed: () async {
-                                  await showConfirmDialog(context,
-                                          'ご記入いただいた内容を送信します。\nよろしいですか？')
+                                  await showConfirmDialog(context, 'ご記入いただいた内容を送信します。\nよろしいですか？')
                                       ? {
-                                          await model
-                                              .onPushSendChatDetail(chatTitle),
-                                          await showTextDialog(
-                                              context, '送信しました。'),
+                                          await model.onPushSendChatDetail(chatTitle),
+                                          await showTextDialog(context, '送信しました。'),
                                         }
                                       : null;
                                 },

@@ -1,24 +1,28 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eastarrow_app/domain/chatdetail.dart';
 import 'package:eastarrow_app/domain/member.dart';
 import 'package:eastarrow_app/repository/chat_repository.dart';
 import 'package:eastarrow_app/repository/member_repository.dart';
+import 'package:eastarrow_app/repository/storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 
 class ChatModel extends ChangeNotifier {
   final titleController = TextEditingController();
   final bodyController = TextEditingController();
   final memberRepository = MemberRepository();
   final chatRepository = ChatRepository();
+  final storageRepository = StorageRepository();
   late Member _member;
   List<Map> chatTitleList = [];
-
-  ///画像選択時にリスト化
-  List<String> selectImageUrl = [];
   late Map chatDetail;
   List<Map> chatDetailList = [];
+  List<File> imageList = [];
+  List<String?> imageUrlList = [];
 
   Future<void> init() async {
     await fetchChatTitle(FirebaseAuth.instance.currentUser!.uid);
@@ -34,18 +38,25 @@ class ChatModel extends ChangeNotifier {
 
   ///chat入力内容をListに入れてDB(chatDetail)を更新
   Future<void> onPushSendNewChat(List<Map> chatTitleList, String userId) async {
+    if (imageList != []) {
+      imageUrlList = await Future.wait(imageList.map((e) async => await uploadToStorage(e)).toList());
+    }
     createChatDetailList(userId);
-    await chatRepository.addChat(
-        chatDetailList, chatTitleList, titleController.text, userId);
+    await chatRepository.addChat(chatDetailList, chatTitleList, titleController.text, userId);
     resetChatDetail();
     notifyListeners();
+  }
+
+  Future<String> uploadToStorage(File imageFile) async {
+    final path = 'chat/${FirebaseAuth.instance.currentUser!.uid}/${DateTime.now().toString()}.png';
+    return await storageRepository.uploadImage(imageFile, path);
   }
 
   ///chatの入力内容を空のchatDetailListにMap型で入れる
   void createChatDetailList(String userId) {
     chatDetail = {
       ChatDetailField.body: bodyController.text,
-      ChatDetailField.imageUrl: selectImageUrl,
+      ChatDetailField.imageUrl: imageUrlList,
 
       ///senderの表示をどうするか。仮でUIDを登録
       ChatDetailField.sender: userId,
@@ -59,7 +70,13 @@ class ChatModel extends ChangeNotifier {
   void resetChatDetail() {
     titleController.text = '';
     bodyController.text = '';
-    selectImageUrl = [];
+    imageList = [];
+    imageUrlList = [];
+    notifyListeners();
+  }
+
+  void addImage(File pickedImage){
+    imageList.add(pickedImage);
     notifyListeners();
   }
 }
