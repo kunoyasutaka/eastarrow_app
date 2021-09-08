@@ -7,17 +7,23 @@ class ResetPasswordModel extends ChangeNotifier {
   final formKey = GlobalKey<FormBuilderState>();
   final mailController = TextEditingController();
   final repository = AuthRepository();
+  String errorMessage = '';
 
-  Future<bool> resetPassword() async {
+  Future<String> resetPassword() async {
     try {
       await repository.sendPasswordResetEmail(mailController.text);
-      return true;
+      return 'success';
     } on MyAuthException catch (e) {
       Logger().e(e.toString());
-      return false;
+      return e.toString();
     } catch (e) {
       Logger().e(e.toString());
-      return false;
+      return e.toString();
     }
+  }
+
+  void inputError(String error){
+    errorMessage = error;
+    notifyListeners();
   }
 }

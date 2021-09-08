@@ -69,14 +69,33 @@ class ResetPasswordPage extends StatelessWidget {
                               borderRadius: BorderRadius.all(Radius.circular(32)),
                             ),
                           ),
-                          onPressed: () async {
-                              if (await model.resetPassword() == true){
+                          onPressed:() async {
+                            final result = await model.resetPassword();
+                            if (result == 'success') {
                               await showTextDialog(context, 'パスワード再設定メールを送信しました。');
                               Navigator.pop(context);
+                            } else {
+                              model.inputError(result);
+                              return;
                             }
                           },
                         ),
                       ),
+                      const SizedBox(height: 12),
+                      if (model.errorMessage == 'ユーザーが見つかりません')
+                        Padding(
+                          child: Align(
+                            child: Text(
+                              model.errorMessage,
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 12,
+                              ),
+                            ),
+                            alignment: Alignment.centerLeft,
+                          ),
+                          padding: const EdgeInsets.only(left: 12),
+                        ),
                     ],
                   ),
                 ),
