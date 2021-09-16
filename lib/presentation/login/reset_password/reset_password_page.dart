@@ -74,9 +74,6 @@ class ResetPasswordPage extends StatelessWidget {
                             if (result == 'success') {
                               await showTextDialog(context, 'パスワード再設定メールを送信しました。');
                               Navigator.pop(context);
-                            } else {
-                              model.inputError(result);
-                              return;
                             }
                           },
                         ),

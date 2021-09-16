@@ -15,15 +15,14 @@ class ResetPasswordModel extends ChangeNotifier {
       return 'success';
     } on MyAuthException catch (e) {
       Logger().e(e.toString());
+      errorMessage = e.message.toString();
+      notifyListeners();
       return e.toString();
     } catch (e) {
       Logger().e(e.toString());
+      errorMessage = e.toString();
+      notifyListeners();
       return e.toString();
     }
-  }
-
-  void inputError(String error){
-    errorMessage = error;
-    notifyListeners();
   }
 }
