@@ -1,5 +1,6 @@
 import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/login/login_model.dart';
+import 'package:eastarrow_app/presentation/login/reset_password/reset_password_page.dart';
 import 'package:eastarrow_app/presentation/register/register_page.dart';
 import 'package:eastarrow_app/presentation/root.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +129,12 @@ class LoginPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          onPressed: () => null,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const ResetPasswordPage(),fullscreenDialog: true),
+                            );
+                          },
                         ),
                       ),
                     ],

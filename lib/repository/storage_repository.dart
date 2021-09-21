@@ -26,26 +26,4 @@ class StorageRepository {
       return '';
     }
   }
-
-  ///元コード
-  Future<List<String>> uploadImageTo(List<File> imageList) async {
-    try {
-      List<String> _downloadUrlList = [];
-      _downloadUrlList = await Future.wait(imageList.map((e) async {
-        TaskSnapshot _snapshot = await storage
-            .ref()
-            .child('chat/${FirebaseAuth.instance.currentUser!.uid}/${DateTime.now().toString()}.png')
-            .putFile(e, firebase_storage.SettableMetadata(contentType: 'image/png'));
-        String _downloadUrl = await _snapshot.ref.getDownloadURL();
-        return _downloadUrl;
-      }).toList());
-      return _downloadUrlList;
-    } on FirebaseException catch (e) {
-      Logger().e(e.toString());
-      return [];
-    } catch (e) {
-      Logger().e(e.toString());
-      return [];
-    }
-  }
 }
