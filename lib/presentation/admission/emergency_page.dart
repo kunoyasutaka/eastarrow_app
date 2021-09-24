@@ -1,7 +1,6 @@
 import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_accident/emergency_accident_page.dart';
 import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_repair/emergency_repair_page.dart';
 import 'package:eastarrow_app/presentation/admission/emergency_model.dart';
-import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/common/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -148,9 +147,7 @@ class EmergencyPage extends StatelessWidget {
                             width: double.infinity,
                             child: ElevatedButton.icon(
                               onPressed: () async {
-                                if (await showConfirmDialog(context, '店舗に電話します。\nよろしいですか。')) {
                                   model.phoneCall();
-                                }
                               },
                               icon: const Icon(Icons.phone),
                               label: const Text(

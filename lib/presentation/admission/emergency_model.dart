@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EmergencyModel extends ChangeNotifier {
-  ///必要であれば実装
-  // final repository = MemberRepository();
-  // late Member member;
-  //
-  // Future<void> init() async {
-  //   member = await repository.fetchMember(FirebaseAuth.instance.currentUser!.uid);
-  //   notifyListeners();
-  // }
+ String phoneURL = 'tel:${dotenv.env['PHONE_NUMBER']}';
   Future<void> phoneCall() async {
-    const phoneURL = "tel:+819018621477";
+    print(phoneURL);
     if (await canLaunch(phoneURL)) {
       launch(phoneURL);
     } else {
