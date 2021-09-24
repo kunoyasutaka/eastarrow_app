@@ -5,7 +5,6 @@ import 'package:url_launcher/url_launcher.dart';
 class EmergencyModel extends ChangeNotifier {
  String phoneURL = 'tel:${dotenv.env['PHONE_NUMBER']}';
   Future<void> phoneCall() async {
-    print(phoneURL);
     if (await canLaunch(phoneURL)) {
       launch(phoneURL);
     } else {
