@@ -1,7 +1,6 @@
 import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_accident/emergency_accident_page.dart';
 import 'package:eastarrow_app/presentation/admission/emergency_detail/emergency_repair/emergency_repair_page.dart';
 import 'package:eastarrow_app/presentation/admission/emergency_model.dart';
-import 'package:eastarrow_app/presentation/common/dialog.dart';
 import 'package:eastarrow_app/presentation/common/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,8 +30,7 @@ class EmergencyPage extends StatelessWidget {
                       width: double.infinity,
                       child: const Text(
                         '緊急連絡',
-                        style: TextStyle(
-                            fontSize: 28, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                       ),
                       decoration: const BoxDecoration(
                         border: Border(
@@ -54,8 +52,7 @@ class EmergencyPage extends StatelessWidget {
                           ),
                           const Text(
                             '・事故・保険のお問い合わせ',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           Container(
                             padding: const EdgeInsets.all(12),
@@ -72,9 +69,7 @@ class EmergencyPage extends StatelessWidget {
                                   ),
                                   builder: (BuildContext context) {
                                     return SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.8,
+                                      height: MediaQuery.of(context).size.height * 0.8,
                                       child: const EmergencyAccidentPage(),
                                     );
                                   },
@@ -90,8 +85,7 @@ class EmergencyPage extends StatelessWidget {
                           const SizedBox(height: 16),
                           const Text(
                             '・修理・整備のお問い合わせ',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           Container(
                             padding: const EdgeInsets.all(12),
@@ -108,9 +102,7 @@ class EmergencyPage extends StatelessWidget {
                                   ),
                                   builder: (BuildContext context) {
                                     return SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.8,
+                                      height: MediaQuery.of(context).size.height * 0.8,
                                       child: const EmergencyRepairPage(),
                                     );
                                   },
@@ -133,8 +125,7 @@ class EmergencyPage extends StatelessWidget {
                       width: double.infinity,
                       child: const Text(
                         '緊急通話',
-                        style: TextStyle(
-                            fontSize: 28, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                       ),
                       decoration: const BoxDecoration(
                         border: Border(
@@ -155,8 +146,9 @@ class EmergencyPage extends StatelessWidget {
                             padding: const EdgeInsets.all(12),
                             width: double.infinity,
                             child: ElevatedButton.icon(
-                              onPressed: () => showConfirmDialog(
-                                  context, '店舗に電話します。\nよろしいですか。'),
+                              onPressed: () async {
+                                  model.phoneCall();
+                              },
                               icon: const Icon(Icons.phone),
                               label: const Text(
                                 '店舗に電話する',
